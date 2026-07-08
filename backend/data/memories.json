@@ -1,0 +1,50 @@
+[
+  {
+    "memory_id": "mem_001",
+    "title": "Learning to Ride a Bike",
+    "category": "Childhood",
+    "text": "I remember the summer I turned seven. Dad let go of the bicycle seat without me noticing, and I rode three blocks before realizing he wasn't running behind me. I crashed into a hedge, but I got up laughing. That was the day I learned that falling is part of learning.",
+    "emotion": "Joyful",
+    "tags": ["childhood", "learning", "family", "perseverance"]
+  },
+  {
+    "memory_id": "mem_002",
+    "title": "Sunday Dinners at Grandma's",
+    "category": "Family",
+    "text": "Every Sunday, the whole family gathered at Grandma's tiny apartment. She'd cook chicken curry from a recipe she never wrote down. The smell of cumin and cardamom filled every room. We'd argue, laugh, and fall asleep on the couch. Grandma always said, 'The table is where hearts open.'",
+    "emotion": "Nostalgic",
+    "tags": ["family", "tradition", "love", "childhood"]
+  },
+  {
+    "memory_id": "mem_003",
+    "title": "The Promotion That Almost Wasn't",
+    "category": "Career",
+    "text": "I was passed over for a promotion in my late twenties. It crushed me. My mentor pulled me aside and said, 'The door that closes is redirecting you to a better one.' Six months later, a better role opened at a different company. That moment taught me patience and trust in the process.",
+    "emotion": "Bittersweet",
+    "tags": ["career", "resilience", "mentorship", "growth"]
+  },
+  {
+    "memory_id": "mem_004",
+    "title": "Advice Under the Stars",
+    "category": "Advice",
+    "text": "On a camping trip, my grandfather pointed at the night sky and said, 'Look at all those stars. You are one of them — small but irreplaceable. Don't spend your life trying to shine like someone else. Just shine.' I think of that every time I feel lost.",
+    "emotion": "Warm",
+    "tags": ["advice", "family", "wisdom", "perspective"]
+  },
+  {
+    "memory_id": "mem_005",
+    "title": "The Bus Fare Gift",
+    "category": "Faith & Kindness",
+    "text": "I once saw a woman at the bus stop counting coins, short by a little. I paid her fare without saying much. She smiled and said, 'Kindness is a boomerang. You never know when it comes back.' A week later, a stranger bought my coffee. That stayed with me forever.",
+    "emotion": "Heartwarming",
+    "tags": ["kindness", "faith", "humanity", "connection"]
+  },
+  {
+    "memory_id": "mem_006",
+    "title": "The Talking Parrot Joke",
+    "category": "Humor",
+    "text": "My uncle once told me a joke so bad it became family legend. A man walks into a library and asks for books about parrots. The librarian says, 'Parrots don't read books.' The man replies, 'Oh sorry — I meant paragraphs.' We still groan-laugh about it at every reunion.",
+    "emotion": "Amused",
+    "tags": ["humor", "family", "joke", "memory"]
+  }
+]

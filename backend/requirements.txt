@@ -1,0 +1,18 @@
+fastapi>=0.115.0
+uvicorn[standard]>=0.32.0
+pydantic>=2.0.0
+python-dotenv>=1.0.0
+
+# Core ML
+torch>=2.4.0
+transformers>=4.51.0
+sentence-transformers>=2.7.0
+accelerate>=1.0.0
+safetensors>=0.4.0
+
+# Model loading from ModelScope
+modelscope>=1.10.0
+
+# Vector store
+chromadb>=0.5.0
+numpy>=1.26.0
