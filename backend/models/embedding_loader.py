@@ -1,31 +1,37 @@
 import logging
 import os
 from sentence_transformers import SentenceTransformer
-from backend.config import EMBEDDING_MODEL_NAME, EMBEDDING_QUERY_INSTRUCTION, MODEL_CACHE_DIR
+from backend.config import EMBEDDING_MODEL_NAME, EMBEDDING_QUERY_INSTRUCTION
+from backend.models.model_registry import get_model_path
 
 logger = logging.getLogger(__name__)
 
-# Global singleton — loaded once at startup, never per request
 embedder_model = None
 
 
 def load_embedder():
-    """Load the embedding model once and cache it globally."""
+    """Load the embedding model once from the registry active path."""
     global embedder_model
 
-    cache_path = os.path.join(MODEL_CACHE_DIR, EMBEDDING_MODEL_NAME.replace("/", "_"))
+    try:
+        model_path = get_model_path("embedding")
+    except KeyError:
+        model_path = None
 
     logger.info(f"Loading embedding model: {EMBEDDING_MODEL_NAME}")
-    logger.info(f"Model cache path: {cache_path}")
+    if model_path and os.path.isdir(model_path):
+        logger.info(f"Loading from local path: {model_path}")
+    else:
+        logger.info(f"Loading from HuggingFace hub")
+        from backend.config import MODEL_CACHE_DIR
+        model_path = MODEL_CACHE_DIR
 
     embedder_model = SentenceTransformer(
         EMBEDDING_MODEL_NAME,
-        cache_folder=cache_path,
+        cache_folder=model_path,
         trust_remote_code=True,
     )
-    embedder_model.max_seq_length = 512  # Qwen3-Embedding-0.6B safe ceiling
-
-    # SentenceTransformer v3+ for Qwen3-Embedding uses modern pipeline
+    embedder_model.max_seq_length = 512
     embedder_model.default_prompt_name = "query"
 
     logger.info("Embedding model loaded successfully.")
@@ -40,10 +46,7 @@ def get_embedder():
 
 
 def embed_query(text: str) -> list[float]:
-    """
-    Embed a single user query with the retrieval instruction prefix.
-    Normalizes the embedding for cosine similarity.
-    """
+    """Embed a single user query with the retrieval instruction prefix."""
     emb = get_embedder()
     query_text = f"{EMBEDDING_QUERY_INSTRUCTION}\n{text}"
     embedding = emb.encode(query_text, normalize_embeddings=True)
@@ -51,10 +54,7 @@ def embed_query(text: str) -> list[float]:
 
 
 def embed_documents(documents: list[str]) -> list[list[float]]:
-    """
-    Embed a list of document strings (memories) without the query instruction.
-    Normalizes embeddings for cosine similarity.
-    """
+    """Embed a list of document strings without the query instruction."""
     emb = get_embedder()
     embeddings = emb.encode(documents, normalize_embeddings=True)
     return [e.tolist() for e in embeddings]

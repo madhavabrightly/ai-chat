@@ -44,6 +44,21 @@ export default function HomeScreen({ onNavigate, backendOnline, computeStatus, r
           )}
         </div>
 
+        {/* Consent & Safety Guardrail */}
+        <div className="consent-panel">
+          <div className="consent-icon">🛡️</div>
+          <div className="consent-body">
+            <div className="consent-title">Ethical Guardrail — Consent-Based Memory Simulation</div>
+            <p className="consent-text">
+              Memory Twin AI is a <strong>consent-based digital memory simulation</strong>.
+              It does <strong>not claim to be a real person</strong>.
+              It answers <strong>only from stored fictional memories</strong>.
+              No real personal data is used. All memories are hand-authored fictional examples
+              demonstrating the architecture.
+            </p>
+          </div>
+        </div>
+
         <div className="home-actions">
           <button className="btn-primary" onClick={() => onNavigate('chat')}>
             Start Chat

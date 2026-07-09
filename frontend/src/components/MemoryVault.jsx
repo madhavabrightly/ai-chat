@@ -25,10 +25,11 @@ export default function MemoryVault({ onNavigate, backendOnline }) {
 
   useEffect(() => { load() }, [])
 
-  const cats = ['All', ...new Set(memories.map(m => m.category))]
+  const cats = ['All', 'Imported', ...new Set(memories.map(m => m.category))]
 
   const filtered = memories.filter(m => {
-    if (activeCat !== 'All' && m.category !== activeCat) return false
+    if (activeCat === 'Imported' && !m.imported) return false
+    if (activeCat !== 'All' && activeCat !== 'Imported' && m.category !== activeCat) return false
     if (search.trim()) {
       const q = search.toLowerCase()
       const haystack = [m.title, m.text, m.category, m.emotion, ...(m.tags || [])].join(' ').toLowerCase()
