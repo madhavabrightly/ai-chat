@@ -533,13 +533,13 @@ def warmup():
 
 
 # ---------------------------------------------------------------------------
-# Memory Import endpoints
+# Memory Import endpoints (Phase 1: per-message with speaker/date/source)
 # ---------------------------------------------------------------------------
 @app.post("/memory/import/preview")
-async def memory_import_preview(file: UploadFile = File(...), import_mode: str = Form("personal")):
-    """Upload a TXT or JSON file and return preview with style profile."""
+async def memory_import_preview(file: UploadFile = File(...)):
+    """Upload a TXT or JSON file and return per-message preview with session_id."""
     import tempfile
-    from backend.services.memory_importer import parse_file
+    from backend.services.memory_importer import parse_file_to_messages, get_session_messages
 
     if not file.filename:
         return {"error": "No file uploaded."}
@@ -552,7 +552,7 @@ async def memory_import_preview(file: UploadFile = File(...), import_mode: str =
         tmppath = tmp.name
 
     try:
-        result = parse_file(tmppath, file.filename, import_mode)
+        result = parse_file_to_messages(tmppath, file.filename)
         os.unlink(tmppath)
         return result
     except Exception as e:
@@ -560,62 +560,19 @@ async def memory_import_preview(file: UploadFile = File(...), import_mode: str =
         return {"error": f"Failed to parse file: {str(e)}"}
 
 
-@app.post("/memory/import/commit")
-def memory_import_commit(req: CommitImportRequest):
-    """Save previewed memories to ChromaDB and store style profile."""
-    from backend.services.memory_importer import commit_import
-    from backend.services.style_profile_builder import save_style_profile, set_active_style_profile
-
-    import_id = req.import_id
-
-    if not import_id:
-        return {"error": "import_id is required"}
-
-    memories = req.memories
-    style_profile = req.style_profile
-    apply_style = req.apply_style_profile
-
-    # Save to imported memories file
-    imports_path = os.path.join(RUNTIME_ROOT, "imports", f"{import_id}.json")
-    os.makedirs(os.path.dirname(imports_path), exist_ok=True)
-    with open(imports_path, "w") as f:
-        json.dump(memories, f, indent=2)
-
-    # Save style profile
-    if style_profile:
-        profile_id = save_style_profile(style_profile)
-        if apply_style:
-            set_active_style_profile(profile_id)
-
-    return {
-        "saved": True,
-        "memory_count": len(memories),
-        "import_id": import_id,
-        "message": f"Imported {len(memories)} memories successfully.",
-    }
+@app.get("/memory/import/{session_id}/messages")
+def memory_import_messages(session_id: str):
+    """Return all messages for a given import session."""
+    from backend.services.memory_importer import get_session_messages
+    messages = get_session_messages(session_id)
+    return {"session_id": session_id, "message_count": len(messages), "messages": messages}
 
 
 @app.get("/memory/imports")
 def memory_imports():
-    """List all imported memory sets."""
-    imports_dir = os.path.join(RUNTIME_ROOT, "imports")
-    results = []
-    if os.path.isdir(imports_dir):
-        for fn in os.listdir(imports_dir):
-            if fn.endswith(".json"):
-                path = os.path.join(imports_dir, fn)
-                with open(path) as f:
-                    try:
-                        data = json.load(f)
-                        if isinstance(data, list):
-                            results.append({
-                                "import_id": fn.replace(".json", ""),
-                                "memory_count": len(data),
-                                "memories": data[:3],
-                            })
-                    except:
-                        pass
-    return {"imports": results}
+    """List all import sessions with message counts."""
+    from backend.services.memory_importer import get_all_sessions
+    return {"sessions": get_all_sessions()}
 
 
 @app.get("/memory/style-profile")

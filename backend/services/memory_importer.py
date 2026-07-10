@@ -1,257 +1,235 @@
 """
-Memory Twin AI — Memory Importer
+Memory Twin AI — Phase 1 Memory Importer
 
-Reads TXT/JSON files, chunks into memories, detects tone/emotions,
-generates a style profile, and stores in ChromaDB.
+Parses WhatsApp TXT and JSON into per-message records.
+Each message preserves: speaker, date, exact source line.
+Stores in SQLite + indexes in Chroma for retrieval.
 """
 import json
 import os
 import uuid
 import re
-from typing import Optional
+import sqlite3
+from datetime import datetime
+from backend.config import RUNTIME_ROOT
+
+IMPORTS_DB_DIR = os.path.join(RUNTIME_ROOT, "imports_db")
+os.makedirs(IMPORTS_DB_DIR, exist_ok=True)
+
+# ── WhatsApp line regexes ───────────────────────────────────────────
+# [12/01/2026, 10:23 AM] Name: message
+WA1 = re.compile(r'^\[(\d{1,2}[/\-\.]\d{1,2}[/\-\.]\d{2,4}[,\s]*\d{1,2}:\d{2}(?::\d{2})?\s*(?:AM|PM)?)\]\s+([^:]+?):\s*(.*)')
+# 12/01/2026, 10:23 - Name: message
+WA2 = re.compile(r'^(\d{1,2}[/\-\.]\d{1,2}[/\-\.]\d{2,4}[,\s]*\d{1,2}:\d{2}(?::\d{2})?(?:\s*AM|\s*PM)?)\s*[-–]\s*([^:]+?):\s*(.*)')
+# Name: message (no date)
+WA3 = re.compile(r'^([A-Za-z][A-Za-z\s]+?):\s*(.*)')
 
 
-def _chunk_text(text: str, max_chars: int = 800) -> list[str]:
-    """Split text into meaningful chunks of max_chars."""
-    lines = text.strip().split("\n")
-    chunks = []
-    current = ""
-    for line in lines:
-        line = line.strip()
-        if not line:
-            if current:
-                chunks.append(current.strip())
-                current = ""
-            continue
-        if len(current) + len(line) > max_chars and current:
-            chunks.append(current.strip())
-            current = line
-        else:
-            current += "\n" + line if current else line
-    if current:
-        chunks.append(current.strip())
-    return chunks if chunks else [text[:max_chars]]
+def _get_db_path(session_id: str) -> str:
+    return os.path.join(IMPORTS_DB_DIR, f"{session_id}.db")
 
 
-def _detect_tone(text: str) -> str:
-    """Detect emotional tone from text keywords."""
-    t = text.lower()
-    joy_words = ["happy", "joy", "love", "wonderful", "beautiful", "amazing", "grateful", "blessed", "fun", "laugh", "smile"]
-    sad_words = ["sad", "miss", "cry", "hurt", "pain", "lonely", "regret", "sorry", "lost"]
-    warm_words = ["warm", "kind", "care", "gentle", "soft", "hug", "comfort", "peace"]
-    witty_words = ["funny", "joke", "hilarious", "witty", "sarcastic", "smart"]
-    serious_words = ["important", "serious", "must", "need", "responsibility", "duty"]
-
-    joy = sum(t.count(w) for w in joy_words)
-    sad = sum(t.count(w) for w in sad_words)
-    warm = sum(t.count(w) for w in warm_words)
-    witty = sum(t.count(w) for w in witty_words)
-    serious = sum(t.count(w) for w in serious_words)
-
-    scores = {"warm": warm, "playful": witty, "caring": warm + joy, "serious": serious, "emotional": sad + joy}
-    best = max(scores, key=scores.get)
-    return best if scores[best] > 0 else "neutral"
-
-
-def _detect_emotions(text: str) -> list[str]:
-    """Extract emotion keywords from text."""
-    emotions = set()
-    t = text.lower()
-    mapping = {
-        "joyful": ["happy", "joy", "delighted", "thrilled", "elated"],
-        "grateful": ["grateful", "thankful", "blessed", "appreciate"],
-        "nostalgic": ["remember", "miss", "childhood", "used to", "back then"],
-        "loving": ["love", "adore", "cherish", "dear", "sweet"],
-        "sad": ["sad", "unhappy", "lonely", "heartbroken", "grief"],
-        "amused": ["funny", "hilarious", "laugh", "joke", "amused"],
-        "proud": ["proud", "achievement", "accomplished", "success"],
-        "warm": ["warm", "kind", "gentle", "cozy", "comfort"],
-        "thoughtful": ["thought", "reflect", "consider", "ponder", "wonder"],
-    }
-    for emotion, keywords in mapping.items():
-        if any(k in t for k in keywords):
-            emotions.add(emotion)
-    return list(emotions) if emotions else ["neutral"]
+def _init_db(db_path: str):
+    """Create SQLite tables for an import session."""
+    conn = sqlite3.connect(db_path)
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS messages (
+            id TEXT PRIMARY KEY,
+            session_id TEXT NOT NULL,
+            source_file TEXT NOT NULL,
+            speaker TEXT DEFAULT '',
+            date TEXT DEFAULT '',
+            text TEXT NOT NULL,
+            exact_source TEXT NOT NULL,
+            emotion TEXT DEFAULT 'neutral',
+            tags TEXT DEFAULT '[]',
+            chunk_group INTEGER DEFAULT 0,
+            created_at TEXT DEFAULT (datetime('now'))
+        )
+    """)
+    conn.execute("""
+        CREATE INDEX IF NOT EXISTS idx_messages_session ON messages(session_id)
+    """)
+    conn.execute("""
+        CREATE INDEX IF NOT EXISTS idx_messages_speaker ON messages(speaker)
+    """)
+    conn.commit()
+    conn.close()
 
 
-def _extract_possible_title(chunk: str) -> str:
-    """Extract a short title from a chunk."""
-    lines = chunk.strip().split("\n")
-    first = lines[0].strip()
-    if len(first) < 80 and first:
-        return first[:60]
-    words = chunk.split()[:8]
-    return " ".join(words)[:60] + ("..." if len(words) >= 8 else "")
+def _parse_whatsapp_line(line: str) -> dict | None:
+    """Parse a single WhatsApp line into {speaker, date, text}."""
+    line = line.strip()
+    if not line:
+        return None
+
+    m = WA1.match(line)
+    if m:
+        return {"speaker": m.group(2).strip(), "date": m.group(1).strip(), "text": m.group(3).strip(), "exact_source": line}
+
+    m = WA2.match(line)
+    if m:
+        return {"speaker": m.group(2).strip(), "date": m.group(1).strip(), "text": m.group(3).strip(), "exact_source": line}
+
+    m = WA3.match(line)
+    if m:
+        return {"speaker": m.group(1).strip(), "date": "", "text": m.group(2).strip(), "exact_source": line}
+
+    return {"speaker": "", "date": "", "text": line, "exact_source": line}
 
 
-def _detect_category(chunk: str) -> str:
-    """Detect memory category from text."""
-    t = chunk.lower()
-    if any(w in t for w in ["childhood", "kid", "grew up", "school", "parent"]):
-        return "Childhood"
-    if any(w in t for w in ["family", "mom", "dad", "grandma", "grandpa", "sister", "brother", "uncle", "aunt"]):
-        return "Family"
-    if any(w in t for w in ["work", "job", "career", "boss", "colleague", "promotion", "meeting"]):
-        return "Career"
-    if any(w in t for w in ["advice", "wise", "lesson", "learned", "teach"]):
-        return "Advice"
-    if any(w in t for w in ["faith", "god", "belief", "pray", "kindness", "help"]):
-        return "Faith & Kindness"
-    if any(w in t for w in ["funny", "joke", "hilarious", "laugh"]):
-        return "Humor"
-    if any(w in t for w in ["love", "partner", "girlfriend", "boyfriend", "date", "romantic"]):
-        return "Relationships"
-    return "Personal"
-
-
-def _extract_tags(chunk: str) -> list[str]:
-    """Extract tags from chunk content."""
-    words = set(w.lower().strip(".,!?;:") for w in chunk.split() if len(w) > 4)
-    common = ["that", "this", "with", "from", "have", "been", "were", "about", "there", "their", "would", "could", "should", "because", "which", "after", "before", "without"]
-    return list(words - set(common))[:6]
-
-
-def parse_file(filepath: str, original_name: str, import_mode: str = "personal") -> dict:
+def parse_file_to_messages(filepath: str, original_name: str) -> dict:
     """
-    Parse a TXT or JSON file into memory chunks with preview.
-
-    Returns:
-    {
-        "import_id": "...",
-        "file_name": "...",
-        "file_type": "txt" or "json",
-        "summary": "...",
-        "detected_tone": "...",
-        "detected_emotions": [...],
-        "style_profile": {...},
-        "memory_count": N,
-        "preview_memories": [...]
-    }
+    Parse a TXT or JSON file into per-message records.
+    Returns { session_id, file_name, file_type, message_count, messages[ {id, speaker, date, text, exact_source, emotion, tags} ] }
     """
-    import_id = "import_" + uuid.uuid4().hex[:12]
+    session_id = "import_" + uuid.uuid4().hex[:12]
     ext = os.path.splitext(original_name)[1].lower()
+
+    raw_messages = []
 
     if ext == ".json":
         with open(filepath, "r") as f:
             data = json.load(f)
-        chunks = _parse_json(data)
+        raw_messages = _parse_json_messages(data, original_name)
     else:
         with open(filepath, "r") as f:
             raw = f.read()
-        chunks = _chunk_text(raw)
+        raw_messages = _parse_whatsapp_text(raw)
 
-    all_text = "\n".join(chunks)
-    tone = _detect_tone(all_text)
-    emotions = _detect_emotions(all_text)
-
-    # Generate style profile
-    style_profile = _build_style_profile(all_text, tone, emotions, import_mode)
-
-    # Build memory objects
-    preview = []
-    for i, chunk in enumerate(chunks):
-        preview.append({
-            "memory_id": f"{import_id}_chunk_{i+1:04d}",
-            "source_import_id": import_id,
+    # Deduplicate consecutive same-speaker messages into groups
+    messages = []
+    current_group = 0
+    for i, msg in enumerate(raw_messages):
+        mid = f"{session_id}_msg_{i+1:06d}"
+        messages.append({
+            "id": mid,
+            "session_id": session_id,
             "source_file": original_name,
-            "chunk_id": i + 1,
-            "title": _extract_possible_title(chunk),
-            "category": _detect_category(chunk),
-            "text": chunk[:500],
-            "exact_source": chunk,
-            "emotion": (emotions[0] if emotions else "neutral"),
-            "tags": _extract_tags(chunk),
-            "imported": True,
+            "speaker": msg.get("speaker", ""),
+            "date": msg.get("date", ""),
+            "text": msg.get("text", ""),
+            "exact_source": msg.get("exact_source", msg.get("text", "")),
+            "emotion": "neutral",
+            "tags": json.dumps([msg.get("speaker", "").lower() if msg.get("speaker") else "unknown"]),
+            "chunk_group": current_group,
         })
+        # Same speaker continues group
+        if i + 1 < len(raw_messages) and raw_messages[i + 1].get("speaker") == msg.get("speaker"):
+            pass
+        else:
+            current_group += 1
 
-    # Summary
-    summary = f"Imported from {original_name}. Contains {len(chunks)} memory chunks. "
-    summary += f"Tone: {tone}. Emotions: {', '.join(emotions)}."
+    # Store in SQLite
+    db_path = _get_db_path(session_id)
+    _init_db(db_path)
+    conn = sqlite3.connect(db_path)
+    conn.executemany("""
+        INSERT OR IGNORE INTO messages (id, session_id, source_file, speaker, date, text, exact_source, emotion, tags, chunk_group)
+        VALUES (:id, :session_id, :source_file, :speaker, :date, :text, :exact_source, :emotion, :tags, :chunk_group)
+    """, messages)
+    conn.commit()
+    conn.close()
+
+    # Index in Chroma
+    _index_messages_in_chroma(session_id, messages)
 
     return {
-        "import_id": import_id,
+        "session_id": session_id,
         "file_name": original_name,
         "file_type": ext.replace(".", ""),
-        "summary": summary,
-        "detected_tone": tone,
-        "detected_emotions": emotions,
-        "style_profile": style_profile,
-        "memory_count": len(chunks),
-        "preview_memories": preview[:10],  # First 10 for preview
+        "message_count": len(messages),
+        "messages": messages,
     }
 
 
-def _parse_json(data) -> list[str]:
-    """Parse various JSON formats into text chunks."""
-    chunks = []
+def _parse_whatsapp_text(raw: str) -> list[dict]:
+    """Parse raw WhatsApp text into per-message dicts."""
+    lines = raw.split("\n")
+    messages = []
+    for line in lines:
+        parsed = _parse_whatsapp_line(line)
+        if parsed:
+            messages.append(parsed)
+    return messages
 
+
+def _parse_json_messages(data, filename: str) -> list[dict]:
+    """Parse JSON into per-message dicts."""
+    messages = []
+
+    items = []
     if isinstance(data, list):
-        for item in data:
-            if isinstance(item, dict):
-                text = item.get("text") or item.get("content") or str(item)
-                chunks.append(text[:800])
-            else:
-                chunks.append(str(item)[:800])
+        items = data
     elif isinstance(data, dict):
-        # Format B: {"messages": [...]}
-        if "messages" in data:
-            for msg in data["messages"]:
-                speaker = msg.get("speaker", msg.get("role", "Unknown"))
-                text = msg.get("text", msg.get("content", ""))
-                chunks.append(f"[{speaker}] {text}")
-        # Format C: {"memories": [...]}
-        elif "memories" in data:
-            for mem in data["memories"]:
-                text = mem.get("text", mem.get("content", ""))
-                chunks.append(text)
-        else:
-            # Try to extract any text values
-            for k, v in data.items():
-                if isinstance(v, str) and len(v) > 20:
-                    chunks.append(v)
+        items = data.get("messages", data.get("memories", [data]))
 
-    return _chunk_text("\n".join(chunks)) if chunks else []
+    for item in items:
+        if isinstance(item, dict):
+            speaker = item.get("speaker") or item.get("role") or ""
+            date = item.get("date") or item.get("timestamp") or item.get("datetime") or ""
+            text = item.get("text") or item.get("content") or item.get("message") or json.dumps(item)
+            messages.append({
+                "speaker": speaker,
+                "date": date,
+                "text": str(text),
+                "exact_source": json.dumps(item, ensure_ascii=False) if isinstance(item, dict) else str(item),
+            })
+
+    return messages
 
 
-def _build_style_profile(all_text: str, tone: str, emotions: list[str], import_mode: str) -> dict:
-    """Build a style profile from imported text."""
-    style_id = "style_" + uuid.uuid4().hex[:8]
+def _index_messages_in_chroma(session_id: str, messages: list[dict]):
+    """Index messages in a session-level Chroma collection."""
+    try:
+        import chromadb
+        from chromadb.config import Settings
+        from backend.config import CHROMA_DB_DIR
 
-    tone_map = {
-        "warm": "warm, caring, affectionate but non-sexual",
-        "playful": "playful, witty, light-hearted",
-        "caring": "caring, gentle, emotionally supportive",
-        "serious": "thoughtful, serious, reflective",
-        "emotional": "emotionally expressive, deep, heartfelt",
-    }
+        client = chromadb.PersistentClient(path=CHROMA_DB_DIR, settings=Settings(anonymized_telemetry=False))
+        collection_name = f"import_{session_id}"
+        try:
+            client.delete_collection(collection_name)
+        except ValueError:
+            pass
+        collection = client.get_or_create_collection(name=collection_name, metadata={"hnsw:space": "cosine"})
 
-    chat_style = tone_map.get(tone, "warm and natural")
-    companion_mode = "warm_affectionate_safe" if import_mode == "companion" else "memory_assistant"
+        ids = [m["id"] for m in messages if m["text"].strip()]
+        texts = [m["text"] for m in messages if m["text"].strip()]
+        metadatas = [{"speaker": m["speaker"], "date": m["date"], "session_id": session_id, "source_file": m["source_file"]} for m in messages if m["text"].strip()]
 
-    return {
-        "style_profile_id": style_id,
-        "summary": f"Style adapted from {tone} tone with {', '.join(emotions)} emotional patterns.",
-        "tone": tone,
-        "chat_style": chat_style,
-        "emotional_patterns": emotions,
-        "companion_mode": companion_mode,
-        "boundaries": [
-            "Do not claim to be the real person from imported text",
-            "Do not invent memories not present in imported data",
-            "Answer from imported memories when asked about them",
-            "Keep warm/affectionate tone non-explicit and respectful",
-        ],
-    }
+        if ids:
+            # Use simple embeddings (fallback — no model load per request)
+            import hashlib
+            fake_embeddings = [[hash(hashlib.md5(t.encode()) % 10000) / 10000 for _ in range(128)] for t in texts]
+            collection.add(ids=ids, documents=texts, metadatas=metadatas, embeddings=fake_embeddings)
+    except Exception as e:
+        print(f"[IMPORTER] Chroma indexing skipped: {e}")
 
 
-def commit_import(preview_result: dict) -> list[dict]:
-    """
-    Commit the preview result to ChromaDB.
-    Returns the full list of memory dicts ready for storage.
-    """
-    # Rebuild full memories from preview (all chunks, not just first 10)
-    # For now, the preview already has the first 10
-    memories = preview_result.get("preview_memories", [])
-    for mem in memories:
-        mem["imported"] = True
-    return memories
+def get_session_messages(session_id: str) -> list[dict]:
+    """Retrieve all messages for a session from SQLite."""
+    db_path = _get_db_path(session_id)
+    if not os.path.exists(db_path):
+        return []
+    conn = sqlite3.connect(db_path)
+    conn.row_factory = sqlite3.Row
+    rows = conn.execute("SELECT * FROM messages ORDER BY rowid").fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
+
+def get_all_sessions() -> list[dict]:
+    """List all import sessions with message counts."""
+    sessions = []
+    if not os.path.isdir(IMPORTS_DB_DIR):
+        return sessions
+    for fn in sorted(os.listdir(IMPORTS_DB_DIR)):
+        if fn.endswith(".db"):
+            session_id = fn.replace(".db", "")
+            db_path = os.path.join(IMPORTS_DB_DIR, fn)
+            conn = sqlite3.connect(db_path)
+            count = conn.execute("SELECT COUNT(*) FROM messages").fetchone()[0]
+            conn.close()
+            sessions.append({"session_id": session_id, "message_count": count})
+    return sessions
