@@ -1,0 +1,1096 @@
+"""
+Memory Twin AI — Backend API
+AMD Developer Hackathon 2026 | Track 3: Unicorn / Open Innovation
+
+Endpoints:
+  GET  /               — Health check
+  GET  /compute-status — AMD compute / device status
+  GET  /memories       — List all memories for the Vault
+  POST /chat           — RAG chat: question → retrieved memories → LLM answer
+  POST /reload-memory  — Rebuild ChromaDB from memories.json
+
+Model Loading:
+  Both models are loaded ONCE at startup in the lifespan context.
+  They are reused for every request — never loaded per request.
+"""
+import logging
+import os
+import sys
+import time
+import uuid
+import signal
+import threading
+from contextlib import asynccontextmanager
+
+import json
+from fastapi import FastAPI, UploadFile, File, Form
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from pydantic import BaseModel
+
+# Ensure the backend package is importable when running from project root
+_proj_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if _proj_root not in sys.path:
+    sys.path.insert(0, _proj_root)
+
+from backend.config import (
+    SYSTEM_PROMPT, TOP_K, LLM_MODEL_NAME, EMBEDDING_MODEL_NAME,
+    CHROMA_DB_DIR, TTS_MODEL_ID, ASR_MODEL_ID, AVATAR_VIDEO_MODEL_ID,
+    MODEL_ROOT, RUNTIME_ROOT, ENABLE_MUSETALK,
+    ENABLE_CRAG, ENABLE_SAFETY_GUARD, ENABLE_STREAMING, ENABLE_JSON_LOGGING,
+    ENABLE_HYBRID_SEARCH, CRAG_CORRECT_THRESHOLD, CRAG_AMBIGUOUS_THRESHOLD,
+    LLM_TIMEOUT_SECONDS, RERANKER_MIN_SCORE,
+)
+from backend.models.embedding_loader import load_embedder
+from backend.models.llm_loader import load_llm, generate_answer, generate_answer_stream, llm_circuit_open
+from backend.models.tts_loader import load_tts
+from backend.models.asr_loader import load_asr
+from backend.models.avatar_video_loader import load_avatar_video
+from backend.models.model_registry import get_model_status, print_model_registry, model_exists_locally
+from backend.rag.memory_store import build_vector_store, rebuild_vector_store, get_all_memories
+from backend.utils.compute_status import get_compute_status
+from backend.utils.logging_config import setup_logging
+from backend.services.companion_profile import get_companion_profile
+from backend.services.voice_router import generate_companion_voice
+from backend.services.avatar_director import create_avatar_action_plan
+from backend.services.reranker_service import load_reranker, rerank
+from backend.services.emotion_service import load_emotion_model, detect_emotion
+from backend.services.tts_service import load_tts2
+from backend.services.language_guard import clean_to_english, contains_non_english
+from backend.services.fallback_answer import build_fallback_answer
+from backend.services.safety_guard import sanitize_input
+from backend.services.chat_style_engine import create_lively_response_instruction
+from backend.rag.question_classifier import classify_question, needs_retrieval, needs_date_filter, needs_exact_source_card
+from backend.rag.answer_classifier import classify_answer, enforce_truth_contract
+from backend.rag.temporal_retriever import retrieve_top5_with_rerank
+from backend.rag.source_cards import build_source_cards
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+
+# ---------------------------------------------------------------------------
+# Lifespan — startup / shutdown
+# ---------------------------------------------------------------------------
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Structured JSON logging (if enabled)
+    if ENABLE_JSON_LOGGING:
+        setup_logging()
+
+    logger.info("=" * 46)
+    logger.info("Memory Twin AI — Starting up")
+    logger.info("=" * 46)
+
+    # Load core models ONCE at startup (never per request)
+    load_embedder()
+    load_llm()
+
+    # Load optional models (TTS, ASR, Avatar)
+    load_tts()
+    load_asr()
+    load_avatar_video()
+
+    # Load upgrade models (reranker, emotion, TTS2)
+    load_reranker()
+    load_emotion_model()
+    load_tts2()
+
+    # Build ChromaDB vector store
+    count = build_vector_store()
+    logger.info(f"Vector store ready — {count} memories indexed.")
+
+    # Print AMD compute status
+    get_compute_status()
+    print_model_registry()
+
+    yield  # App runs here
+
+    logger.info("Memory Twin AI — Shutting down.")
+
+
+app = FastAPI(
+    title="Memory Twin AI",
+    description="Consent-based digital memory simulation with RAG.",
+    version="1.0.0",
+    lifespan=lifespan,
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+# ---------------------------------------------------------------------------
+# Pydantic schemas
+# ---------------------------------------------------------------------------
+class ChatMessage(BaseModel):
+    role: str  # "user" or "assistant"
+    content: str
+
+
+class SaveMemoryRequest(BaseModel):
+    title: str = "User Memory"
+    category: str = "Personal"
+    text: str
+    emotion: str = "Neutral"
+    tags: list[str] = []
+
+
+class ChatRequest(BaseModel):
+    question: str
+    history: list[ChatMessage] = []
+    companion_type: str = "female"
+    temporary_context: dict = None  # {"enabled": bool, "file_name": str, "summary": str, "style_profile": dict, "chunks": list}
+
+
+class ChatResponse(BaseModel):
+    answer: str
+    retrieved_memories: list
+    compute_status: dict
+    rag_trace: dict
+    companion: dict = {}
+    avatar_action_plan: dict = {}
+    exact_sources: list = []
+    temp_context_active: bool = False
+    emotion: dict = {}
+    realtime_engine: dict = {}
+    # Memory Truth Contract fields
+    question_category: str = ""
+    truth_level: str = ""
+    source_cards: list = []
+    evidence_count: int = 0
+
+
+class VoiceSpeakRequest(BaseModel):
+    text: str
+    companion_type: str = "female"
+    mood: str = "calm"
+
+
+class VoiceSpeakResponse(BaseModel):
+    audio_url: str = ""
+    voice_profile: str = ""
+    companion_type: str = ""
+    mood: str = ""
+    fallback: bool = True
+    voice_settings: dict = {}
+
+
+class AvatarActionRequest(BaseModel):
+    answer: str = ""
+    retrieved_memories: list = []
+    companion_type: str = "female"
+
+
+class CommitImportRequest(BaseModel):
+    import_id: str = ""
+    memories: list = []
+    style_profile: dict = {}
+    apply_style_profile: bool = False
+
+
+# ---------------------------------------------------------------------------
+# Mount frontend static files (built from memory_ui)
+# ---------------------------------------------------------------------------
+FRONTEND_DIST = os.path.join(_proj_root, "frontend", "dist")
+if os.path.isdir(FRONTEND_DIST):
+    app.mount("/assets", StaticFiles(directory=os.path.join(FRONTEND_DIST, "assets")), name="assets")
+
+
+# ---------------------------------------------------------------------------
+# Thread pool for offloading blocking LLM calls (keeps event loop free)
+# ---------------------------------------------------------------------------
+import asyncio
+from concurrent.futures import ThreadPoolExecutor
+
+_LLM_EXECUTOR = ThreadPoolExecutor(max_workers=4, thread_name_prefix="llm")
+
+
+async def _generate_with_timeout(system_prompt: str, history: list, timeout_s: float = None) -> tuple:
+    """
+    Run blocking LLM generation in a thread pool with a hard timeout.
+    Returns (answer, error) where error is None on success.
+    """
+    timeout_s = timeout_s or LLM_TIMEOUT_SECONDS
+    loop = asyncio.get_event_loop()
+    try:
+        answer = await asyncio.wait_for(
+            loop.run_in_executor(_LLM_EXECUTOR, generate_answer, system_prompt, history),
+            timeout=timeout_s,
+        )
+        return answer, None
+    except asyncio.TimeoutError:
+        return None, "generation_timeout"
+    except Exception as e:
+        return None, str(e)[:120]
+
+
+# ---------------------------------------------------------------------------
+# Endpoints
+# ---------------------------------------------------------------------------
+@app.get("/health")
+def health():
+    """Liveness probe — always 200 if the process is alive."""
+    from backend.models.model_registry import get_model_status
+    models = get_model_status()
+    chat_ready = models.get("llm", {}).get("loadable", False)
+    return {
+        "status": "ok",
+        "backend": "online",
+        "chat_ready": chat_ready,
+        "models": {k: {"exists": v["exists_locally"], "loadable": v["loadable"]} for k, v in models.items()},
+    }
+
+
+@app.get("/ready")
+def ready():
+    """Readiness probe — 503 if core models are not loaded yet."""
+    from fastapi import HTTPException
+    from backend.models.llm_loader import get_llm
+    from backend.models.embedding_loader import get_embedder
+    try:
+        get_llm()
+        get_embedder()
+        return {"status": "ready", "models": "loaded", "circuit_open": llm_circuit_open()}
+    except RuntimeError:
+        raise HTTPException(status_code=503, detail="models not loaded")
+
+
+@app.get("/compute-status")
+def compute_status():
+    """Return the current compute/device/model status for AMD proof."""
+    return get_compute_status()
+
+
+@app.get("/memories")
+def list_memories():
+    """Return all memories for the Memory Vault frontend."""
+    return {"memories": get_all_memories()}
+
+
+@app.post("/chat", response_model=ChatResponse)
+async def chat(req: ChatRequest):
+    """
+    RAG chat pipeline (async, with timeout protection and safe fallbacks).
+
+    Upgrades:
+      - async def + thread-pool offload (doesn't block the event loop)
+      - Safety guardrails (prompt injection + PII redaction)
+      - Dynamic system prompt (chat_style_engine + emotion injection)
+      - Hybrid retrieval (dense + BM25 + RRF) with query condensing
+      - CRAG relevance gating (skip LLM when retrieval confidence is low)
+      - LLM generation timeout with graceful fallback
+      - Citation-enforced context ([Memory N] labels)
+    """
+    request_id = uuid.uuid4().hex[:8]
+    question = req.question.strip()
+    logger.info(f"[CHAT:{request_id}] received — len={len(question)}")
+
+    t_start = time.time()
+    retrieved = []
+    answer = ""
+    retrieval_time = 0
+    generation_time = 0
+    chat_error = None
+    exact_sources = []
+    safety_report = {}
+    crag_verdict = "n/a"
+    question_category = ""
+    truth_level = ""
+    source_cards = []
+
+    # Step 0: Safety guardrails (prompt injection + PII redaction)
+    if ENABLE_SAFETY_GUARD:
+        question, safety_report = sanitize_input(question)
+        if safety_report.get("injection"):
+            logger.warning(f"[CHAT:{request_id}] prompt_injection_blocked")
+
+    # Step 0b: Classify the question (Memory Truth Contract)
+    try:
+        classification = classify_question(question)
+        question_category = classification["category"]
+        logger.info(f"[CHAT:{request_id}] question_category={question_category} confidence={classification['confidence']:.2f}")
+    except Exception as e:
+        logger.warning(f"[CHAT:{request_id}] question classification failed: {e}")
+        question_category = "SUPPORTED_INFERENCE"
+
+    # Check for temporary context
+    temp_ctx = req.temporary_context
+    temp_enabled = temp_ctx and temp_ctx.get("enabled", False) and temp_ctx.get("chunks")
+
+    # Step 1: Retrieve memories — Memory Truth Contract pipeline (top 20 → top 5)
+    try:
+        t0 = time.time()
+        if temp_enabled:
+            # Simple keyword match on temporary chunks
+            q = question.lower()
+            temp_chunks = temp_ctx.get("chunks", [])
+            for chunk in temp_chunks:
+                text = chunk.get("text", "").lower()
+                if any(word in text for word in q.split() if len(word) > 3):
+                    retrieved.append({
+                        "memory_id": chunk.get("temp_id", "temp_000"),
+                        "title": f"Imported: {chunk.get('source_file', 'unknown')}",
+                        "category": "Imported Chat",
+                        "emotion": chunk.get("emotion", "neutral"),
+                        "snippet": chunk.get("text", "")[:200],
+                        "full_text": chunk.get("text", ""),
+                        "relevance_score": 0.5,
+                        "exact_source": chunk.get("exact_source", ""),
+                        "speaker": chunk.get("speaker", ""),
+                        "line_number": chunk.get("line_number", 0),
+                        "timestamp_iso": chunk.get("timestamp_iso", ""),
+                        "date": chunk.get("date", ""),
+                        "source_file": chunk.get("source_file", ""),
+                        "temporary": True,
+                    })
+            # Also get permanent memories using the Memory Truth Contract pipeline
+            history_for_retrieval = [msg.model_dump() for msg in req.history]
+            if needs_retrieval(question_category):
+                permanent = retrieve_top5_with_rerank(
+                    question=question,
+                    history=history_for_retrieval,
+                    use_hybrid=ENABLE_HYBRID_SEARCH,
+                )
+                retrieved = retrieved[:3] + permanent[:2]
+            else:
+                retrieved = retrieved[:3]
+        else:
+            history_for_retrieval = [msg.model_dump() for msg in req.history]
+            if needs_retrieval(question_category):
+                retrieved = retrieve_top5_with_rerank(
+                    question=question,
+                    history=history_for_retrieval,
+                    use_hybrid=ENABLE_HYBRID_SEARCH,
+                )
+            else:
+                # GENERAL_COMPANION / APP_IDENTITY — no retrieval needed
+                retrieved = []
+        retrieval_time = (time.time() - t0) * 1000
+        logger.info(f"[CHAT:{request_id}] retrieval_ms={retrieval_time:.1f} memories={len(retrieved)}")
+    except Exception as e:
+        logger.error(f"[CHAT:{request_id}] retrieval failed: {e}")
+        retrieved = []
+
+    # Step 1b: Build source cards from retrieved memories
+    try:
+        source_cards = build_source_cards(retrieved)
+        logger.info(f"[CHAT:{request_id}] source_cards={len(source_cards)}")
+    except Exception as e:
+        logger.warning(f"[CHAT:{request_id}] source card build failed: {e}")
+        source_cards = []
+
+    # Step 1c: Re-rank retrieved memories if reranker is available (legacy path)
+    reranker_used = False
+    rerank_time = 0
+    try:
+        if retrieved and not temp_enabled:
+            t_rerank = time.time()
+            retrieved = rerank(question, retrieved, min_score=RERANKER_MIN_SCORE)
+            rerank_time = (time.time() - t_rerank) * 1000
+            reranker_used = True
+    except Exception as e:
+        logger.warning(f"[CHAT:{request_id}] rerank skipped: {e}")
+
+    # Step 1c: Detect emotion from question + retrieved memories
+    emotion_result = detect_emotion(question, retrieved)
+
+    # Step 1d: CRAG relevance gating — skip LLM if retrieval confidence is low
+    if ENABLE_CRAG and retrieved:
+        top_score = retrieved[0].get("relevance_score", 0) or 0
+        if top_score >= CRAG_CORRECT_THRESHOLD:
+            crag_verdict = "correct"
+        elif top_score >= CRAG_AMBIGUOUS_THRESHOLD:
+            crag_verdict = "ambiguous"
+        else:
+            crag_verdict = "incorrect"
+
+        if crag_verdict == "incorrect":
+            logger.info(f"[CHAT:{request_id}] CRAG=incorrect (top_score={top_score:.2f}) — using fallback")
+            fallback = build_fallback_answer(
+                question=question,
+                companion_type=req.companion_type,
+                retrieved_memories=[],
+            )
+            answer = fallback["answer"]
+            chat_error = "crag_low_confidence"
+
+    # Extract exact sources from temporary memories
+    exact_sources = [
+        {"memory_id": m["memory_id"], "exact_source": m.get("exact_source", ""), "speaker": m.get("speaker", "")}
+        for m in retrieved if m.get("temporary") and m.get("exact_source")
+    ]
+
+    # Build context with style profile if available
+    style_instruction = ""
+    if temp_enabled and temp_ctx.get("style_profile"):
+        sp = temp_ctx["style_profile"]
+        tone = sp.get("tone", "warm")
+        style_instruction = f"\nAdapt your response to a {tone} tone. Keep it natural."
+
+    context_parts = []
+    for i, mem in enumerate(retrieved, 1):
+        prefix = "[Imported Chat] " if mem.get("temporary") else ""
+        speaker = f" ({mem.get('speaker', '')})" if mem.get("speaker") else ""
+        context_parts.append(
+            f"{prefix}[Memory {i}: {mem['title']}{speaker}]\n{mem['full_text']}"
+        )
+    context = "\n\n".join(context_parts)
+
+    user_msg = (
+        f"I have these memories on my mind right now:\n{context}\n\n"
+        f"The person I'm talking to just said: \"{question}\"\n\n"
+        f"Respond naturally as yourself — warm, human, and conversational.{style_instruction}"
+    )
+
+    history = [msg.model_dump() for msg in req.history]
+    history.append({"role": "user", "content": user_msg})
+
+    # Step 2: Build DYNAMIC system prompt (chat_style_engine + emotion injection)
+    companion_type = getattr(req, "companion_type", "female")
+    dynamic_prompt = SYSTEM_PROMPT + "\n\n" + create_lively_response_instruction(
+        companion_type=companion_type,
+        mood=emotion_result.get("avatar_mood", "calm"),
+        user_message=question,
+        memory_context=context,
+        conversation_turns=len(req.history),
+        emotion=emotion_result.get("emotion", ""),
+        response_style=emotion_result.get("response_style", ""),
+    )
+
+    # Step 3: Generate answer (async with timeout) — skip if CRAG already answered
+    if not answer:
+        try:
+            t1 = time.time()
+            answer, gen_err = await _generate_with_timeout(dynamic_prompt, history)
+            generation_time = (time.time() - t1) * 1000
+            logger.info(f"[CHAT:{request_id}] generation_ms={generation_time:.1f}")
+            if gen_err:
+                chat_error = gen_err
+                logger.error(f"[CHAT:{request_id}] generation failed: {gen_err}")
+                fallback = build_fallback_answer(
+                    question=question,
+                    companion_type=companion_type,
+                    retrieved_memories=retrieved,
+                    error=gen_err[:80],
+                )
+                answer = fallback["answer"]
+            else:
+                # Apply language guard (English-only enforcement)
+                if contains_non_english(answer):
+                    logger.warning(f"[CHAT:{request_id}] non_english_detected in LLM output")
+                    answer = clean_to_english(answer)
+        except Exception as e:
+            logger.error(f"[CHAT:{request_id}] generation exception: {e}")
+            fallback = build_fallback_answer(
+                question=question,
+                companion_type=companion_type,
+                retrieved_memories=retrieved,
+                error=str(e)[:80],
+            )
+            answer = fallback["answer"]
+            chat_error = str(e)[:120]
+
+    # Step 3b: Apply Memory Truth Contract — classify answer truth level
+    try:
+        truth_result = classify_answer(answer, retrieved)
+        truth_level = truth_result["truth_level"]
+        logger.info(f"[CHAT:{request_id}] truth_level={truth_level} reason={truth_result['reason']}")
+        # Enforce truth contract: prepend disclaimer if UNKNOWN
+        answer = enforce_truth_contract(answer, truth_level)
+    except Exception as e:
+        logger.warning(f"[CHAT:{request_id}] truth contract enforcement failed: {e}")
+        truth_level = "SUPPORTED_INFERENCE"
+
+    # Compute total time
+    total_ms = (time.time() - t_start) * 1000
+    logger.info(f"[CHAT:{request_id}] total_ms={total_ms:.1f}")
+
+    # Step 7: Build RAG trace with reranker + CRAG + Memory Truth Contract info
+    rag_trace = {
+        "question": question,
+        "embedding_model": EMBEDDING_MODEL_NAME,
+        "vector_db": "ChromaDB (cosine similarity, HNSW)",
+        "retrieval_method": "hybrid (dense+BM25+RRF)" if ENABLE_HYBRID_SEARCH else "dense-only",
+        "top_k": TOP_K,
+        "llm_model": LLM_MODEL_NAME,
+        "reranker_model": "Qwen3-Reranker-0.6B" if reranker_used else "N/A",
+        "reranker_used": reranker_used,
+        "crag_verdict": crag_verdict,
+        "safety_guard": safety_report,
+        "chromadb_path": CHROMA_DB_DIR,
+        "retrieval_time_ms": round(retrieval_time, 1),
+        "rerank_time_ms": round(rerank_time, 1),
+        "generation_time_ms": round(generation_time, 1),
+        "total_time_ms": round(total_ms, 1),
+        "error": chat_error is not None,
+        # Memory Truth Contract fields
+        "question_category": question_category,
+        "truth_level": truth_level,
+        "evidence_count": len(retrieved),
+        "source_card_count": len(source_cards),
+        "retrieved_memories": [
+            {
+                "title": m["title"],
+                "category": m["category"],
+                "relevance_score": m.get("relevance_score", 0),
+            }
+            for m in retrieved
+        ],
+    }
+
+    # Step 8: Companion info + avatar action plan
+    companion_profile = get_companion_profile(companion_type)
+
+    try:
+        avatar_plan = create_avatar_action_plan(answer, retrieved, companion_type)
+    except Exception as e:
+        logger.error(f"[CHAT:{request_id}] avatar_plan failed: {e}")
+        avatar_plan = {"mood": "calm", "expression": "gentle_smile", "gesture": "hands_relaxed",
+                       "movement": "still", "mouth_style": "normal", "camera": "medium",
+                       "short_spoken_summary": "", "animation_cues": []}
+
+    # Step 9: Build realtime engine info
+    realtime_engine = {
+        "asr": "sensevoice" if model_exists_locally("asr") else "browser_speech_recognition",
+        "emotion": emotion_result.get("source", "text_heuristic"),
+        "emotion_detected": emotion_result.get("emotion", "calm"),
+        "tts": "cosyvoice2" if model_exists_locally("tts2") else "browser_tts",
+        "reranker": "qwen3_reranker" if reranker_used else "disabled",
+        "embedding": "qwen3_embedding",
+        "llm": "qwen2.5_7b",
+        "retrieval": "hybrid" if ENABLE_HYBRID_SEARCH else "dense",
+        "safety_guard": "active" if ENABLE_SAFETY_GUARD else "disabled",
+        "fallbacks": [],
+    }
+    if realtime_engine["asr"] == "browser_speech_recognition":
+        realtime_engine["fallbacks"].append("asr")
+    if realtime_engine["tts"] == "browser_tts":
+        realtime_engine["fallbacks"].append("tts")
+    if realtime_engine["reranker"] == "disabled":
+        realtime_engine["fallbacks"].append("reranker")
+    if emotion_result.get("source") == "text_heuristic":
+        realtime_engine["fallbacks"].append("emotion")
+
+    # Step 6: Get compute status
+    try:
+        status = get_compute_status()
+    except Exception as e:
+        logger.error(f"[CHAT:{request_id}] compute_status failed: {e}")
+        status = {"error": "compute status unavailable"}
+
+    logger.info(f"[CHAT:{request_id}] complete")
+
+    return ChatResponse(
+        answer=answer,
+        retrieved_memories=retrieved,
+        compute_status=status,
+        rag_trace=rag_trace,
+        companion={
+            "type": companion_type,
+            "voice_profile": companion_profile["voice_profile"],
+            "mood": avatar_plan["mood"],
+        },
+        avatar_action_plan=avatar_plan,
+        exact_sources=exact_sources,
+        temp_context_active=temp_enabled or False,
+        emotion=emotion_result,
+        realtime_engine=realtime_engine,
+        # Memory Truth Contract fields
+        question_category=question_category,
+        truth_level=truth_level,
+        source_cards=source_cards,
+        evidence_count=len(retrieved),
+    )
+
+
+# ---------------------------------------------------------------------------
+# Streaming chat (SSE — Server-Sent Events)
+# ---------------------------------------------------------------------------
+from fastapi.responses import StreamingResponse
+
+@app.post("/chat/stream")
+async def chat_stream(req: ChatRequest):
+    """
+    Streaming RAG chat via Server-Sent Events.
+
+    Event flow:
+      1. data: {"type":"rag_trace", ...}   — retrieved memories + metadata (instant)
+      2. data: {"type":"token", "delta":..} — streamed LLM tokens (as generated)
+      3. data: {"type":"done", ...}         — final metadata (emotion, companion, etc.)
+
+    This lets the frontend render retrieved memories instantly while the
+    LLM streams, matching the LlamaIndex streaming chat pattern.
+    """
+    if not ENABLE_STREAMING:
+        return {"error": "Streaming disabled (ENABLE_STREAMING=false)"}
+
+    request_id = uuid.uuid4().hex[:8]
+    question = req.question.strip()
+
+    # Safety guardrails
+    if ENABLE_SAFETY_GUARD:
+        question, safety_report = sanitize_input(question)
+    else:
+        safety_report = {}
+
+    temp_ctx = req.temporary_context
+    temp_enabled = temp_ctx and temp_ctx.get("enabled", False) and temp_ctx.get("chunks")
+
+    # Retrieve + rerank + emotion (same as /chat)
+    history_for_retrieval = [msg.model_dump() for msg in req.history]
+    retrieved = []
+    reranker_used = False
+
+    if temp_enabled:
+        # Simple keyword match on temporary chunks
+        q = question.lower()
+        temp_chunks = temp_ctx.get("chunks", [])
+        for chunk in temp_chunks:
+            text = chunk.get("text", "").lower()
+            if any(word in text for word in q.split() if len(word) > 3):
+                retrieved.append({
+                    "memory_id": chunk.get("temp_id", "temp_000"),
+                    "title": f"Imported: {chunk.get('source_file', 'unknown')}",
+                    "category": "Imported Chat",
+                    "emotion": chunk.get("emotion", "neutral"),
+                    "snippet": chunk.get("text", "")[:200],
+                    "full_text": chunk.get("text", ""),
+                    "relevance_score": 0.5,
+                    "exact_source": chunk.get("exact_source", ""),
+                    "speaker": chunk.get("speaker", ""),
+                    "line_number": chunk.get("line_number", 0),
+                    "timestamp_iso": chunk.get("timestamp_iso", ""),
+                    "date": chunk.get("date", ""),
+                    "source_file": chunk.get("source_file", ""),
+                    "temporary": True,
+                })
+        # Also get permanent memories
+        try:
+            permanent = retrieve_top5_with_rerank(
+                question=question,
+                history=history_for_retrieval,
+                use_hybrid=ENABLE_HYBRID_SEARCH,
+            )
+            retrieved = retrieved[:3] + permanent[:2]
+        except Exception:
+            retrieved = retrieved[:3]
+    else:
+        try:
+            retrieved = retrieve_top5_with_rerank(
+                question=question,
+                history=history_for_retrieval,
+                use_hybrid=ENABLE_HYBRID_SEARCH,
+            )
+        except Exception:
+            retrieved = []
+
+    try:
+        retrieved = rerank(question, retrieved, min_score=RERANKER_MIN_SCORE)
+        reranker_used = True
+    except Exception:
+        reranker_used = False
+
+    emotion_result = detect_emotion(question, retrieved)
+
+    # Build context
+    style_instruction = ""
+    if temp_enabled and temp_ctx.get("style_profile"):
+        sp = temp_ctx["style_profile"]
+        tone = sp.get("tone", "warm")
+        style_instruction = f"\nAdapt your response to a {tone} tone. Keep it natural."
+
+    context_parts = []
+    for i, mem in enumerate(retrieved, 1):
+        prefix = "[Imported Chat] " if mem.get("temporary") else ""
+        speaker = f" ({mem.get('speaker', '')})" if mem.get("speaker") else ""
+        context_parts.append(f"{prefix}[Memory {i}: {mem['title']}{speaker}]\n{mem['full_text']}")
+    context = "\n\n".join(context_parts)
+
+    user_msg = (
+        f"I have these memories on my mind right now:\n{context}\n\n"
+        f"The person I'm talking to just said: \"{question}\"\n\n"
+        f"Respond naturally as yourself — warm, human, and conversational.{style_instruction}"
+    )
+    history = [msg.model_dump() for msg in req.history]
+    history.append({"role": "user", "content": user_msg})
+
+    companion_type = getattr(req, "companion_type", "female")
+    dynamic_prompt = SYSTEM_PROMPT + "\n\n" + create_lively_response_instruction(
+        companion_type=companion_type,
+        mood=emotion_result.get("avatar_mood", "calm"),
+        user_message=question,
+        memory_context=context,
+        conversation_turns=len(req.history),
+        emotion=emotion_result.get("emotion", ""),
+        response_style=emotion_result.get("response_style", ""),
+    )
+
+    async def event_generator():
+        # 1. Send RAG trace first (instant — frontend can render memories)
+        trace_payload = {
+            "type": "rag_trace",
+            "retrieved_memories": [
+                {"title": m["title"], "category": m["category"],
+                 "relevance_score": m.get("relevance_score", 0)}
+                for m in retrieved
+            ],
+            "reranker_used": reranker_used,
+            "emotion": emotion_result,
+            "safety_guard": safety_report,
+        }
+        yield f"data: {json.dumps(trace_payload)}\n\n"
+
+        # 2. Stream LLM tokens via async generator
+        full_response = ""
+        try:
+            loop = asyncio.get_event_loop()
+
+            def _stream_in_thread():
+                """Run blocking stream generator, push chunks to queue."""
+                import queue
+                q = queue.Queue()
+                done_sentinel = object()
+
+                def _producer():
+                    try:
+                        for chunk in generate_answer_stream(dynamic_prompt, history):
+                            q.put(chunk)
+                    except Exception as e:
+                        q.put(e)
+                    finally:
+                        q.put(done_sentinel)
+
+                thread = threading.Thread(target=_producer, daemon=True)
+                thread.start()
+                return q, done_sentinel, thread
+
+            q, done_sentinel, thread = await loop.run_in_executor(None, _stream_in_thread)
+
+            while True:
+                try:
+                    item = await loop.run_in_executor(None, q.get, True, 0.5)
+                except Exception:
+                    # queue.Empty timeout — check if thread is done
+                    if not thread.is_alive():
+                        break
+                    continue
+                if item is done_sentinel:
+                    break
+                if isinstance(item, Exception):
+                    yield f"data: {json.dumps({'type': 'error', 'message': str(item)[:120]})}\n\n"
+                    break
+                full_response += item
+                yield f"data: {json.dumps({'type': 'token', 'delta': item})}\n\n"
+
+            # Apply language guard
+            if contains_non_english(full_response):
+                full_response = clean_to_english(full_response)
+
+        except Exception as e:
+            yield f"data: {json.dumps({'type': 'error', 'message': str(e)[:120]})}\n\n"
+
+        # 3. Send done event with final metadata
+        try:
+            avatar_plan = create_avatar_action_plan(full_response, retrieved, companion_type)
+        except Exception:
+            avatar_plan = {"mood": "calm", "expression": "gentle_smile"}
+
+        # Apply truth contract
+        try:
+            truth_result = classify_answer(full_response, retrieved)
+            truth_level = truth_result["truth_level"]
+            full_response = enforce_truth_contract(full_response, truth_level)
+        except Exception:
+            truth_level = "SUPPORTED_INFERENCE"
+
+        done_payload = {
+            "type": "done",
+            "answer": full_response,
+            "companion": {
+                "type": companion_type,
+                "mood": avatar_plan["mood"],
+            },
+            "avatar_action_plan": avatar_plan,
+            "truth_level": truth_level,
+            "retrieved_memories": [
+                {"title": m["title"], "category": m["category"],
+                 "relevance_score": m.get("relevance_score", 0)}
+                for m in retrieved
+            ],
+        }
+        yield f"data: {json.dumps(done_payload)}\n\n"
+        yield "data: [DONE]\n\n"
+
+    return StreamingResponse(event_generator(), media_type="text/event-stream")
+
+
+# ---------------------------------------------------------------------------
+# Serve generated audio files
+# ---------------------------------------------------------------------------
+@app.get("/audio/{filename}")
+def serve_audio(filename: str):
+    """Serve a generated TTS audio file from the runtime directory."""
+    from fastapi.responses import FileResponse
+    from backend.config import GENERATED_AUDIO_DIR
+    # Prevent path traversal
+    safe_name = os.path.basename(filename)
+    audio_path = os.path.join(GENERATED_AUDIO_DIR, safe_name)
+    if os.path.isfile(audio_path):
+        return FileResponse(audio_path, media_type="audio/wav")
+    from fastapi import HTTPException
+    raise HTTPException(status_code=404, detail="audio file not found")
+
+
+@app.post("/memories")
+def save_memory(req: SaveMemoryRequest):
+    """Save a new memory from user chat and rebuild the vector store index."""
+    import json, uuid
+    from backend.config import MEMORIES_PATH
+    data_path = MEMORIES_PATH
+    memories = []
+    if os.path.exists(data_path):
+        with open(data_path) as f:
+            memories = json.load(f)
+    new_mem = {
+        "memory_id": "mem_" + uuid.uuid4().hex[:8],
+        "title": req.title,
+        "category": req.category,
+        "text": req.text,
+        "emotion": req.emotion,
+        "tags": req.tags or ["user-saved"],
+    }
+    memories.append(new_mem)
+    os.makedirs(os.path.dirname(data_path), exist_ok=True)
+    with open(data_path, "w") as f:
+        json.dump(memories, f, indent=2)
+    # Rebuild the vector store so the new memory is immediately retrievable
+    try:
+        from backend.rag.memory_store import rebuild_vector_store
+        rebuild_vector_store()
+    except Exception as e:
+        logger.warning(f"Vector store rebuild after save failed: {e}")
+    return {"status": "ok", "memory": new_mem, "indexed": True}
+
+
+# ---------------------------------------------------------------------------
+# Model status
+# ---------------------------------------------------------------------------
+@app.get("/models/status")
+def models_status():
+    """Return which models exist locally and their paths."""
+    return {
+        "model_root": MODEL_ROOT,
+        "runtime_root": RUNTIME_ROOT,
+        "musetalk_enabled": ENABLE_MUSETALK,
+        "models": get_model_status(),
+    }
+
+
+# ---------------------------------------------------------------------------
+# Voice synthesis
+# ---------------------------------------------------------------------------
+@app.post("/voice/speak", response_model=VoiceSpeakResponse)
+def voice_speak(req: VoiceSpeakRequest):
+    """Generate companion voice audio."""
+    result = generate_companion_voice(req.text, req.companion_type, req.mood)
+    if result.get("fallback") == "browser_tts":
+        return VoiceSpeakResponse(
+            fallback=True,
+            voice_settings=result.get("voice_settings", {}),
+            companion_type=req.companion_type,
+            mood=req.mood,
+        )
+    return VoiceSpeakResponse(
+        audio_url=result.get("audio_url", ""),
+        voice_profile=result.get("voice_profile", ""),
+        companion_type=req.companion_type,
+        mood=req.mood,
+        fallback=False,
+    )
+
+
+# ---------------------------------------------------------------------------
+# Avatar action plan
+# ---------------------------------------------------------------------------
+@app.post("/avatar/action-plan")
+def avatar_action_plan(req: AvatarActionRequest):
+    """Convert chat answer into avatar animation instructions."""
+    plan = create_avatar_action_plan(
+        req.answer, req.retrieved_memories, req.companion_type
+    )
+    return plan
+
+
+# ---------------------------------------------------------------------------
+# Avatar clip generation (optional, only if ENABLE_MUSETALK=true)
+# ---------------------------------------------------------------------------
+@app.post("/avatar/generate-clip")
+def avatar_generate_clip(req: AvatarActionRequest):
+    """Generate enhanced avatar video clip (MuseTalk). Returns fallback if unavailable."""
+    from backend.models.avatar_video_loader import generate_avatar_clip
+    # For now, always return fallback — MuseTalk requires audio input
+    return {"status": "fallback_live_animation", "reason": "Use lightweight CSS avatar for live reaction"}
+
+
+@app.post("/warmup")
+def warmup():
+    """Warm up the models with a small test. Run once after startup."""
+    try:
+        # Test embedding model quickly
+        from backend.models.embedding_loader import embed_query
+        vec = embed_query("Warmup test")
+        embed_ok = len(vec) > 0
+    except Exception as e:
+        embed_ok = False
+
+    try:
+        # Test LLM with a micro prompt
+        from backend.models.llm_loader import generate_answer
+        test = generate_answer("Say OK.", [{"role": "user", "content": "Type OK"}])
+        llm_ok = len(test) > 0
+    except Exception as e:
+        llm_ok = False
+
+    return {
+        "status": "ok",
+        "embedding_ready": embed_ok,
+        "llm_ready": llm_ok,
+        "chat_ready": embed_ok and llm_ok,
+    }
+
+
+# ---------------------------------------------------------------------------
+# Memory Import endpoints (Phase 1: per-message with speaker/date/source)
+# ---------------------------------------------------------------------------
+@app.post("/memory/import/preview")
+async def memory_import_preview(file: UploadFile = File(...)):
+    """Upload a TXT or JSON file and return per-message preview with session_id."""
+    import tempfile
+    from backend.services.memory_importer import parse_file_to_messages, get_session_messages
+
+    if not file.filename:
+        return {"error": "No file uploaded."}
+
+    suffix = os.path.splitext(file.filename)[1] or ".txt"
+    content = await file.read()
+
+    with tempfile.NamedTemporaryFile(suffix=suffix, delete=False) as tmp:
+        tmp.write(content)
+        tmppath = tmp.name
+
+    try:
+        result = parse_file_to_messages(tmppath, file.filename)
+        os.unlink(tmppath)
+        return result
+    except Exception as e:
+        os.unlink(tmppath)
+        return {"error": f"Failed to parse file: {str(e)}"}
+
+
+@app.get("/memory/import/{session_id}/messages")
+def memory_import_messages(session_id: str):
+    """Return all messages for a given import session."""
+    from backend.services.memory_importer import get_session_messages
+    messages = get_session_messages(session_id)
+    return {"session_id": session_id, "message_count": len(messages), "messages": messages}
+
+
+@app.get("/memory/imports")
+def memory_imports():
+    """List all import sessions with message counts."""
+    from backend.services.memory_importer import get_all_sessions
+    return {"sessions": get_all_sessions()}
+
+
+@app.get("/memory/style-profile")
+def memory_style_profile():
+    """Return the active style profile."""
+    from backend.services.style_profile_builder import get_active_style_profile
+    profile = get_active_style_profile()
+    if profile:
+        return {"active": True, "profile": profile}
+    return {"active": False, "profile": None}
+
+
+class SelectStyleProfileRequest(BaseModel):
+    profile_id: str = ""
+
+
+@app.post("/memory/style-profile/select")
+def memory_style_profile_select(req: SelectStyleProfileRequest):
+    """Select a style profile by ID."""
+    from backend.services.style_profile_builder import set_active_style_profile, load_style_profile
+    profile_id = req.profile_id
+    if not profile_id:
+        return {"error": "profile_id is required"}
+    profile = load_style_profile(profile_id)
+    if not profile:
+        return {"error": "Profile not found"}
+    set_active_style_profile(profile_id)
+    return {"selected": True, "profile": profile}
+
+
+@app.post("/reload-memory")
+def reload_memory():
+    """Drop and rebuild the ChromaDB collection from memories.json."""
+    count = rebuild_vector_store()
+    return {"status": "ok", "memories_indexed": count}
+
+
+# ---------------------------------------------------------------------------
+# ASR Transcription
+# ---------------------------------------------------------------------------
+@app.post("/asr/transcribe")
+async def asr_transcribe(file: UploadFile = File(...)):
+    """Transcribe an uploaded audio file using SenseVoiceSmall."""
+    import tempfile
+    from backend.models.asr_loader import transcribe_audio
+
+    if not file.filename:
+        return {"ok": False, "transcript": "", "error": "No file uploaded"}
+
+    suffix = os.path.splitext(file.filename)[1] or ".wav"
+    content = await file.read()
+
+    if len(content) < 100:
+        return {"ok": False, "transcript": "", "error": "Audio too short"}
+
+    # Save to temp
+    tmpdir = os.path.join(RUNTIME_ROOT, "temp_audio")
+    os.makedirs(tmpdir, exist_ok=True)
+    with tempfile.NamedTemporaryFile(suffix=suffix, dir=tmpdir, delete=False) as tmp:
+        tmp.write(content)
+        tmppath = tmp.name
+
+    try:
+        result = transcribe_audio(tmppath)
+        if "text" in result:
+            transcript = result["text"].strip()
+            os.unlink(tmppath)
+            return {"ok": True, "transcript": transcript, "asr_model": "iic/SenseVoiceSmall", "fallback_used": False}
+        else:
+            os.unlink(tmppath)
+            return {"ok": False, "transcript": "", "error": result.get("reason", "ASR failed"), "fallback": "typed_input"}
+    except Exception as e:
+        try: os.unlink(tmppath)
+        except: pass
+        return {"ok": False, "transcript": "", "error": str(e), "fallback": "typed_input"}
+
+
+# ---------------------------------------------------------------------------
+# SPA fallback — serve index.html for any unmatched GET
+# ---------------------------------------------------------------------------
+from fastapi.responses import FileResponse
+
+@app.get("/{full_path:path}")
+def spa_fallback(full_path: str):
+    idx = os.path.join(FRONTEND_DIST, "index.html")
+    if os.path.isfile(idx):
+        return FileResponse(idx)
+    return {"status": "ok", "app": "Memory Twin AI", "track": "Track 3 — Unicorn / Open Innovation"}
