@@ -29,7 +29,7 @@ export const VAD_STATE = Object.freeze({
 // Valid state transitions
 const VALID_TRANSITIONS = {
   [VAD_STATE.IDLE]: [VAD_STATE.INITIALIZING],
-  [VAD_STATE.INITIALIZING]: [VAD_STATE.LISTENING, VAD_STATE.ERROR, VAD_STATE.IDLE],
+  [VAD_STATE.INITIALIZING]: [VAD_STATE.LISTENING, VAD_STATE.STOPPING, VAD_STATE.ERROR, VAD_STATE.IDLE],
   [VAD_STATE.LISTENING]: [VAD_STATE.SPEECH_DETECTED, VAD_STATE.PAUSED, VAD_STATE.STOPPING, VAD_STATE.ERROR],
   [VAD_STATE.SPEECH_DETECTED]: [VAD_STATE.LISTENING, VAD_STATE.STOPPING, VAD_STATE.ERROR],
   [VAD_STATE.PAUSED]: [VAD_STATE.LISTENING, VAD_STATE.STOPPING, VAD_STATE.ERROR],
@@ -161,95 +161,9 @@ export async function startVadRecording({ onSpeechStart, onSpeechEnd, onError } 
   transitionTo(VAD_STATE.INITIALIZING)
 
   try {
-    // Use local Vite-served assets to avoid CDN/CORS issues with dev tunnels.
-    // When accessed via a dev tunnel that only proxies the backend port
-    // (e.g. https://xxx-8000.devtunnels.ms), the frontend port (3090) is
-    // unreachable. The backend also serves /vad-assets, so we try the
-    // backend origin as a fallback.
-    const frontendOrigin = window.location.origin
-    const backendOrigin = (() => {
-      try {
-        // If we're on the frontend port (3090), backend is on 8000
-        if (window.location.port === '3090') {
-          return `${window.location.protocol}//${window.location.hostname}:8000`
-        }
-        // If we're on the backend port (8000) or via a tunnel, use current origin
-        return window.location.origin
-      } catch { return window.location.origin }
-    })()
-
-    const baseAssetPath = `${backendOrigin}/vad-assets/`
-    const onnxWASMBasePath = `${backendOrigin}/vad-assets/onnx/`
-
-    // Quick reachability check — if backend assets aren't reachable, fall back
-    // to frontend origin (works when both ports are accessible)
-    try {
-      const probe = await fetch(`${backendOrigin}/vad-assets/onnx/ort-wasm-simd-threaded.mjs`, {
-        method: 'HEAD',
-        cache: 'no-store',
-      })
-      if (!probe.ok) throw new Error('backend assets unreachable')
-    } catch {
-      // Fallback to frontend origin
-      const fbBase = `${frontendOrigin}/vad-assets/`
-      const fbOnnx = `${frontendOrigin}/vad-assets/onnx/`
-      vadInstance = await MicVAD.new({
-        baseAssetPath: fbBase,
-        onnxWASMBasePath: fbOnnx,
-        additionalAudioConstraints: {
-          echoCancellation: true,
-          noiseSuppression: true,
-          autoGainControl: true,
-          channelCount: 1,
-          sampleRate: 16000,
-        },
-        positiveSpeechThreshold: 0.7,
-        negativeSpeechThreshold: 0.35,
-        minSpeechFrames: 6,
-        preSpeechPadFrames: 10,
-        onSpeechStart: () => {
-          if (!currentSession || currentSession.token !== sessionToken) return
-          if (!transitionTo(VAD_STATE.SPEECH_DETECTED)) return
-          currentSession.lastSpeechStart = Date.now()
-          if (currentSession.callbacks.onSpeechStart) {
-            try { currentSession.callbacks.onSpeechStart() } catch {}
-          }
-        },
-        onSpeechRealStart: () => {},
-        onSpeechEnd: (audio) => {
-          if (!currentSession || currentSession.token !== sessionToken) return
-          if (!isAudioValid(audio)) {
-            transitionTo(VAD_STATE.LISTENING)
-            return
-          }
-          transitionTo(VAD_STATE.LISTENING)
-          if (currentSession.callbacks.onSpeechEnd) {
-            try { currentSession.callbacks.onSpeechEnd(float32ToWav(audio)) } catch {}
-          }
-        },
-        onVADMisfire: () => {
-          if (currentSession && currentSession.token === sessionToken) {
-            transitionTo(VAD_STATE.LISTENING)
-          }
-        },
-        onFrameProcessed: () => {},
-        onError: (e) => {
-          if (!currentSession || currentSession.token !== sessionToken) return
-          transitionTo(VAD_STATE.ERROR)
-          if (currentSession.callbacks.onError) {
-            try { currentSession.callbacks.onError(e) } catch {}
-          }
-        },
-        startOnLoad: true,
-      })
-      if (!currentSession || currentSession.token !== sessionToken) {
-        try { vadInstance.destroy() } catch {}
-        vadInstance = null
-        return { ok: false, error: 'session_cancelled' }
-      }
-      transitionTo(VAD_STATE.LISTENING)
-      return { ok: true, sessionToken }
-    }
+    const origin = window.location.origin
+    const baseAssetPath = `${origin}/vad-assets/`
+    const onnxWASMBasePath = `${origin}/vad-assets/onnx/`
 
     vadInstance = await MicVAD.new({
       baseAssetPath,

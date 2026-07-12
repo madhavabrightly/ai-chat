@@ -43,6 +43,7 @@ from backend.services.language_guard import contains_non_english, clean_to_engli
 from backend.services.fallback_answer import build_fallback_answer
 from backend.services.fast_query_router import route_query, CASUAL, APP_IDENTITY, NORMAL_MEMORY, EXACT_MEMORY
 from backend.services.streaming_llm_service import stream_chat
+from backend.services.session_memory import append_session_message, retrieve_session_memories
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -183,6 +184,11 @@ VAD_ASSETS_DIR = os.path.join(_proj_root, "frontend", "public", "vad-assets")
 if os.path.isdir(VAD_ASSETS_DIR):
     app.mount("/vad-assets", StaticFiles(directory=VAD_ASSETS_DIR), name="vad-assets")
     logger.info(f"VAD assets served from {VAD_ASSETS_DIR}")
+
+PUBLIC_MODELS_DIR = os.path.join(_proj_root, "frontend", "public", "models")
+if os.path.isdir(PUBLIC_MODELS_DIR):
+    app.mount("/models", StaticFiles(directory=PUBLIC_MODELS_DIR), name="models")
+    logger.info(f"Public models served from {PUBLIC_MODELS_DIR}")
 
 # ── Schemas ────────────────────────────────────────────────────────
 class ChatMessage(BaseModel):
@@ -447,6 +453,9 @@ async def chat(req: ChatRequest):
             route = NORMAL_MEMORY
             route_meta = {"skip_retrieval": False, "use_reranker": False, "n_results": 5}
 
+        session_retrieved = retrieve_session_memories(question, n_results=4)
+        append_session_message("user", question, req.companion_type, request_id)
+
         # Step 1: Retrieval (skip for casual/app-identity)
         if not route_meta.get("skip_retrieval", False):
             try:
@@ -458,6 +467,9 @@ async def chat(req: ChatRequest):
             except Exception as e:
                 logger.error(f"[CHAT:{request_id}] retrieval failed: {e}")
                 retrieved = []
+
+        if session_retrieved:
+            retrieved = session_retrieved + retrieved
 
         # Step 1.5: Check for trigger rule match
         trigger_match = None
@@ -537,6 +549,7 @@ async def chat(req: ChatRequest):
 
         profile = get_companion_profile(req.companion_type)
         avatar_plan = create_avatar_action_plan(answer, retrieved, req.companion_type)
+        append_session_message("assistant", answer, req.companion_type, request_id)
 
         return ChatResponse(
             answer=answer,
@@ -579,6 +592,9 @@ async def chat_stream(req: ChatRequest):
             route, route_meta = route_query(question, history_dicts)
             yield f"data: {json.dumps({'type': 'chat.accepted', 'request_id': request_id, 'route': route})}\n\n"
 
+            session_retrieved = retrieve_session_memories(question, n_results=4)
+            append_session_message("user", question, req.companion_type, request_id)
+
             # 2. Retrieval (skip for casual)
             retrieved = []
             if not route_meta.get("skip_retrieval", False):
@@ -588,6 +604,9 @@ async def chat_stream(req: ChatRequest):
                 retrieved = retrieve_memories(question, n_results=n_results)
                 retrieval_ms = (time.time() - t0) * 1000
                 yield f"data: {json.dumps({'type': 'retrieval.completed', 'count': len(retrieved), 'ms': round(retrieval_ms, 1)})}\n\n"
+
+            if session_retrieved:
+                retrieved = session_retrieved + retrieved
 
             # 2.5: Check for trigger rule match (e.g., "if I say 22, tell me I'm beautiful")
             trigger_match = None
@@ -641,6 +660,7 @@ async def chat_stream(req: ChatRequest):
 
             # 5. Avatar action plan and done
             avatar_plan = create_avatar_action_plan(full_answer, retrieved[:3], req.companion_type)
+            append_session_message("assistant", full_answer, req.companion_type, request_id)
             yield f"data: {json.dumps({'type': 'avatar.action', 'plan': avatar_plan})}\n\n"
             total_ms = (time.time() - t_start) * 1000
             yield f"data: {json.dumps({'type': 'answer.completed', 'answer': full_answer, 'llm_ms': round(llm_ms, 1), 'total_ms': round(total_ms, 1), 'retrieved_memories': retrieved[:3], 'avatar_action_plan': avatar_plan})}\n\n"
@@ -648,7 +668,7 @@ async def chat_stream(req: ChatRequest):
 
         except Exception as e:
             logger.error(f"[STREAM:{request_id}] error: {e}")
-            yield f"data: {json.dumps({'type': 'chat.error', 'error': str(e)[:200]})}\n\n"
+            yield f"data: {json.dumps({'type': 'chat.error', 'message': str(e)[:200]})}\n\n"
 
     return StreamingResponse(event_generator(), media_type="text/event-stream")
 

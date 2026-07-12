@@ -16,7 +16,8 @@
  *   - STREAM_ERROR        — backend sent {type: "error"} event
  */
 
-const BASE = ''
+import { apiBaseCandidates, apiUrl, shouldRetryApiStatus } from './baseUrl.js'
+
 const CHAT_TIMEOUT_MS = 50000
 const ASR_TIMEOUT_MS = 45000
 const HEALTH_TIMEOUT_MS = 5000
@@ -89,11 +90,18 @@ export async function requestJson(path, {
       fetchOptions.body = JSON.stringify(body)
     }
 
-    const r = await fetch(BASE + path, fetchOptions)
+    let r = null
+    let lastText = ''
+    const bases = apiBaseCandidates()
+    for (let i = 0; i < bases.length; i += 1) {
+      r = await fetch(apiUrl(path, bases[i]), fetchOptions)
+      lastText = await r.text().catch(() => '')
+      if (r.ok || !shouldRetryApiStatus(r.status) || i === bases.length - 1) break
+    }
     clearTimeout(timeoutId)
 
     // Read response body once
-    const text = await r.text().catch(() => '')
+    const text = lastText
     let data = null
     if (text) {
       try {
@@ -231,14 +239,20 @@ export async function importMemoryFile(file, { signal = null } = {}) {
   form.append('file', file)
 
   try {
-    const r = await fetch(BASE + '/memory/import/preview', {
-      method: 'POST',
-      headers: { 'X-Request-ID': requestId },
-      body: form,
-      signal: controller.signal,
-    })
+    let r = null
+    let data = null
+    const bases = apiBaseCandidates()
+    for (let i = 0; i < bases.length; i += 1) {
+      r = await fetch(apiUrl('/memory/import/preview', bases[i]), {
+        method: 'POST',
+        headers: { 'X-Request-ID': requestId },
+        body: form,
+        signal: controller.signal,
+      })
+      data = await r.json().catch(() => null)
+      if (r.ok || !shouldRetryApiStatus(r.status) || i === bases.length - 1) break
+    }
     clearTimeout(timeoutId)
-    const data = await r.json().catch(() => null)
     if (!r.ok || data?.error) {
       return makeError('HTTP_ERROR', data?.error || `HTTP ${r.status}`, {
         http_status: r.status,
@@ -330,15 +344,20 @@ export async function sendChatMessageStream({
   }
 
   try {
-    const r = await fetch(BASE + '/chat/stream', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Request-ID': requestId,
-      },
-      body: JSON.stringify(body),
-      signal: controller.signal,
-    })
+    let r = null
+    const bases = apiBaseCandidates()
+    for (let i = 0; i < bases.length; i += 1) {
+      r = await fetch(apiUrl('/chat/stream', bases[i]), {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Request-ID': requestId,
+        },
+        body: JSON.stringify(body),
+        signal: controller.signal,
+      })
+      if (r.ok || !shouldRetryApiStatus(r.status) || i === bases.length - 1) break
+    }
     clearTimeout(timeoutId)
 
     if (!r.ok) {

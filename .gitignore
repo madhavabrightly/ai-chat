@@ -65,5 +65,6 @@ Thumbs.db
 /tmp/
 
 # Large WASM binaries (downloaded at runtime by VAD/ORT)
+frontend/public/vad-assets/
 frontend/public/vad-assets/onnx/*.wasm
 frontend/public/vad-assets/onnx/*.jspi.wasm

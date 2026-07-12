@@ -11,7 +11,7 @@ export default function HomeScreen({ onNavigate, backendOnline, computeStatus, r
           <GlowingOrb pulsing={false} size={90} />
           <h1 className="home-title">Memory Twin AI</h1>
           <p className="home-sub">
-            Consent-based AI memory simulation using RAG, ChromaDB, Qwen embeddings, and Qwen LLM.
+            Fast live companion chat using session memory, ChromaDB, Qwen embeddings, and Qwen LLM.
           </p>
         </div>
 
@@ -44,17 +44,13 @@ export default function HomeScreen({ onNavigate, backendOnline, computeStatus, r
           )}
         </div>
 
-        {/* Consent & Safety Guardrail */}
         <div className="consent-panel">
-          <div className="consent-icon">🛡️</div>
+          <div className="consent-icon">⚡</div>
           <div className="consent-body">
-            <div className="consent-title">Ethical Guardrail — Consent-Based Memory Simulation</div>
+            <div className="consent-title">Live Memory Mode</div>
             <p className="consent-text">
-              Memory Twin AI is a <strong>consent-based digital memory simulation</strong>.
-              It does <strong>not claim to be a real person</strong>.
-              It answers <strong>only from stored fictional memories</strong>.
-              No real personal data is used. All memories are hand-authored fictional examples
-              demonstrating the architecture.
+              Every chat turn is saved into a private session JSON log, then retrieved back into the
+              conversation so the companion can react to what you just said without waiting for a manual import.
             </p>
           </div>
         </div>

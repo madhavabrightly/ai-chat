@@ -4,7 +4,7 @@ Single source of truth for all selected model paths and metadata.
 Supports legacy cache paths (from ModelScope) and new preferred paths.
 """
 import os
-from backend.config import MODEL_ROOT, RUNTIME_ROOT
+from backend.config import ENABLE_MUSETALK, MODEL_ROOT, RUNTIME_ROOT
 
 # Legacy paths are old ModelScope cache dirs (already on disk)
 LEGACY_PATHS = {
@@ -166,6 +166,8 @@ def get_model_status() -> dict:
     """Return dict of all models with detailed status."""
     status = {}
     for key, spec in MODEL_SPECS.items():
+        if key == "avatar_video" and not ENABLE_MUSETALK:
+            continue
         info = _find_active_path(spec)
         has_weights = _has_weight_files(info["path"])
         fallback = None
@@ -198,6 +200,8 @@ def print_model_registry():
     print("Memory Twin AI — Model Registry")
     print("=" * 55)
     for key, spec in MODEL_SPECS.items():
+        if key == "avatar_video" and not ENABLE_MUSETALK:
+            continue
         info = _find_active_path(spec)
         has_weights = _has_weight_files(info["path"])
         status_char = "✓" if has_weights else "✗"

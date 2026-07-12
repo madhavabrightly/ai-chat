@@ -1,8 +1,8 @@
 import { useState, useRef } from 'react'
+import { importMemoryFile } from '../api/memoryApi.js'
 
 export default function ImportMemory({ onNavigate }) {
   const [file, setFile] = useState(null)
-  const [consent, setConsent] = useState(false)
   const [sessionId, setSessionId] = useState(null)
   const [messages, setMessages] = useState([])
   const [loading, setLoading] = useState(false)
@@ -10,19 +10,16 @@ export default function ImportMemory({ onNavigate }) {
   const fileRef = useRef(null)
 
   async function handleImport() {
-    if (!file || !consent) return
+    if (!file) return
     setLoading(true)
     setError('')
     setMessages([])
 
-    const form = new FormData()
-    form.append('file', file)
-
     try {
-      const r = await fetch('/memory/import/preview', { method: 'POST', body: form })
-      const data = await r.json()
-      if (data.error) {
-        setError(data.error)
+      const result = await importMemoryFile(file)
+      const data = result.data || {}
+      if (!result.ok || data.error) {
+        setError(data.error || result.message || 'Import failed.')
       } else {
         setSessionId(data.session_id)
         setMessages(data.messages || [])
@@ -69,14 +66,7 @@ export default function ImportMemory({ onNavigate }) {
           </div>
         </div>
 
-        <div className="import-section">
-          <label className="import-check-label">
-            <input type="checkbox" checked={consent} onChange={e => setConsent(e.target.checked)} />
-            <span>I have permission to import and use this text for a private memory simulation.</span>
-          </label>
-        </div>
-
-        <button className="btn-primary" onClick={handleImport} disabled={!file || !consent || loading}>
+        <button className="btn-primary" onClick={handleImport} disabled={!file || loading}>
           {loading ? '⏳ Importing...' : '📥 Import Messages'}
         </button>
 

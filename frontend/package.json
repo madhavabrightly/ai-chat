@@ -4,6 +4,9 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
+    "sync:vad-assets": "node scripts/sync-vad-assets.mjs",
+    "postinstall": "node scripts/sync-vad-assets.mjs",
+    "prebuild": "node scripts/sync-vad-assets.mjs",
     "dev": "vite",
     "build": "vite build",
     "model:live": "node scripts/create-live-glb.mjs public/models/lacrimosa-optimized.glb public/models/lacrimosa-live.raw.glb && gltf-transform optimize public/models/lacrimosa-live.raw.glb public/models/lacrimosa-live.glb --compress meshopt --texture-compress webp --texture-size 512 --simplify false --join false --flatten false --palette false && node -e \"require('node:fs').rmSync('public/models/lacrimosa-live.raw.glb',{force:true})\"",

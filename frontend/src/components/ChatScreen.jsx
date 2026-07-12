@@ -48,8 +48,7 @@ export default function ChatScreen({ onAvatarState, onAvatarMood, onLastAnswer, 
   const inputRef = useRef(null)
   const loadingTimerRef = useRef(null)
   const fileRef = useRef(null)
-  const currentAbortRef = useRef(null)
-  const currentRequestRef = useRef(null) // { requestId, text, history, tempCtx, companionType }
+  const activeAbortRef = useRef(new Map())
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -83,9 +82,10 @@ export default function ChatScreen({ onAvatarState, onAvatarMood, onLastAnswer, 
   // Cleanup on unmount
   useEffect(() => {
     return () => {
-      if (currentAbortRef.current) {
-        try { currentAbortRef.current.abort() } catch {}
-      }
+      activeAbortRef.current.forEach(controller => {
+        try { controller.abort() } catch {}
+      })
+      activeAbortRef.current.clear()
     }
   }, [])
 
@@ -96,15 +96,10 @@ export default function ChatScreen({ onAvatarState, onAvatarMood, onLastAnswer, 
   const send = useCallback(function(q, retryPayload) {
     // If retryPayload is provided, use its question (not the cleared input field)
     const text = retryPayload?.question || q || input
-    if (!text?.trim() || loading) return
+    if (!text?.trim()) return
     setInput('')
 
-    // Cancel any previous in-flight request
-    if (currentAbortRef.current) {
-      try { currentAbortRef.current.abort() } catch {}
-    }
     const abortController = new AbortController()
-    currentAbortRef.current = abortController
 
     // Build retry payload (used if user clicks Retry)
     const history = messages
@@ -164,13 +159,7 @@ export default function ChatScreen({ onAvatarState, onAvatarMood, onLastAnswer, 
       status: 'streaming',
     })
 
-    currentRequestRef.current = {
-      requestId: streamingId,
-      text,
-      history,
-      tempCtx,
-      companionType: companion || 'female',
-    }
+    activeAbortRef.current.set(streamingId, abortController)
 
     let fullAnswer = ''
     let traceData = null
@@ -183,17 +172,17 @@ export default function ChatScreen({ onAvatarState, onAvatarMood, onLastAnswer, 
       tempContext: requestPayload.tempCtx,
       signal: abortController.signal,
       onToken: (delta) => {
-        if (currentAbortRef.current !== abortController) return
+        if (activeAbortRef.current.get(streamingId) !== abortController) return
         fullAnswer += delta
         updateMessage(streamingId, { content: fullAnswer })
       },
       onTrace: (trace) => {
-        if (currentAbortRef.current !== abortController) return
+        if (activeAbortRef.current.get(streamingId) !== abortController) return
         traceData = trace
         if (trace.rag_trace) setLastTrace(trace.rag_trace)
       },
       onDone: (done) => {
-        if (currentAbortRef.current !== abortController) return
+        if (activeAbortRef.current.get(streamingId) !== abortController) return
         const finalAnswer = done.answer || fullAnswer
         retrievedMemories = done.retrieved_memories || []
         // Only mark memory_based if memories were actually retrieved
@@ -213,7 +202,7 @@ export default function ChatScreen({ onAvatarState, onAvatarMood, onLastAnswer, 
         if (onAvatarState) onAvatarState('idle')
       },
       onError: (err) => {
-        if (currentAbortRef.current !== abortController) return
+        if (activeAbortRef.current.get(streamingId) !== abortController) return
         const errorMsg = err?.message || err || 'Stream error. Try again.'
         const errorCode = err?.code || 'STREAM_ERROR'
         updateMessage(streamingId, {
@@ -235,13 +224,12 @@ export default function ChatScreen({ onAvatarState, onAvatarMood, onLastAnswer, 
         if (onAvatarMood) onAvatarMood('calm')
       },
     }).finally(() => {
-      if (currentAbortRef.current === abortController) {
-        currentAbortRef.current = null
-        currentRequestRef.current = null
+      if (activeAbortRef.current.get(streamingId) === abortController) {
+        activeAbortRef.current.delete(streamingId)
       }
-      setLoading(false)
+      setLoading(activeAbortRef.current.size > 0)
     })
-  }, [input, loading, messages, onAvatarState, onAvatarMood, onLastAnswer, companion,
+  }, [input, messages, onAvatarState, onAvatarMood, onLastAnswer, companion,
       addMessage, updateMessage, setLastTrace, importMeta, importChunks])
 
   // Retry a failed message using its stored retry_payload
@@ -358,7 +346,7 @@ export default function ChatScreen({ onAvatarState, onAvatarMood, onLastAnswer, 
             {companion && (
               <div className="sug-row" style={{ marginTop: 12 }}>
                 {SUGGESTIONS.map(s => (
-                  <button key={s} className="chip-sug" onClick={() => send(s)} disabled={loading}>{s}</button>
+                  <button key={s} className="chip-sug" onClick={() => send(s)}>{s}</button>
                 ))}
               </div>
             )}
@@ -396,7 +384,6 @@ export default function ChatScreen({ onAvatarState, onAvatarMood, onLastAnswer, 
                     className="btn-ghost-xs"
                     style={{ marginLeft: 34, marginTop: 4 }}
                     onClick={() => retryMessage(msg.id)}
-                    disabled={loading}
                   >
                     🔁 Retry
                   </button>
@@ -408,15 +395,6 @@ export default function ChatScreen({ onAvatarState, onAvatarMood, onLastAnswer, 
             )}
           </div>
         ))}
-
-        {loading && (
-          <div className="wa-msg wa-ai">
-            <div className="wa-avatar-small">{companion === 'male' ? '👤' : '👩'}</div>
-            <div className="wa-bubble wa-bubble-ai">
-              <span className="wa-typing-dots"><span className="wa-dot" /><span className="wa-dot" /><span className="wa-dot" /></span>
-            </div>
-          </div>
-        )}
 
         <div ref={endRef} />
       </div>
@@ -438,41 +416,40 @@ export default function ChatScreen({ onAvatarState, onAvatarMood, onLastAnswer, 
           onKeyDown={e => {
             if (e.key === 'Enter' && !e.shiftKey) {
               e.preventDefault()
-              if (!loading && input.trim() && companion) send()
+              if (input.trim() && companion) send()
             }
           }}
-          disabled={loading || !companion}
+          disabled={!companion}
           rows={1}
         />
-        {loading ? (
+        {loading && (
           <button
             className="wa-stop"
             onClick={() => {
-              if (currentAbortRef.current) {
-                try { currentAbortRef.current.abort() } catch {}
-              }
+              activeAbortRef.current.forEach(controller => {
+                try { controller.abort() } catch {}
+              })
             }}
-            title="Stop generation"
-            aria-label="Stop generation"
+            title="Stop current replies"
+            aria-label="Stop current replies"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
               <rect x="6" y="6" width="12" height="12" rx="2"/>
             </svg>
           </button>
-        ) : (
-          <button
-            className="wa-send"
-            onClick={() => send()}
-            disabled={loading || !input.trim() || !companion}
-            title="Send message"
-            aria-label="Send message"
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/>
-              <path d="m21.854 2.147-10.94 10.939"/>
-            </svg>
-          </button>
         )}
+        <button
+          className="wa-send"
+          onClick={() => send()}
+          disabled={!input.trim() || !companion}
+          title="Send message"
+          aria-label="Send message"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/>
+            <path d="m21.854 2.147-10.94 10.939"/>
+          </svg>
+        </button>
       </div>
     </div>
   )

@@ -10,7 +10,8 @@
  *   - EMPTY_AUDIO   — audio blob too small
  */
 
-const BASE = ''
+import { apiBaseCandidates, apiUrl, shouldRetryApiStatus } from './baseUrl.js'
+
 const ASR_TIMEOUT_MS = 45000
 const MIN_AUDIO_BYTES = 100
 
@@ -55,17 +56,22 @@ export async function transcribeAudio(audioBlob, { signal = null } = {}) {
   fd.append('file', audioBlob, 'recording.wav')
 
   try {
-    const r = await fetch(BASE + '/asr/transcribe', {
-      method: 'POST',
-      body: fd,
-      signal: controller.signal,
-      headers: {
-        'X-Request-ID': requestId,
-      },
-    })
+    let r = null
+    let data = null
+    const bases = apiBaseCandidates()
+    for (let i = 0; i < bases.length; i += 1) {
+      r = await fetch(apiUrl('/asr/transcribe', bases[i]), {
+        method: 'POST',
+        body: fd,
+        signal: controller.signal,
+        headers: {
+          'X-Request-ID': requestId,
+        },
+      })
+      data = await r.json().catch(() => ({}))
+      if (r.ok || !shouldRetryApiStatus(r.status) || i === bases.length - 1) break
+    }
     clearTimeout(timeoutId)
-
-    const data = await r.json().catch(() => ({}))
 
     if (!r.ok) {
       return {
