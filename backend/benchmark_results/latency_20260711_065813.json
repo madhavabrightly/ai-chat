@@ -1,0 +1,25 @@
+{
+  "timestamp": "2026-07-11T06:58:13",
+  "results": {
+    "embedding_ms": {
+      "p50": 29.0,
+      "p95": 68.2,
+      "samples": 5
+    },
+    "retrieval_ms": {
+      "p50": 30.4,
+      "p95": 31.7,
+      "samples": 5
+    },
+    "full_chat_ms": {
+      "p50": 4606.0,
+      "p95": 27875.5,
+      "samples": 5
+    },
+    "cache_retrieval_ms": {
+      "p50": 0.0,
+      "p95": 0.0,
+      "samples": 3
+    }
+  }
+}

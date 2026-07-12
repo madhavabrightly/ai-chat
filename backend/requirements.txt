@@ -1,0 +1,38 @@
+fastapi>=0.115.0
+uvicorn[standard]>=0.32.0
+pydantic>=2.0.0
+python-dotenv>=1.0.0
+python-multipart>=0.0.9
+
+# Core ML
+torch>=2.4.0
+transformers>=4.51.0
+sentence-transformers>=2.7.0
+accelerate>=1.0.0
+safetensors>=0.4.0
+
+# Optional 4-bit quantization (AMD ROCm builds available)
+bitsandbytes>=0.43.0
+
+# Model loading from ModelScope
+modelscope>=1.10.0
+
+# Vector store
+chromadb>=0.5.0
+numpy>=1.26.0
+
+# Hybrid search — sparse BM25 retrieval
+rank-bm25>=0.2.2
+
+# Audio I/O (for TTS wav saving)
+torchaudio>=2.4.0
+
+# Structured JSON logging (optional — falls back to plain text if absent)
+python-json-logger>=2.0.0
+
+# ASR / emotion models (FunASR — SenseVoice + emotion2vec)
+funasr>=1.1.0
+
+# TTS (CosyVoice — installed separately from FunAudioLLM/CosyVoice repo)
+# cosyvoice is not on PyPI; install from source:
+#   pip install git+https://github.com/FunAudioLLM/CosyVoice.git

@@ -1,0 +1,69 @@
+# Environment
+.env
+.env.local
+.env.production
+
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.Python
+venv/
+.venv/
+*.egg-info/
+
+# Model weights — NEVER commit these to the repo
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.gguf
+*.ggml
+*.onnx
+checkpoints/
+model_cache/
+.cache/
+
+# Model & runtime cache (outside git repo)
+runtime_cache/
+/workspace/memory_twin_models/
+/workspace/memory_twin_runtime/
+/workspace/memory_twin_chroma/
+
+# Generated media
+generated_audio/
+generated_avatar_clips/
+frontend/public/models/*.glb
+!frontend/public/models/lacrimosa-optimized.glb
+!frontend/public/models/lacrimosa-live.glb
+*.wav
+*.mp3
+*.mp4
+*.webm
+
+# Datasets
+datasets/
+
+# Node
+node_modules/
+dist/
+build/
+.cache/vite/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+/tmp/
+
+# Large WASM binaries (downloaded at runtime by VAD/ORT)
+frontend/public/vad-assets/onnx/*.wasm
+frontend/public/vad-assets/onnx/*.jspi.wasm
