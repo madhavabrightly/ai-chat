@@ -1,0 +1,6302 @@
+{
+  "inspectedAt": "2026-07-11T15:39:29.525Z",
+  "file": {
+    "path": "C:\\Users\\brigh\\Desktop\\trying_new\\ai-chat\\frontend\\public\\models\\lacrimosa.glb",
+    "sizeBytes": 146419176
+  },
+  "glb": {
+    "version": 2,
+    "declaredLength": 146419176,
+    "chunks": [
+      {
+        "type": "JSON",
+        "length": 1208420
+      },
+      {
+        "type": "BIN",
+        "length": 145210728
+      }
+    ]
+  },
+  "asset": {
+    "extras": {
+      "author": "Jun Hungry (https://sketchfab.com/JunHungry)",
+      "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+      "source": "https://sketchfab.com/3d-models/lacrimosa-animated-neverness-to-everness-b7efadb938ee4d1687b3aae214aeafc6",
+      "title": "Lacrimosa animated - Neverness To everness"
+    },
+    "generator": "Sketchfab-17.17.0",
+    "version": "2.0"
+  },
+  "counts": {
+    "scenes": 1,
+    "nodes": 429,
+    "meshes": 10,
+    "materials": 10,
+    "textures": 7,
+    "images": 7,
+    "skins": 1,
+    "animations": 1,
+    "morphTargets": 148,
+    "triangles": 47051
+  },
+  "scenes": [
+    {
+      "index": 0,
+      "name": "Sketchfab_Scene",
+      "nodes": [
+        "Sketchfab_model"
+      ]
+    }
+  ],
+  "meshes": [
+    {
+      "index": 0,
+      "name": "0",
+      "primitives": [
+        {
+          "primitiveIndex": 0,
+          "mode": 4,
+          "material": 0,
+          "triangles": 14452,
+          "attributes": [
+            "JOINTS_0",
+            "NORMAL",
+            "POSITION",
+            "TEXCOORD_0",
+            "TEXCOORD_1",
+            "TEXCOORD_2",
+            "TEXCOORD_3",
+            "WEIGHTS_0"
+          ],
+          "morphTargetCount": 148
+        }
+      ],
+      "triangleCount": 14452,
+      "morphTargets": [
+        "morph_0",
+        "morph_1",
+        "morph_2",
+        "morph_3",
+        "morph_4",
+        "morph_5",
+        "morph_6",
+        "morph_7",
+        "morph_8",
+        "morph_9",
+        "morph_10",
+        "morph_11",
+        "morph_12",
+        "morph_13",
+        "morph_14",
+        "morph_15",
+        "morph_16",
+        "morph_17",
+        "morph_18",
+        "morph_19",
+        "morph_20",
+        "morph_21",
+        "morph_22",
+        "morph_23",
+        "morph_24",
+        "morph_25",
+        "morph_26",
+        "morph_27",
+        "morph_28",
+        "morph_29",
+        "morph_30",
+        "morph_31",
+        "morph_32",
+        "morph_33",
+        "morph_34",
+        "morph_35",
+        "morph_36",
+        "morph_37",
+        "morph_38",
+        "morph_39",
+        "morph_40",
+        "morph_41",
+        "morph_42",
+        "morph_43",
+        "morph_44",
+        "morph_45",
+        "morph_46",
+        "morph_47",
+        "morph_48",
+        "morph_49",
+        "morph_50",
+        "morph_51",
+        "morph_52",
+        "morph_53",
+        "morph_54",
+        "morph_55",
+        "morph_56",
+        "morph_57",
+        "morph_58",
+        "morph_59",
+        "morph_60",
+        "morph_61",
+        "morph_62",
+        "morph_63",
+        "morph_64",
+        "morph_65",
+        "morph_66",
+        "morph_67",
+        "morph_68",
+        "morph_69",
+        "morph_70",
+        "morph_71",
+        "morph_72",
+        "morph_73",
+        "morph_74",
+        "morph_75",
+        "morph_76",
+        "morph_77",
+        "morph_78",
+        "morph_79",
+        "morph_80",
+        "morph_81",
+        "morph_82",
+        "morph_83",
+        "morph_84",
+        "morph_85",
+        "morph_86",
+        "morph_87",
+        "morph_88",
+        "morph_89",
+        "morph_90",
+        "morph_91",
+        "morph_92",
+        "morph_93",
+        "morph_94",
+        "morph_95",
+        "morph_96",
+        "morph_97",
+        "morph_98",
+        "morph_99",
+        "morph_100",
+        "morph_101",
+        "morph_102",
+        "morph_103",
+        "morph_104",
+        "morph_105",
+        "morph_106",
+        "morph_107",
+        "morph_108",
+        "morph_109",
+        "morph_110",
+        "morph_111",
+        "morph_112",
+        "morph_113",
+        "morph_114",
+        "morph_115",
+        "morph_116",
+        "morph_117",
+        "morph_118",
+        "morph_119",
+        "morph_120",
+        "morph_121",
+        "morph_122",
+        "morph_123",
+        "morph_124",
+        "morph_125",
+        "morph_126",
+        "morph_127",
+        "morph_128",
+        "morph_129",
+        "morph_130",
+        "morph_131",
+        "morph_132",
+        "morph_133",
+        "morph_134",
+        "morph_135",
+        "morph_136",
+        "morph_137",
+        "morph_138",
+        "morph_139",
+        "morph_140",
+        "morph_141",
+        "morph_142",
+        "morph_143",
+        "morph_144",
+        "morph_145",
+        "morph_146",
+        "morph_147"
+      ]
+    },
+    {
+      "index": 1,
+      "name": "1",
+      "primitives": [
+        {
+          "primitiveIndex": 0,
+          "mode": 4,
+          "material": 1,
+          "triangles": 214,
+          "attributes": [
+            "JOINTS_0",
+            "NORMAL",
+            "POSITION",
+            "TEXCOORD_0",
+            "TEXCOORD_1",
+            "TEXCOORD_2",
+            "TEXCOORD_3",
+            "WEIGHTS_0"
+          ],
+          "morphTargetCount": 148
+        }
+      ],
+      "triangleCount": 214,
+      "morphTargets": [
+        "morph_0",
+        "morph_1",
+        "morph_2",
+        "morph_3",
+        "morph_4",
+        "morph_5",
+        "morph_6",
+        "morph_7",
+        "morph_8",
+        "morph_9",
+        "morph_10",
+        "morph_11",
+        "morph_12",
+        "morph_13",
+        "morph_14",
+        "morph_15",
+        "morph_16",
+        "morph_17",
+        "morph_18",
+        "morph_19",
+        "morph_20",
+        "morph_21",
+        "morph_22",
+        "morph_23",
+        "morph_24",
+        "morph_25",
+        "morph_26",
+        "morph_27",
+        "morph_28",
+        "morph_29",
+        "morph_30",
+        "morph_31",
+        "morph_32",
+        "morph_33",
+        "morph_34",
+        "morph_35",
+        "morph_36",
+        "morph_37",
+        "morph_38",
+        "morph_39",
+        "morph_40",
+        "morph_41",
+        "morph_42",
+        "morph_43",
+        "morph_44",
+        "morph_45",
+        "morph_46",
+        "morph_47",
+        "morph_48",
+        "morph_49",
+        "morph_50",
+        "morph_51",
+        "morph_52",
+        "morph_53",
+        "morph_54",
+        "morph_55",
+        "morph_56",
+        "morph_57",
+        "morph_58",
+        "morph_59",
+        "morph_60",
+        "morph_61",
+        "morph_62",
+        "morph_63",
+        "morph_64",
+        "morph_65",
+        "morph_66",
+        "morph_67",
+        "morph_68",
+        "morph_69",
+        "morph_70",
+        "morph_71",
+        "morph_72",
+        "morph_73",
+        "morph_74",
+        "morph_75",
+        "morph_76",
+        "morph_77",
+        "morph_78",
+        "morph_79",
+        "morph_80",
+        "morph_81",
+        "morph_82",
+        "morph_83",
+        "morph_84",
+        "morph_85",
+        "morph_86",
+        "morph_87",
+        "morph_88",
+        "morph_89",
+        "morph_90",
+        "morph_91",
+        "morph_92",
+        "morph_93",
+        "morph_94",
+        "morph_95",
+        "morph_96",
+        "morph_97",
+        "morph_98",
+        "morph_99",
+        "morph_100",
+        "morph_101",
+        "morph_102",
+        "morph_103",
+        "morph_104",
+        "morph_105",
+        "morph_106",
+        "morph_107",
+        "morph_108",
+        "morph_109",
+        "morph_110",
+        "morph_111",
+        "morph_112",
+        "morph_113",
+        "morph_114",
+        "morph_115",
+        "morph_116",
+        "morph_117",
+        "morph_118",
+        "morph_119",
+        "morph_120",
+        "morph_121",
+        "morph_122",
+        "morph_123",
+        "morph_124",
+        "morph_125",
+        "morph_126",
+        "morph_127",
+        "morph_128",
+        "morph_129",
+        "morph_130",
+        "morph_131",
+        "morph_132",
+        "morph_133",
+        "morph_134",
+        "morph_135",
+        "morph_136",
+        "morph_137",
+        "morph_138",
+        "morph_139",
+        "morph_140",
+        "morph_141",
+        "morph_142",
+        "morph_143",
+        "morph_144",
+        "morph_145",
+        "morph_146",
+        "morph_147"
+      ]
+    },
+    {
+      "index": 2,
+      "name": "2",
+      "primitives": [
+        {
+          "primitiveIndex": 0,
+          "mode": 4,
+          "material": 2,
+          "triangles": 14326,
+          "attributes": [
+            "JOINTS_0",
+            "NORMAL",
+            "POSITION",
+            "TEXCOORD_0",
+            "TEXCOORD_1",
+            "TEXCOORD_2",
+            "TEXCOORD_3",
+            "WEIGHTS_0"
+          ],
+          "morphTargetCount": 148
+        }
+      ],
+      "triangleCount": 14326,
+      "morphTargets": [
+        "morph_0",
+        "morph_1",
+        "morph_2",
+        "morph_3",
+        "morph_4",
+        "morph_5",
+        "morph_6",
+        "morph_7",
+        "morph_8",
+        "morph_9",
+        "morph_10",
+        "morph_11",
+        "morph_12",
+        "morph_13",
+        "morph_14",
+        "morph_15",
+        "morph_16",
+        "morph_17",
+        "morph_18",
+        "morph_19",
+        "morph_20",
+        "morph_21",
+        "morph_22",
+        "morph_23",
+        "morph_24",
+        "morph_25",
+        "morph_26",
+        "morph_27",
+        "morph_28",
+        "morph_29",
+        "morph_30",
+        "morph_31",
+        "morph_32",
+        "morph_33",
+        "morph_34",
+        "morph_35",
+        "morph_36",
+        "morph_37",
+        "morph_38",
+        "morph_39",
+        "morph_40",
+        "morph_41",
+        "morph_42",
+        "morph_43",
+        "morph_44",
+        "morph_45",
+        "morph_46",
+        "morph_47",
+        "morph_48",
+        "morph_49",
+        "morph_50",
+        "morph_51",
+        "morph_52",
+        "morph_53",
+        "morph_54",
+        "morph_55",
+        "morph_56",
+        "morph_57",
+        "morph_58",
+        "morph_59",
+        "morph_60",
+        "morph_61",
+        "morph_62",
+        "morph_63",
+        "morph_64",
+        "morph_65",
+        "morph_66",
+        "morph_67",
+        "morph_68",
+        "morph_69",
+        "morph_70",
+        "morph_71",
+        "morph_72",
+        "morph_73",
+        "morph_74",
+        "morph_75",
+        "morph_76",
+        "morph_77",
+        "morph_78",
+        "morph_79",
+        "morph_80",
+        "morph_81",
+        "morph_82",
+        "morph_83",
+        "morph_84",
+        "morph_85",
+        "morph_86",
+        "morph_87",
+        "morph_88",
+        "morph_89",
+        "morph_90",
+        "morph_91",
+        "morph_92",
+        "morph_93",
+        "morph_94",
+        "morph_95",
+        "morph_96",
+        "morph_97",
+        "morph_98",
+        "morph_99",
+        "morph_100",
+        "morph_101",
+        "morph_102",
+        "morph_103",
+        "morph_104",
+        "morph_105",
+        "morph_106",
+        "morph_107",
+        "morph_108",
+        "morph_109",
+        "morph_110",
+        "morph_111",
+        "morph_112",
+        "morph_113",
+        "morph_114",
+        "morph_115",
+        "morph_116",
+        "morph_117",
+        "morph_118",
+        "morph_119",
+        "morph_120",
+        "morph_121",
+        "morph_122",
+        "morph_123",
+        "morph_124",
+        "morph_125",
+        "morph_126",
+        "morph_127",
+        "morph_128",
+        "morph_129",
+        "morph_130",
+        "morph_131",
+        "morph_132",
+        "morph_133",
+        "morph_134",
+        "morph_135",
+        "morph_136",
+        "morph_137",
+        "morph_138",
+        "morph_139",
+        "morph_140",
+        "morph_141",
+        "morph_142",
+        "morph_143",
+        "morph_144",
+        "morph_145",
+        "morph_146",
+        "morph_147"
+      ]
+    },
+    {
+      "index": 3,
+      "name": "3",
+      "primitives": [
+        {
+          "primitiveIndex": 0,
+          "mode": 4,
+          "material": 3,
+          "triangles": 3639,
+          "attributes": [
+            "JOINTS_0",
+            "NORMAL",
+            "POSITION",
+            "TEXCOORD_0",
+            "TEXCOORD_1",
+            "TEXCOORD_2",
+            "TEXCOORD_3",
+            "WEIGHTS_0"
+          ],
+          "morphTargetCount": 148
+        }
+      ],
+      "triangleCount": 3639,
+      "morphTargets": [
+        "morph_0",
+        "morph_1",
+        "morph_2",
+        "morph_3",
+        "morph_4",
+        "morph_5",
+        "morph_6",
+        "morph_7",
+        "morph_8",
+        "morph_9",
+        "morph_10",
+        "morph_11",
+        "morph_12",
+        "morph_13",
+        "morph_14",
+        "morph_15",
+        "morph_16",
+        "morph_17",
+        "morph_18",
+        "morph_19",
+        "morph_20",
+        "morph_21",
+        "morph_22",
+        "morph_23",
+        "morph_24",
+        "morph_25",
+        "morph_26",
+        "morph_27",
+        "morph_28",
+        "morph_29",
+        "morph_30",
+        "morph_31",
+        "morph_32",
+        "morph_33",
+        "morph_34",
+        "morph_35",
+        "morph_36",
+        "morph_37",
+        "morph_38",
+        "morph_39",
+        "morph_40",
+        "morph_41",
+        "morph_42",
+        "morph_43",
+        "morph_44",
+        "morph_45",
+        "morph_46",
+        "morph_47",
+        "morph_48",
+        "morph_49",
+        "morph_50",
+        "morph_51",
+        "morph_52",
+        "morph_53",
+        "morph_54",
+        "morph_55",
+        "morph_56",
+        "morph_57",
+        "morph_58",
+        "morph_59",
+        "morph_60",
+        "morph_61",
+        "morph_62",
+        "morph_63",
+        "morph_64",
+        "morph_65",
+        "morph_66",
+        "morph_67",
+        "morph_68",
+        "morph_69",
+        "morph_70",
+        "morph_71",
+        "morph_72",
+        "morph_73",
+        "morph_74",
+        "morph_75",
+        "morph_76",
+        "morph_77",
+        "morph_78",
+        "morph_79",
+        "morph_80",
+        "morph_81",
+        "morph_82",
+        "morph_83",
+        "morph_84",
+        "morph_85",
+        "morph_86",
+        "morph_87",
+        "morph_88",
+        "morph_89",
+        "morph_90",
+        "morph_91",
+        "morph_92",
+        "morph_93",
+        "morph_94",
+        "morph_95",
+        "morph_96",
+        "morph_97",
+        "morph_98",
+        "morph_99",
+        "morph_100",
+        "morph_101",
+        "morph_102",
+        "morph_103",
+        "morph_104",
+        "morph_105",
+        "morph_106",
+        "morph_107",
+        "morph_108",
+        "morph_109",
+        "morph_110",
+        "morph_111",
+        "morph_112",
+        "morph_113",
+        "morph_114",
+        "morph_115",
+        "morph_116",
+        "morph_117",
+        "morph_118",
+        "morph_119",
+        "morph_120",
+        "morph_121",
+        "morph_122",
+        "morph_123",
+        "morph_124",
+        "morph_125",
+        "morph_126",
+        "morph_127",
+        "morph_128",
+        "morph_129",
+        "morph_130",
+        "morph_131",
+        "morph_132",
+        "morph_133",
+        "morph_134",
+        "morph_135",
+        "morph_136",
+        "morph_137",
+        "morph_138",
+        "morph_139",
+        "morph_140",
+        "morph_141",
+        "morph_142",
+        "morph_143",
+        "morph_144",
+        "morph_145",
+        "morph_146",
+        "morph_147"
+      ]
+    },
+    {
+      "index": 4,
+      "name": "4",
+      "primitives": [
+        {
+          "primitiveIndex": 0,
+          "mode": 4,
+          "material": 4,
+          "triangles": 4843,
+          "attributes": [
+            "JOINTS_0",
+            "NORMAL",
+            "POSITION",
+            "TEXCOORD_0",
+            "TEXCOORD_1",
+            "TEXCOORD_2",
+            "TEXCOORD_3",
+            "WEIGHTS_0"
+          ],
+          "morphTargetCount": 148
+        }
+      ],
+      "triangleCount": 4843,
+      "morphTargets": [
+        "morph_0",
+        "morph_1",
+        "morph_2",
+        "morph_3",
+        "morph_4",
+        "morph_5",
+        "morph_6",
+        "morph_7",
+        "morph_8",
+        "morph_9",
+        "morph_10",
+        "morph_11",
+        "morph_12",
+        "morph_13",
+        "morph_14",
+        "morph_15",
+        "morph_16",
+        "morph_17",
+        "morph_18",
+        "morph_19",
+        "morph_20",
+        "morph_21",
+        "morph_22",
+        "morph_23",
+        "morph_24",
+        "morph_25",
+        "morph_26",
+        "morph_27",
+        "morph_28",
+        "morph_29",
+        "morph_30",
+        "morph_31",
+        "morph_32",
+        "morph_33",
+        "morph_34",
+        "morph_35",
+        "morph_36",
+        "morph_37",
+        "morph_38",
+        "morph_39",
+        "morph_40",
+        "morph_41",
+        "morph_42",
+        "morph_43",
+        "morph_44",
+        "morph_45",
+        "morph_46",
+        "morph_47",
+        "morph_48",
+        "morph_49",
+        "morph_50",
+        "morph_51",
+        "morph_52",
+        "morph_53",
+        "morph_54",
+        "morph_55",
+        "morph_56",
+        "morph_57",
+        "morph_58",
+        "morph_59",
+        "morph_60",
+        "morph_61",
+        "morph_62",
+        "morph_63",
+        "morph_64",
+        "morph_65",
+        "morph_66",
+        "morph_67",
+        "morph_68",
+        "morph_69",
+        "morph_70",
+        "morph_71",
+        "morph_72",
+        "morph_73",
+        "morph_74",
+        "morph_75",
+        "morph_76",
+        "morph_77",
+        "morph_78",
+        "morph_79",
+        "morph_80",
+        "morph_81",
+        "morph_82",
+        "morph_83",
+        "morph_84",
+        "morph_85",
+        "morph_86",
+        "morph_87",
+        "morph_88",
+        "morph_89",
+        "morph_90",
+        "morph_91",
+        "morph_92",
+        "morph_93",
+        "morph_94",
+        "morph_95",
+        "morph_96",
+        "morph_97",
+        "morph_98",
+        "morph_99",
+        "morph_100",
+        "morph_101",
+        "morph_102",
+        "morph_103",
+        "morph_104",
+        "morph_105",
+        "morph_106",
+        "morph_107",
+        "morph_108",
+        "morph_109",
+        "morph_110",
+        "morph_111",
+        "morph_112",
+        "morph_113",
+        "morph_114",
+        "morph_115",
+        "morph_116",
+        "morph_117",
+        "morph_118",
+        "morph_119",
+        "morph_120",
+        "morph_121",
+        "morph_122",
+        "morph_123",
+        "morph_124",
+        "morph_125",
+        "morph_126",
+        "morph_127",
+        "morph_128",
+        "morph_129",
+        "morph_130",
+        "morph_131",
+        "morph_132",
+        "morph_133",
+        "morph_134",
+        "morph_135",
+        "morph_136",
+        "morph_137",
+        "morph_138",
+        "morph_139",
+        "morph_140",
+        "morph_141",
+        "morph_142",
+        "morph_143",
+        "morph_144",
+        "morph_145",
+        "morph_146",
+        "morph_147"
+      ]
+    },
+    {
+      "index": 5,
+      "name": "5",
+      "primitives": [
+        {
+          "primitiveIndex": 0,
+          "mode": 4,
+          "material": 5,
+          "triangles": 2913,
+          "attributes": [
+            "JOINTS_0",
+            "NORMAL",
+            "POSITION",
+            "TEXCOORD_0",
+            "TEXCOORD_1",
+            "TEXCOORD_2",
+            "TEXCOORD_3",
+            "WEIGHTS_0"
+          ],
+          "morphTargetCount": 148
+        }
+      ],
+      "triangleCount": 2913,
+      "morphTargets": [
+        "morph_0",
+        "morph_1",
+        "morph_2",
+        "morph_3",
+        "morph_4",
+        "morph_5",
+        "morph_6",
+        "morph_7",
+        "morph_8",
+        "morph_9",
+        "morph_10",
+        "morph_11",
+        "morph_12",
+        "morph_13",
+        "morph_14",
+        "morph_15",
+        "morph_16",
+        "morph_17",
+        "morph_18",
+        "morph_19",
+        "morph_20",
+        "morph_21",
+        "morph_22",
+        "morph_23",
+        "morph_24",
+        "morph_25",
+        "morph_26",
+        "morph_27",
+        "morph_28",
+        "morph_29",
+        "morph_30",
+        "morph_31",
+        "morph_32",
+        "morph_33",
+        "morph_34",
+        "morph_35",
+        "morph_36",
+        "morph_37",
+        "morph_38",
+        "morph_39",
+        "morph_40",
+        "morph_41",
+        "morph_42",
+        "morph_43",
+        "morph_44",
+        "morph_45",
+        "morph_46",
+        "morph_47",
+        "morph_48",
+        "morph_49",
+        "morph_50",
+        "morph_51",
+        "morph_52",
+        "morph_53",
+        "morph_54",
+        "morph_55",
+        "morph_56",
+        "morph_57",
+        "morph_58",
+        "morph_59",
+        "morph_60",
+        "morph_61",
+        "morph_62",
+        "morph_63",
+        "morph_64",
+        "morph_65",
+        "morph_66",
+        "morph_67",
+        "morph_68",
+        "morph_69",
+        "morph_70",
+        "morph_71",
+        "morph_72",
+        "morph_73",
+        "morph_74",
+        "morph_75",
+        "morph_76",
+        "morph_77",
+        "morph_78",
+        "morph_79",
+        "morph_80",
+        "morph_81",
+        "morph_82",
+        "morph_83",
+        "morph_84",
+        "morph_85",
+        "morph_86",
+        "morph_87",
+        "morph_88",
+        "morph_89",
+        "morph_90",
+        "morph_91",
+        "morph_92",
+        "morph_93",
+        "morph_94",
+        "morph_95",
+        "morph_96",
+        "morph_97",
+        "morph_98",
+        "morph_99",
+        "morph_100",
+        "morph_101",
+        "morph_102",
+        "morph_103",
+        "morph_104",
+        "morph_105",
+        "morph_106",
+        "morph_107",
+        "morph_108",
+        "morph_109",
+        "morph_110",
+        "morph_111",
+        "morph_112",
+        "morph_113",
+        "morph_114",
+        "morph_115",
+        "morph_116",
+        "morph_117",
+        "morph_118",
+        "morph_119",
+        "morph_120",
+        "morph_121",
+        "morph_122",
+        "morph_123",
+        "morph_124",
+        "morph_125",
+        "morph_126",
+        "morph_127",
+        "morph_128",
+        "morph_129",
+        "morph_130",
+        "morph_131",
+        "morph_132",
+        "morph_133",
+        "morph_134",
+        "morph_135",
+        "morph_136",
+        "morph_137",
+        "morph_138",
+        "morph_139",
+        "morph_140",
+        "morph_141",
+        "morph_142",
+        "morph_143",
+        "morph_144",
+        "morph_145",
+        "morph_146",
+        "morph_147"
+      ]
+    },
+    {
+      "index": 6,
+      "name": "6",
+      "primitives": [
+        {
+          "primitiveIndex": 0,
+          "mode": 4,
+          "material": 6,
+          "triangles": 5070,
+          "attributes": [
+            "JOINTS_0",
+            "NORMAL",
+            "POSITION",
+            "TEXCOORD_0",
+            "TEXCOORD_1",
+            "TEXCOORD_2",
+            "TEXCOORD_3",
+            "WEIGHTS_0"
+          ],
+          "morphTargetCount": 148
+        }
+      ],
+      "triangleCount": 5070,
+      "morphTargets": [
+        "morph_0",
+        "morph_1",
+        "morph_2",
+        "morph_3",
+        "morph_4",
+        "morph_5",
+        "morph_6",
+        "morph_7",
+        "morph_8",
+        "morph_9",
+        "morph_10",
+        "morph_11",
+        "morph_12",
+        "morph_13",
+        "morph_14",
+        "morph_15",
+        "morph_16",
+        "morph_17",
+        "morph_18",
+        "morph_19",
+        "morph_20",
+        "morph_21",
+        "morph_22",
+        "morph_23",
+        "morph_24",
+        "morph_25",
+        "morph_26",
+        "morph_27",
+        "morph_28",
+        "morph_29",
+        "morph_30",
+        "morph_31",
+        "morph_32",
+        "morph_33",
+        "morph_34",
+        "morph_35",
+        "morph_36",
+        "morph_37",
+        "morph_38",
+        "morph_39",
+        "morph_40",
+        "morph_41",
+        "morph_42",
+        "morph_43",
+        "morph_44",
+        "morph_45",
+        "morph_46",
+        "morph_47",
+        "morph_48",
+        "morph_49",
+        "morph_50",
+        "morph_51",
+        "morph_52",
+        "morph_53",
+        "morph_54",
+        "morph_55",
+        "morph_56",
+        "morph_57",
+        "morph_58",
+        "morph_59",
+        "morph_60",
+        "morph_61",
+        "morph_62",
+        "morph_63",
+        "morph_64",
+        "morph_65",
+        "morph_66",
+        "morph_67",
+        "morph_68",
+        "morph_69",
+        "morph_70",
+        "morph_71",
+        "morph_72",
+        "morph_73",
+        "morph_74",
+        "morph_75",
+        "morph_76",
+        "morph_77",
+        "morph_78",
+        "morph_79",
+        "morph_80",
+        "morph_81",
+        "morph_82",
+        "morph_83",
+        "morph_84",
+        "morph_85",
+        "morph_86",
+        "morph_87",
+        "morph_88",
+        "morph_89",
+        "morph_90",
+        "morph_91",
+        "morph_92",
+        "morph_93",
+        "morph_94",
+        "morph_95",
+        "morph_96",
+        "morph_97",
+        "morph_98",
+        "morph_99",
+        "morph_100",
+        "morph_101",
+        "morph_102",
+        "morph_103",
+        "morph_104",
+        "morph_105",
+        "morph_106",
+        "morph_107",
+        "morph_108",
+        "morph_109",
+        "morph_110",
+        "morph_111",
+        "morph_112",
+        "morph_113",
+        "morph_114",
+        "morph_115",
+        "morph_116",
+        "morph_117",
+        "morph_118",
+        "morph_119",
+        "morph_120",
+        "morph_121",
+        "morph_122",
+        "morph_123",
+        "morph_124",
+        "morph_125",
+        "morph_126",
+        "morph_127",
+        "morph_128",
+        "morph_129",
+        "morph_130",
+        "morph_131",
+        "morph_132",
+        "morph_133",
+        "morph_134",
+        "morph_135",
+        "morph_136",
+        "morph_137",
+        "morph_138",
+        "morph_139",
+        "morph_140",
+        "morph_141",
+        "morph_142",
+        "morph_143",
+        "morph_144",
+        "morph_145",
+        "morph_146",
+        "morph_147"
+      ]
+    },
+    {
+      "index": 7,
+      "name": "7",
+      "primitives": [
+        {
+          "primitiveIndex": 0,
+          "mode": 4,
+          "material": 7,
+          "triangles": 950,
+          "attributes": [
+            "JOINTS_0",
+            "NORMAL",
+            "POSITION",
+            "TEXCOORD_0",
+            "TEXCOORD_1",
+            "TEXCOORD_2",
+            "TEXCOORD_3",
+            "WEIGHTS_0"
+          ],
+          "morphTargetCount": 148
+        }
+      ],
+      "triangleCount": 950,
+      "morphTargets": [
+        "morph_0",
+        "morph_1",
+        "morph_2",
+        "morph_3",
+        "morph_4",
+        "morph_5",
+        "morph_6",
+        "morph_7",
+        "morph_8",
+        "morph_9",
+        "morph_10",
+        "morph_11",
+        "morph_12",
+        "morph_13",
+        "morph_14",
+        "morph_15",
+        "morph_16",
+        "morph_17",
+        "morph_18",
+        "morph_19",
+        "morph_20",
+        "morph_21",
+        "morph_22",
+        "morph_23",
+        "morph_24",
+        "morph_25",
+        "morph_26",
+        "morph_27",
+        "morph_28",
+        "morph_29",
+        "morph_30",
+        "morph_31",
+        "morph_32",
+        "morph_33",
+        "morph_34",
+        "morph_35",
+        "morph_36",
+        "morph_37",
+        "morph_38",
+        "morph_39",
+        "morph_40",
+        "morph_41",
+        "morph_42",
+        "morph_43",
+        "morph_44",
+        "morph_45",
+        "morph_46",
+        "morph_47",
+        "morph_48",
+        "morph_49",
+        "morph_50",
+        "morph_51",
+        "morph_52",
+        "morph_53",
+        "morph_54",
+        "morph_55",
+        "morph_56",
+        "morph_57",
+        "morph_58",
+        "morph_59",
+        "morph_60",
+        "morph_61",
+        "morph_62",
+        "morph_63",
+        "morph_64",
+        "morph_65",
+        "morph_66",
+        "morph_67",
+        "morph_68",
+        "morph_69",
+        "morph_70",
+        "morph_71",
+        "morph_72",
+        "morph_73",
+        "morph_74",
+        "morph_75",
+        "morph_76",
+        "morph_77",
+        "morph_78",
+        "morph_79",
+        "morph_80",
+        "morph_81",
+        "morph_82",
+        "morph_83",
+        "morph_84",
+        "morph_85",
+        "morph_86",
+        "morph_87",
+        "morph_88",
+        "morph_89",
+        "morph_90",
+        "morph_91",
+        "morph_92",
+        "morph_93",
+        "morph_94",
+        "morph_95",
+        "morph_96",
+        "morph_97",
+        "morph_98",
+        "morph_99",
+        "morph_100",
+        "morph_101",
+        "morph_102",
+        "morph_103",
+        "morph_104",
+        "morph_105",
+        "morph_106",
+        "morph_107",
+        "morph_108",
+        "morph_109",
+        "morph_110",
+        "morph_111",
+        "morph_112",
+        "morph_113",
+        "morph_114",
+        "morph_115",
+        "morph_116",
+        "morph_117",
+        "morph_118",
+        "morph_119",
+        "morph_120",
+        "morph_121",
+        "morph_122",
+        "morph_123",
+        "morph_124",
+        "morph_125",
+        "morph_126",
+        "morph_127",
+        "morph_128",
+        "morph_129",
+        "morph_130",
+        "morph_131",
+        "morph_132",
+        "morph_133",
+        "morph_134",
+        "morph_135",
+        "morph_136",
+        "morph_137",
+        "morph_138",
+        "morph_139",
+        "morph_140",
+        "morph_141",
+        "morph_142",
+        "morph_143",
+        "morph_144",
+        "morph_145",
+        "morph_146",
+        "morph_147"
+      ]
+    },
+    {
+      "index": 8,
+      "name": "8",
+      "primitives": [
+        {
+          "primitiveIndex": 0,
+          "mode": 4,
+          "material": 8,
+          "triangles": 482,
+          "attributes": [
+            "JOINTS_0",
+            "NORMAL",
+            "POSITION",
+            "TEXCOORD_0",
+            "TEXCOORD_1",
+            "TEXCOORD_2",
+            "TEXCOORD_3",
+            "WEIGHTS_0"
+          ],
+          "morphTargetCount": 148
+        }
+      ],
+      "triangleCount": 482,
+      "morphTargets": [
+        "morph_0",
+        "morph_1",
+        "morph_2",
+        "morph_3",
+        "morph_4",
+        "morph_5",
+        "morph_6",
+        "morph_7",
+        "morph_8",
+        "morph_9",
+        "morph_10",
+        "morph_11",
+        "morph_12",
+        "morph_13",
+        "morph_14",
+        "morph_15",
+        "morph_16",
+        "morph_17",
+        "morph_18",
+        "morph_19",
+        "morph_20",
+        "morph_21",
+        "morph_22",
+        "morph_23",
+        "morph_24",
+        "morph_25",
+        "morph_26",
+        "morph_27",
+        "morph_28",
+        "morph_29",
+        "morph_30",
+        "morph_31",
+        "morph_32",
+        "morph_33",
+        "morph_34",
+        "morph_35",
+        "morph_36",
+        "morph_37",
+        "morph_38",
+        "morph_39",
+        "morph_40",
+        "morph_41",
+        "morph_42",
+        "morph_43",
+        "morph_44",
+        "morph_45",
+        "morph_46",
+        "morph_47",
+        "morph_48",
+        "morph_49",
+        "morph_50",
+        "morph_51",
+        "morph_52",
+        "morph_53",
+        "morph_54",
+        "morph_55",
+        "morph_56",
+        "morph_57",
+        "morph_58",
+        "morph_59",
+        "morph_60",
+        "morph_61",
+        "morph_62",
+        "morph_63",
+        "morph_64",
+        "morph_65",
+        "morph_66",
+        "morph_67",
+        "morph_68",
+        "morph_69",
+        "morph_70",
+        "morph_71",
+        "morph_72",
+        "morph_73",
+        "morph_74",
+        "morph_75",
+        "morph_76",
+        "morph_77",
+        "morph_78",
+        "morph_79",
+        "morph_80",
+        "morph_81",
+        "morph_82",
+        "morph_83",
+        "morph_84",
+        "morph_85",
+        "morph_86",
+        "morph_87",
+        "morph_88",
+        "morph_89",
+        "morph_90",
+        "morph_91",
+        "morph_92",
+        "morph_93",
+        "morph_94",
+        "morph_95",
+        "morph_96",
+        "morph_97",
+        "morph_98",
+        "morph_99",
+        "morph_100",
+        "morph_101",
+        "morph_102",
+        "morph_103",
+        "morph_104",
+        "morph_105",
+        "morph_106",
+        "morph_107",
+        "morph_108",
+        "morph_109",
+        "morph_110",
+        "morph_111",
+        "morph_112",
+        "morph_113",
+        "morph_114",
+        "morph_115",
+        "morph_116",
+        "morph_117",
+        "morph_118",
+        "morph_119",
+        "morph_120",
+        "morph_121",
+        "morph_122",
+        "morph_123",
+        "morph_124",
+        "morph_125",
+        "morph_126",
+        "morph_127",
+        "morph_128",
+        "morph_129",
+        "morph_130",
+        "morph_131",
+        "morph_132",
+        "morph_133",
+        "morph_134",
+        "morph_135",
+        "morph_136",
+        "morph_137",
+        "morph_138",
+        "morph_139",
+        "morph_140",
+        "morph_141",
+        "morph_142",
+        "morph_143",
+        "morph_144",
+        "morph_145",
+        "morph_146",
+        "morph_147"
+      ]
+    },
+    {
+      "index": 9,
+      "name": "9",
+      "primitives": [
+        {
+          "primitiveIndex": 0,
+          "mode": 4,
+          "material": 9,
+          "triangles": 162,
+          "attributes": [
+            "JOINTS_0",
+            "NORMAL",
+            "POSITION",
+            "TEXCOORD_0",
+            "TEXCOORD_1",
+            "TEXCOORD_2",
+            "TEXCOORD_3",
+            "WEIGHTS_0"
+          ],
+          "morphTargetCount": 148
+        }
+      ],
+      "triangleCount": 162,
+      "morphTargets": [
+        "morph_0",
+        "morph_1",
+        "morph_2",
+        "morph_3",
+        "morph_4",
+        "morph_5",
+        "morph_6",
+        "morph_7",
+        "morph_8",
+        "morph_9",
+        "morph_10",
+        "morph_11",
+        "morph_12",
+        "morph_13",
+        "morph_14",
+        "morph_15",
+        "morph_16",
+        "morph_17",
+        "morph_18",
+        "morph_19",
+        "morph_20",
+        "morph_21",
+        "morph_22",
+        "morph_23",
+        "morph_24",
+        "morph_25",
+        "morph_26",
+        "morph_27",
+        "morph_28",
+        "morph_29",
+        "morph_30",
+        "morph_31",
+        "morph_32",
+        "morph_33",
+        "morph_34",
+        "morph_35",
+        "morph_36",
+        "morph_37",
+        "morph_38",
+        "morph_39",
+        "morph_40",
+        "morph_41",
+        "morph_42",
+        "morph_43",
+        "morph_44",
+        "morph_45",
+        "morph_46",
+        "morph_47",
+        "morph_48",
+        "morph_49",
+        "morph_50",
+        "morph_51",
+        "morph_52",
+        "morph_53",
+        "morph_54",
+        "morph_55",
+        "morph_56",
+        "morph_57",
+        "morph_58",
+        "morph_59",
+        "morph_60",
+        "morph_61",
+        "morph_62",
+        "morph_63",
+        "morph_64",
+        "morph_65",
+        "morph_66",
+        "morph_67",
+        "morph_68",
+        "morph_69",
+        "morph_70",
+        "morph_71",
+        "morph_72",
+        "morph_73",
+        "morph_74",
+        "morph_75",
+        "morph_76",
+        "morph_77",
+        "morph_78",
+        "morph_79",
+        "morph_80",
+        "morph_81",
+        "morph_82",
+        "morph_83",
+        "morph_84",
+        "morph_85",
+        "morph_86",
+        "morph_87",
+        "morph_88",
+        "morph_89",
+        "morph_90",
+        "morph_91",
+        "morph_92",
+        "morph_93",
+        "morph_94",
+        "morph_95",
+        "morph_96",
+        "morph_97",
+        "morph_98",
+        "morph_99",
+        "morph_100",
+        "morph_101",
+        "morph_102",
+        "morph_103",
+        "morph_104",
+        "morph_105",
+        "morph_106",
+        "morph_107",
+        "morph_108",
+        "morph_109",
+        "morph_110",
+        "morph_111",
+        "morph_112",
+        "morph_113",
+        "morph_114",
+        "morph_115",
+        "morph_116",
+        "morph_117",
+        "morph_118",
+        "morph_119",
+        "morph_120",
+        "morph_121",
+        "morph_122",
+        "morph_123",
+        "morph_124",
+        "morph_125",
+        "morph_126",
+        "morph_127",
+        "morph_128",
+        "morph_129",
+        "morph_130",
+        "morph_131",
+        "morph_132",
+        "morph_133",
+        "morph_134",
+        "morph_135",
+        "morph_136",
+        "morph_137",
+        "morph_138",
+        "morph_139",
+        "morph_140",
+        "morph_141",
+        "morph_142",
+        "morph_143",
+        "morph_144",
+        "morph_145",
+        "morph_146",
+        "morph_147"
+      ]
+    }
+  ],
+  "materials": [
+    {
+      "index": 0,
+      "name": "MI_player_004_lacrimosa_01",
+      "alphaMode": "OPAQUE",
+      "doubleSided": false,
+      "extensions": [
+        "KHR_materials_unlit"
+      ]
+    },
+    {
+      "index": 1,
+      "name": "MI_player_004_lacrimosa_03",
+      "alphaMode": "OPAQUE",
+      "doubleSided": true,
+      "extensions": [
+        "KHR_materials_unlit"
+      ]
+    },
+    {
+      "index": 2,
+      "name": "MI_player_004_lacrimosa_02",
+      "alphaMode": "OPAQUE",
+      "doubleSided": true,
+      "extensions": [
+        "KHR_materials_unlit"
+      ]
+    },
+    {
+      "index": 3,
+      "name": "MI_player_004_lacrimosa_hair_01",
+      "alphaMode": "OPAQUE",
+      "doubleSided": false,
+      "extensions": [
+        "KHR_materials_unlit"
+      ]
+    },
+    {
+      "index": 4,
+      "name": "MI_player_004_lacrimosa_hair_02",
+      "alphaMode": "OPAQUE",
+      "doubleSided": true,
+      "extensions": [
+        "KHR_materials_unlit"
+      ]
+    },
+    {
+      "index": 5,
+      "name": "MI_common_face_mask",
+      "alphaMode": "OPAQUE",
+      "doubleSided": true,
+      "extensions": [
+        "KHR_materials_unlit"
+      ]
+    },
+    {
+      "index": 6,
+      "name": "MI_player_004_lacrimosa_face",
+      "alphaMode": "OPAQUE",
+      "doubleSided": false,
+      "extensions": [
+        "KHR_materials_unlit"
+      ]
+    },
+    {
+      "index": 7,
+      "name": "MI_player_004_lacrimosa_eyelash",
+      "alphaMode": "OPAQUE",
+      "doubleSided": true,
+      "extensions": [
+        "KHR_materials_unlit"
+      ]
+    },
+    {
+      "index": 8,
+      "name": "MI_player_004_lacrimosa_eye",
+      "alphaMode": "OPAQUE",
+      "doubleSided": true,
+      "extensions": [
+        "KHR_materials_unlit"
+      ]
+    },
+    {
+      "index": 9,
+      "name": "MI_player_004_lacrimosa_gaoguang",
+      "alphaMode": "OPAQUE",
+      "doubleSided": true,
+      "extensions": [
+        "KHR_materials_unlit"
+      ]
+    }
+  ],
+  "images": [
+    {
+      "index": 0,
+      "name": "image_0",
+      "mimeType": "image/png",
+      "bufferView": 9,
+      "dimensions": {
+        "width": 1024,
+        "height": 1024
+      }
+    },
+    {
+      "index": 1,
+      "name": "image_1",
+      "mimeType": "image/png",
+      "bufferView": 10,
+      "dimensions": {
+        "width": 1024,
+        "height": 1024
+      }
+    },
+    {
+      "index": 2,
+      "name": "image_2",
+      "mimeType": "image/png",
+      "bufferView": 11,
+      "dimensions": {
+        "width": 1024,
+        "height": 1024
+      }
+    },
+    {
+      "index": 3,
+      "name": "image_3",
+      "mimeType": "image/png",
+      "bufferView": 12,
+      "dimensions": {
+        "width": 1024,
+        "height": 1024
+      }
+    },
+    {
+      "index": 4,
+      "name": "image_4",
+      "mimeType": "image/png",
+      "bufferView": 13,
+      "dimensions": {
+        "width": 1024,
+        "height": 1024
+      }
+    },
+    {
+      "index": 5,
+      "name": "image_5",
+      "mimeType": "image/png",
+      "bufferView": 14,
+      "dimensions": {
+        "width": 1024,
+        "height": 1024
+      }
+    },
+    {
+      "index": 6,
+      "name": "image_6",
+      "mimeType": "image/png",
+      "bufferView": 15,
+      "dimensions": {
+        "width": 1024,
+        "height": 1024
+      }
+    }
+  ],
+  "skins": [
+    {
+      "index": 0,
+      "name": "skin_0",
+      "skeleton": "_rootJoint",
+      "jointCount": 411,
+      "joints": [
+        "_rootJoint",
+        "root_04",
+        "Bip001_05",
+        "Bip001-Pelvis_06",
+        "Bip001-Spine_07",
+        "Bip001-Spine1_08",
+        "Bip001-Spine2_09",
+        "Bip001-L-Clavicle_010",
+        "Bip001-L-UpperArm_011",
+        "Bip001-L-Forearm_012",
+        "Bip001-L-Hand_013",
+        "Bip001-L-Finger0_014",
+        "Bip001-L-Finger01_015",
+        "Bip001-L-Finger02_016",
+        "Bip001-L-Finger02_end_0275",
+        "Bip001-L-Finger1_017",
+        "Bip001-L-Finger11_018",
+        "Bip001-L-Finger12_019",
+        "Bip001-L-Finger12_end_0276",
+        "weapon_finger_L1_020",
+        "weapon_finger_L1_end_0277",
+        "Bip001-L-Finger2_021",
+        "Bip001-L-Finger21_022",
+        "Bip001-L-Finger22_023",
+        "Bip001-L-Finger22_end_0278",
+        "Bip001-L-Finger3_024",
+        "Bip001-L-Finger31_025",
+        "Bip001-L-Finger32_026",
+        "Bip001-L-Finger32_end_0279",
+        "Bip001-L-Finger4_027",
+        "Bip001-L-Finger41_028",
+        "Bip001-L-Finger42_029",
+        "Bip001-L-Finger42_end_0260",
+        "Bip001-Prop2_030",
+        "Lhand_Weapon2_031",
+        "Lhand_Weapon2_end_0281",
+        "FoliageInteractionL_032",
+        "FoliageInteractionL_end_0282",
+        "Bone-L-ForeArm-Twist_033",
+        "Bone-L-ForeArm-Twist1_034",
+        "Bn_l_handD_001_035",
+        "Bn_l_handD_001_end_0283",
+        "Bn_l_handU_001_036",
+        "Bn_l_handU_001_end_0284",
+        "Bn_l_elbowAvg_001_037",
+        "Bn_l_elbowAvg_001_end_0285",
+        "Bn_l_elbowPush_001_038",
+        "Bn_l_elbowPush_001_end_0286",
+        "Bone-L-UpperArm-Twist_039",
+        "Bone-L-UpperArm-Twist1_040",
+        "Bone-L-UpperArm-Twist1_end_0287",
+        "Bn_l_callorA_001_041",
+        "Bn_l_callorA_001_end_0288",
+        "Bip001-R-Clavicle_042",
+        "Bip001-R-UpperArm_043",
+        "Bip001-R-Forearm_044",
+        "Bip001-R-Hand_045",
+        "Bip001-R-Finger0_046",
+        "Bip001-R-Finger01_047",
+        "Bip001-R-Finger02_048",
+        "Bip001-R-Finger02_end_0289",
+        "Bip001-R-Finger1_049",
+        "Bip001-R-Finger11_050",
+        "Bip001-R-Finger12_051",
+        "Bip001-R-Finger12_end_0290",
+        "weapon_finger_R1_052",
+        "weapon_finger_R1_end_0291",
+        "ContaintSocket_053",
+        "ContaintSocket_end_0292",
+        "Bip001-R-Finger2_054",
+        "Bip001-R-Finger21_055",
+        "Bip001-R-Finger22_056",
+        "Bip001-R-Finger22_end_0293",
+        "Bip001-R-Finger3_057",
+        "Bip001-R-Finger31_058",
+        "Bip001-R-Finger32_059",
+        "Bip001-R-Finger32_end_0294",
+        "Bip001-R-Finger4_060",
+        "Bip001-R-Finger41_061",
+        "Bip001-R-Finger42_062",
+        "Bip001-R-Finger42_end_0295",
+        "Bip001-Prop1_063",
+        "GlidingSocket_064",
+        "GlidingSocket_end_0296",
+        "Rhand_Weapon2_065",
+        "Rhand_Weapon2_end_0297",
+        "FoliageInteractionR_066",
+        "FoliageInteractionR_end_0298",
+        "Bone-R-ForeArm-Twist_067",
+        "Bone-R-ForeArm-Twist1_068",
+        "Bn_r_handD_001_069",
+        "Bn_r_handD_001_end_0299",
+        "Bn_r_handU_001_070",
+        "Bn_r_handU_001_end_0280",
+        "Bn_r_elbowAvg_001_071",
+        "Bn_r_elbowAvg_001_end_0301",
+        "Bn_r_elbowPush_001_072",
+        "Bn_r_elbowPush_001_end_0302",
+        "Bn_r_callorA_001_073",
+        "Bn_r_callorA_002_074",
+        "Bn_r_callorA_002_end_0303",
+        "Bone-R-UpperArm-Twist_075",
+        "Bone-R-UpperArm-Twist1_076",
+        "Bone-R-UpperArm-Twist1_end_0304",
+        "Bn_r_clothB_001_077",
+        "Bn_r_clothB_002_078",
+        "Bn_r_clothB_002_end_0305",
+        "Bn_r_clothD_001_079",
+        "Bn_r_clothD_002_080",
+        "Bn_r_clothD_003_00",
+        "Bn_r_clothD_003_end_0306",
+        "Bn_r_upperArmPush_0_001_081",
+        "Bn_r_upperArmPush_0_001_end_0307",
+        "Bip001-Neck_082",
+        "Bip001-Head_083",
+        "Bn_m_hairU_001_084",
+        "Bn_m_hairU_002_085",
+        "Bn_m_hairU_003_086",
+        "Bn_m_hairU_003_end_0308",
+        "Bn_r_hairB_001_087",
+        "Bn_r_hairB_002_088",
+        "Bn_r_hairB_002_end_0309",
+        "Bn_m_hair_001_089",
+        "Bn_m_hair_002_090",
+        "Bn_m_hair_002_end_0310",
+        "Bn_r_hairD_001_091",
+        "Bn_r_hairD_002_092",
+        "Bn_r_hairD_003_093",
+        "Bn_r_hairD_003_end_0311",
+        "Bone_head_094",
+        "mouth_095",
+        "Bon_zuiba_R_096",
+        "Bon_zuiba_R_end_0312",
+        "Bon_yachi_up_097",
+        "Bon_yachi_up_end_0313",
+        "Bon_yachi_lo_098",
+        "Bon_yachi_lo_end_0314",
+        "Bon_colip_R_099",
+        "Bon_colip_R_end_0315",
+        "Bon_uplip02_R_01",
+        "Bon_uplip02_R_end_0316",
+        "Bon_Lolip02_R_02",
+        "Bon_Lolip02_R_end_0317",
+        "Bon_uplip01_R_03",
+        "Bon_uplip01_R_end_0318",
+        "Bon_Lolip01_R_0100",
+        "Bon_Lolip01_R_end_0319",
+        "Bon_uplip_M_0101",
+        "Bon_uplip_M_end_0300",
+        "Bon_Lolip_M_0102",
+        "Bon_Lolip_M_end_0321",
+        "Bon_uplip01_L_0103",
+        "Bon_uplip01_L_end_0322",
+        "Bon_Lolip01_L_0104",
+        "Bon_Lolip01_L_end_0323",
+        "Bon_uplip02_L_0105",
+        "Bon_uplip02_L_end_0324",
+        "Bon_Lolip02_L_0106",
+        "Bon_Lolip02_L_end_0325",
+        "Bon_colip_L_0107",
+        "Bon_colip_L_end_0326",
+        "Bon_zuiba_L_0108",
+        "Bon_zuiba_L_end_0327",
+        "Bon_eyebrow02_L_0109",
+        "Bon_eyebrow02_L_end_0328",
+        "Bon_eyebrow01_L_0110",
+        "Bon_eyebrow01_L_end_0329",
+        "Bon_eyebrow03_L_0111",
+        "Bon_eyebrow03_L_end_0330",
+        "Bon_eyebrow03_R_0112",
+        "Bon_eyebrow03_R_end_0331",
+        "Bon_eyebrow02_R_0113",
+        "Bon_eyebrow02_R_end_0332",
+        "Bon_eyebrow01_R_0114",
+        "Bon_eyebrow01_R_end_0333",
+        "BON_eyelid04_up_R_0115",
+        "BON_eyelid04_up_R_end_0334",
+        "BON_eyelid05_up_R_0116",
+        "BON_eyelid05_up_R_end_0335",
+        "BON_eyelid_up_R_0117",
+        "BON_eyelid_up_R_end_0336",
+        "BON_eyelid03_up_R_0118",
+        "BON_eyelid03_up_R_end_0337",
+        "BON_eyeCo_out_R_0120",
+        "BON_eyeCo_out_R_end_0338",
+        "BON_eyelid03_lo_R_0121",
+        "BON_eyelid03_lo_R_end_0339",
+        "BON_eyelid_lo_R_0122",
+        "BON_eyelid_lo_R_end_0320",
+        "BON_eyelid02_lo_R_0123",
+        "BON_eyelid02_lo_R_end_0341",
+        "BON_eyeCo_in_R_0124",
+        "BON_eyeCo_in_R_end_0342",
+        "BON_eyelid02_up_R_0125",
+        "BON_eyelid02_up_R_end_0343",
+        "Bon_eyeball_R_0126",
+        "Bon_eyeball_R_end_0344",
+        "Bon_lianjia_R_0127",
+        "Bon_lianjia_R_end_0345",
+        "BON_eyelid05_up_L_0128",
+        "BON_eyelid05_up_L_end_0346",
+        "BON_eyelid04_up_L_0129",
+        "BON_eyelid04_up_L_end_0347",
+        "BON_eyelid_up_L_0130",
+        "BON_eyelid_up_L_end_0348",
+        "Bon_eyeball_L_0131",
+        "Bon_eyeball_L_end_0349",
+        "BON_eyelid02_up_L_0132",
+        "BON_eyelid02_up_L_end_0350",
+        "BON_eyeCo_in_L_0133",
+        "BON_eyeCo_in_L_end_0351",
+        "BON_eyelid02_lo_L_0134",
+        "BON_eyelid02_lo_L_end_0352",
+        "BON_eyelid_lo_L_0135",
+        "BON_eyelid_lo_L_end_0353",
+        "BON_eyelid03_lo_L_0136",
+        "BON_eyelid03_lo_L_end_0354",
+        "BON_eyeCo_out_L_0137",
+        "BON_eyeCo_out_L_end_0355",
+        "BON_eyelid03_up_L_0138",
+        "BON_eyelid03_up_L_end_0356",
+        "Bon_lianjia_L_0139",
+        "Bon_lianjia_L_end_0357",
+        "Bn_r_hairA_001_0119",
+        "Bn_r_hairA_002_0141",
+        "Bn_r_hairA_003_0142",
+        "Bn_r_hairA_004_0143",
+        "Bn_r_hairA_005_0144",
+        "Bn_r_hairA_006_0145",
+        "Bn_r_hairA_007_0146",
+        "Bn_r_hairA_007_end_0358",
+        "Bn_r_hairC_001_0147",
+        "Bn_r_hairC_002_0148",
+        "Bn_r_hairC_003_0149",
+        "Bn_r_hairC_004_0150",
+        "Bn_r_hairC_004_end_0359",
+        "Bn_l_hairA_001_0151",
+        "Bn_l_hairA_002_0152",
+        "Bn_l_hairA_003_0153",
+        "Bn_l_hairA_004_0154",
+        "Bn_l_hairA_005_0155",
+        "Bn_l_hairA_006_0156",
+        "Bn_l_hairA_007_0157",
+        "Bn_l_hairA_007_end_0340",
+        "Bn_l_hairC_001_0158",
+        "Bn_l_hairC_002_0159",
+        "Bn_l_hairC_003_0140",
+        "Bn_l_hairC_004_0161",
+        "Bn_l_hairC_004_end_0361",
+        "Bn_l_hairB_001_0162",
+        "Bn_l_hairB_002_0163",
+        "Bn_l_hairD_001_0164",
+        "Bn_l_hairD_002_0165",
+        "Bn_l_hairD_003_0166",
+        "Bn_l_hairD_003_end_0362",
+        "FirstPersonCameraAttachSocket_0167",
+        "FirstPersonCameraAttachSocket_end_0363",
+        "Bn_m_tieU_001_0168",
+        "Bn_m_tieU_002_0169",
+        "Bn_m_tieU_003_0170",
+        "Bn_m_tieU_004_0171",
+        "Bn_m_tieU_004_end_0364",
+        "Bn_m_tieU_006_0172",
+        "Bn_m_tieU_007_0173",
+        "Bn_m_tieU_008_0174",
+        "Bn_m_tieU_008_end_0365",
+        "Bn_l_clothC_001_0175",
+        "Bn_l_clothC_002_0176",
+        "Bn_l_clothC_002_end_0366",
+        "Bn_l_clothB_001_0177",
+        "Bn_l_clothB_002_0178",
+        "Bn_l_clothB_002_end_0367",
+        "Bn_l_clothA_001_0179",
+        "Bn_l_clothA_002_0160",
+        "Bn_l_lalian_001_0181",
+        "Bn_l_lalian_001_end_0368",
+        "Bn_m_cloth_001_0182",
+        "Bn_m_cloth_002_0183",
+        "Bn_m_cloth_002_end_0369",
+        "Bn_r_xiong_001_0184",
+        "Bn_r_xiong_001_end_0370",
+        "Bn_l_xiong_001_0185",
+        "Bn_l_xiong_001_end_0371",
+        "Bn_r_clothC_001_0186",
+        "Bn_r_clothC_002_0187",
+        "Bn_r_clothC_002_end_0372",
+        "Bn_l_callor_001_0188",
+        "Bn_l_callor_002_0189",
+        "Bn_l_callor_002_end_0373",
+        "Bn_m_callor_001_0190",
+        "Bn_m_callor_002_0191",
+        "Bn_m_callor_002_end_0374",
+        "Bn_r_callor_001_0192",
+        "Bn_r_callor_002_0193",
+        "Bn_r_callor_002_end_0375",
+        "Bn_r_clothE_001_0194",
+        "Bn_r_clothE_end_0195",
+        "Bn_r_clothE_end_end_0376",
+        "Bn_l_clothE_001_0196",
+        "Bn_l_clothE_end_0197",
+        "Bn_l_clothE_end_end_0377",
+        "Bip001-L-Thigh_0198",
+        "Bip001-L-Calf_0199",
+        "Bip001-L-Foot_0180",
+        "Bip001-L-Toe0_0201",
+        "Bip001-L-Toe0_end_0378",
+        "FootStep_Left_0202",
+        "FootStep_Left_end_0379",
+        "Bone-L-Calf-Twist_0203",
+        "Bone-L-Calf-Twist1_0204",
+        "Bone-L-Calf-Twist1_end_0360",
+        "Bn_l_kneePush_001_0205",
+        "Bn_l_kneePush_001_end_0381",
+        "Bn_l_kneeAvg_001_0206",
+        "Bn_l_kneeAvg_001_end_0382",
+        "Bone-L-Thigh-Twist_0207",
+        "Bone-L-Thigh-Twist1_0208",
+        "Bone-L-Thigh-Twist1_end_0383",
+        "Bip001-R-Thigh_0209",
+        "Bip001-R-Calf_0210",
+        "Bip001-R-Foot_0211",
+        "Bip001-R-Toe0_0212",
+        "Bip001-R-Toe0_end_0384",
+        "FootStep_Right_0213",
+        "FootStep_Right_end_0385",
+        "Bone-R-Calf-Twist_0214",
+        "Bone-R-Calf-Twist1_0215",
+        "Bone-R-Calf-Twist1_end_0386",
+        "Bn_r_kneePush_001_0216",
+        "Bn_r_kneePush_001_end_0387",
+        "Bn_r_kneeAvg_001_0217",
+        "Bn_r_kneeAvg_001_end_0388",
+        "Bone-R-Thigh-Twist_0218",
+        "Bone-R-Thigh-Twist1_0219",
+        "Bone-R-Thigh-Twist1_end_0389",
+        "Bn_m_tail_001_0200",
+        "Bn_m_tail_002_0221",
+        "Bn_m_tail_003_0222",
+        "Bn_m_tail_004_0223",
+        "Bn_m_tail_005_0224",
+        "Bn_m_tail_006_0225",
+        "WaterDroppingSocket1_0226",
+        "WaterDroppingSocket1_end_0390",
+        "Bn_m_tail_006������_0227",
+        "Bn_m_tail_006������_end_0391",
+        "Bn_r_qunA_001_0228",
+        "Bn_r_qunA_002_0229",
+        "Bn_r_qunA_003_0230",
+        "Bn_r_qunA_003_end_0392",
+        "Bn_r_qunB_001_0231",
+        "Bn_r_qunB_002_0232",
+        "Bn_r_qunB_003_0233",
+        "Bn_r_qunB_003_end_0393",
+        "Bn_r_qunC_001_0234",
+        "Bn_r_qunC_002_0235",
+        "Bn_r_qunC_003_0236",
+        "Bn_r_piaodai_002_0237",
+        "Bn_r_piaodai_003_0238",
+        "Bn_r_piaodai_003_end_0394",
+        "Bn_m_qunF_001_0239",
+        "Bn_m_qunF_002_0220",
+        "Bn_m_qunF_003_0241",
+        "Bn_m_qunF_003_end_0395",
+        "Bn_m_qunB_001_0242",
+        "Bn_m_qunB_002_0243",
+        "Bn_m_qunB_003_0244",
+        "Bn_m_qunB_003_end_0396",
+        "Bn_l_qunC_001_0245",
+        "Bn_l_qunC_002_0246",
+        "Bn_l_qunC_003_0247",
+        "Bn_l_piaodai_003_0248",
+        "Bn_l_piaodai_004_0249",
+        "Bn_l_piaodai_004_end_0397",
+        "Bn_l_qunB_001_0250",
+        "Bn_l_qunB_002_0251",
+        "Bn_l_qunB_003_0252",
+        "Bn_l_qunB_003_end_0398",
+        "Bn_l_qunA_001_0253",
+        "Bn_l_qunA_002_0254",
+        "Bn_l_qunA_003_0255",
+        "Bn_l_qunA_003_end_0399",
+        "Bn_m_gongpai_001_0256",
+        "Bn_m_gongpai_002_0257",
+        "Bn_m_gongpai_003_0258",
+        "Bn_m_gongpai_003_end_0380",
+        "FireSocket_0259",
+        "FireSocket_end_0400",
+        "root_foot_0240",
+        "foot_r_0261",
+        "foot_r_end_0401",
+        "foot_l_0262",
+        "foot_l_end_0402",
+        "root_hand_0263",
+        "hand_r_0264",
+        "FX_hand_rSocket_0265",
+        "FX_hand_rSocket_end_0403",
+        "Rhand_Weapon_0266",
+        "Rhand_Weapon_end_0404",
+        "hand_l_0267",
+        "FX_hand_lSocket_0268",
+        "FX_hand_lSocket_end_0405",
+        "wq_root_L_0269",
+        "P_wq_L_0270",
+        "P_wq_L_end_0406",
+        "wq_root_R_0271",
+        "P_wq_R_0272",
+        "P_wq_R_end_0407",
+        "rootSocket_0273",
+        "rootSocket_end_0408",
+        "WeaponSocket_0274",
+        "WeaponSocket_end_0409"
+      ]
+    }
+  ],
+  "bones": {
+    "count": 411,
+    "all": [
+      "_rootJoint",
+      "root_04",
+      "Bip001_05",
+      "Bip001-Pelvis_06",
+      "Bip001-Spine_07",
+      "Bip001-Spine1_08",
+      "Bip001-Spine2_09",
+      "Bip001-L-Clavicle_010",
+      "Bip001-L-UpperArm_011",
+      "Bip001-L-Forearm_012",
+      "Bip001-L-Hand_013",
+      "Bip001-L-Finger0_014",
+      "Bip001-L-Finger01_015",
+      "Bip001-L-Finger02_016",
+      "Bip001-L-Finger02_end_0275",
+      "Bip001-L-Finger1_017",
+      "Bip001-L-Finger11_018",
+      "Bip001-L-Finger12_019",
+      "Bip001-L-Finger12_end_0276",
+      "weapon_finger_L1_020",
+      "weapon_finger_L1_end_0277",
+      "Bip001-L-Finger2_021",
+      "Bip001-L-Finger21_022",
+      "Bip001-L-Finger22_023",
+      "Bip001-L-Finger22_end_0278",
+      "Bip001-L-Finger3_024",
+      "Bip001-L-Finger31_025",
+      "Bip001-L-Finger32_026",
+      "Bip001-L-Finger32_end_0279",
+      "Bip001-L-Finger4_027",
+      "Bip001-L-Finger41_028",
+      "Bip001-L-Finger42_029",
+      "Bip001-L-Finger42_end_0260",
+      "Bip001-Prop2_030",
+      "Lhand_Weapon2_031",
+      "Lhand_Weapon2_end_0281",
+      "FoliageInteractionL_032",
+      "FoliageInteractionL_end_0282",
+      "Bone-L-ForeArm-Twist_033",
+      "Bone-L-ForeArm-Twist1_034",
+      "Bn_l_handD_001_035",
+      "Bn_l_handD_001_end_0283",
+      "Bn_l_handU_001_036",
+      "Bn_l_handU_001_end_0284",
+      "Bn_l_elbowAvg_001_037",
+      "Bn_l_elbowAvg_001_end_0285",
+      "Bn_l_elbowPush_001_038",
+      "Bn_l_elbowPush_001_end_0286",
+      "Bone-L-UpperArm-Twist_039",
+      "Bone-L-UpperArm-Twist1_040",
+      "Bone-L-UpperArm-Twist1_end_0287",
+      "Bn_l_callorA_001_041",
+      "Bn_l_callorA_001_end_0288",
+      "Bip001-R-Clavicle_042",
+      "Bip001-R-UpperArm_043",
+      "Bip001-R-Forearm_044",
+      "Bip001-R-Hand_045",
+      "Bip001-R-Finger0_046",
+      "Bip001-R-Finger01_047",
+      "Bip001-R-Finger02_048",
+      "Bip001-R-Finger02_end_0289",
+      "Bip001-R-Finger1_049",
+      "Bip001-R-Finger11_050",
+      "Bip001-R-Finger12_051",
+      "Bip001-R-Finger12_end_0290",
+      "weapon_finger_R1_052",
+      "weapon_finger_R1_end_0291",
+      "ContaintSocket_053",
+      "ContaintSocket_end_0292",
+      "Bip001-R-Finger2_054",
+      "Bip001-R-Finger21_055",
+      "Bip001-R-Finger22_056",
+      "Bip001-R-Finger22_end_0293",
+      "Bip001-R-Finger3_057",
+      "Bip001-R-Finger31_058",
+      "Bip001-R-Finger32_059",
+      "Bip001-R-Finger32_end_0294",
+      "Bip001-R-Finger4_060",
+      "Bip001-R-Finger41_061",
+      "Bip001-R-Finger42_062",
+      "Bip001-R-Finger42_end_0295",
+      "Bip001-Prop1_063",
+      "GlidingSocket_064",
+      "GlidingSocket_end_0296",
+      "Rhand_Weapon2_065",
+      "Rhand_Weapon2_end_0297",
+      "FoliageInteractionR_066",
+      "FoliageInteractionR_end_0298",
+      "Bone-R-ForeArm-Twist_067",
+      "Bone-R-ForeArm-Twist1_068",
+      "Bn_r_handD_001_069",
+      "Bn_r_handD_001_end_0299",
+      "Bn_r_handU_001_070",
+      "Bn_r_handU_001_end_0280",
+      "Bn_r_elbowAvg_001_071",
+      "Bn_r_elbowAvg_001_end_0301",
+      "Bn_r_elbowPush_001_072",
+      "Bn_r_elbowPush_001_end_0302",
+      "Bn_r_callorA_001_073",
+      "Bn_r_callorA_002_074",
+      "Bn_r_callorA_002_end_0303",
+      "Bone-R-UpperArm-Twist_075",
+      "Bone-R-UpperArm-Twist1_076",
+      "Bone-R-UpperArm-Twist1_end_0304",
+      "Bn_r_clothB_001_077",
+      "Bn_r_clothB_002_078",
+      "Bn_r_clothB_002_end_0305",
+      "Bn_r_clothD_001_079",
+      "Bn_r_clothD_002_080",
+      "Bn_r_clothD_003_00",
+      "Bn_r_clothD_003_end_0306",
+      "Bn_r_upperArmPush_0_001_081",
+      "Bn_r_upperArmPush_0_001_end_0307",
+      "Bip001-Neck_082",
+      "Bip001-Head_083",
+      "Bn_m_hairU_001_084",
+      "Bn_m_hairU_002_085",
+      "Bn_m_hairU_003_086",
+      "Bn_m_hairU_003_end_0308",
+      "Bn_r_hairB_001_087",
+      "Bn_r_hairB_002_088",
+      "Bn_r_hairB_002_end_0309",
+      "Bn_m_hair_001_089",
+      "Bn_m_hair_002_090",
+      "Bn_m_hair_002_end_0310",
+      "Bn_r_hairD_001_091",
+      "Bn_r_hairD_002_092",
+      "Bn_r_hairD_003_093",
+      "Bn_r_hairD_003_end_0311",
+      "Bone_head_094",
+      "mouth_095",
+      "Bon_zuiba_R_096",
+      "Bon_zuiba_R_end_0312",
+      "Bon_yachi_up_097",
+      "Bon_yachi_up_end_0313",
+      "Bon_yachi_lo_098",
+      "Bon_yachi_lo_end_0314",
+      "Bon_colip_R_099",
+      "Bon_colip_R_end_0315",
+      "Bon_uplip02_R_01",
+      "Bon_uplip02_R_end_0316",
+      "Bon_Lolip02_R_02",
+      "Bon_Lolip02_R_end_0317",
+      "Bon_uplip01_R_03",
+      "Bon_uplip01_R_end_0318",
+      "Bon_Lolip01_R_0100",
+      "Bon_Lolip01_R_end_0319",
+      "Bon_uplip_M_0101",
+      "Bon_uplip_M_end_0300",
+      "Bon_Lolip_M_0102",
+      "Bon_Lolip_M_end_0321",
+      "Bon_uplip01_L_0103",
+      "Bon_uplip01_L_end_0322",
+      "Bon_Lolip01_L_0104",
+      "Bon_Lolip01_L_end_0323",
+      "Bon_uplip02_L_0105",
+      "Bon_uplip02_L_end_0324",
+      "Bon_Lolip02_L_0106",
+      "Bon_Lolip02_L_end_0325",
+      "Bon_colip_L_0107",
+      "Bon_colip_L_end_0326",
+      "Bon_zuiba_L_0108",
+      "Bon_zuiba_L_end_0327",
+      "Bon_eyebrow02_L_0109",
+      "Bon_eyebrow02_L_end_0328",
+      "Bon_eyebrow01_L_0110",
+      "Bon_eyebrow01_L_end_0329",
+      "Bon_eyebrow03_L_0111",
+      "Bon_eyebrow03_L_end_0330",
+      "Bon_eyebrow03_R_0112",
+      "Bon_eyebrow03_R_end_0331",
+      "Bon_eyebrow02_R_0113",
+      "Bon_eyebrow02_R_end_0332",
+      "Bon_eyebrow01_R_0114",
+      "Bon_eyebrow01_R_end_0333",
+      "BON_eyelid04_up_R_0115",
+      "BON_eyelid04_up_R_end_0334",
+      "BON_eyelid05_up_R_0116",
+      "BON_eyelid05_up_R_end_0335",
+      "BON_eyelid_up_R_0117",
+      "BON_eyelid_up_R_end_0336",
+      "BON_eyelid03_up_R_0118",
+      "BON_eyelid03_up_R_end_0337",
+      "BON_eyeCo_out_R_0120",
+      "BON_eyeCo_out_R_end_0338",
+      "BON_eyelid03_lo_R_0121",
+      "BON_eyelid03_lo_R_end_0339",
+      "BON_eyelid_lo_R_0122",
+      "BON_eyelid_lo_R_end_0320",
+      "BON_eyelid02_lo_R_0123",
+      "BON_eyelid02_lo_R_end_0341",
+      "BON_eyeCo_in_R_0124",
+      "BON_eyeCo_in_R_end_0342",
+      "BON_eyelid02_up_R_0125",
+      "BON_eyelid02_up_R_end_0343",
+      "Bon_eyeball_R_0126",
+      "Bon_eyeball_R_end_0344",
+      "Bon_lianjia_R_0127",
+      "Bon_lianjia_R_end_0345",
+      "BON_eyelid05_up_L_0128",
+      "BON_eyelid05_up_L_end_0346",
+      "BON_eyelid04_up_L_0129",
+      "BON_eyelid04_up_L_end_0347",
+      "BON_eyelid_up_L_0130",
+      "BON_eyelid_up_L_end_0348",
+      "Bon_eyeball_L_0131",
+      "Bon_eyeball_L_end_0349",
+      "BON_eyelid02_up_L_0132",
+      "BON_eyelid02_up_L_end_0350",
+      "BON_eyeCo_in_L_0133",
+      "BON_eyeCo_in_L_end_0351",
+      "BON_eyelid02_lo_L_0134",
+      "BON_eyelid02_lo_L_end_0352",
+      "BON_eyelid_lo_L_0135",
+      "BON_eyelid_lo_L_end_0353",
+      "BON_eyelid03_lo_L_0136",
+      "BON_eyelid03_lo_L_end_0354",
+      "BON_eyeCo_out_L_0137",
+      "BON_eyeCo_out_L_end_0355",
+      "BON_eyelid03_up_L_0138",
+      "BON_eyelid03_up_L_end_0356",
+      "Bon_lianjia_L_0139",
+      "Bon_lianjia_L_end_0357",
+      "Bn_r_hairA_001_0119",
+      "Bn_r_hairA_002_0141",
+      "Bn_r_hairA_003_0142",
+      "Bn_r_hairA_004_0143",
+      "Bn_r_hairA_005_0144",
+      "Bn_r_hairA_006_0145",
+      "Bn_r_hairA_007_0146",
+      "Bn_r_hairA_007_end_0358",
+      "Bn_r_hairC_001_0147",
+      "Bn_r_hairC_002_0148",
+      "Bn_r_hairC_003_0149",
+      "Bn_r_hairC_004_0150",
+      "Bn_r_hairC_004_end_0359",
+      "Bn_l_hairA_001_0151",
+      "Bn_l_hairA_002_0152",
+      "Bn_l_hairA_003_0153",
+      "Bn_l_hairA_004_0154",
+      "Bn_l_hairA_005_0155",
+      "Bn_l_hairA_006_0156",
+      "Bn_l_hairA_007_0157",
+      "Bn_l_hairA_007_end_0340",
+      "Bn_l_hairC_001_0158",
+      "Bn_l_hairC_002_0159",
+      "Bn_l_hairC_003_0140",
+      "Bn_l_hairC_004_0161",
+      "Bn_l_hairC_004_end_0361",
+      "Bn_l_hairB_001_0162",
+      "Bn_l_hairB_002_0163",
+      "Bn_l_hairD_001_0164",
+      "Bn_l_hairD_002_0165",
+      "Bn_l_hairD_003_0166",
+      "Bn_l_hairD_003_end_0362",
+      "FirstPersonCameraAttachSocket_0167",
+      "FirstPersonCameraAttachSocket_end_0363",
+      "Bn_m_tieU_001_0168",
+      "Bn_m_tieU_002_0169",
+      "Bn_m_tieU_003_0170",
+      "Bn_m_tieU_004_0171",
+      "Bn_m_tieU_004_end_0364",
+      "Bn_m_tieU_006_0172",
+      "Bn_m_tieU_007_0173",
+      "Bn_m_tieU_008_0174",
+      "Bn_m_tieU_008_end_0365",
+      "Bn_l_clothC_001_0175",
+      "Bn_l_clothC_002_0176",
+      "Bn_l_clothC_002_end_0366",
+      "Bn_l_clothB_001_0177",
+      "Bn_l_clothB_002_0178",
+      "Bn_l_clothB_002_end_0367",
+      "Bn_l_clothA_001_0179",
+      "Bn_l_clothA_002_0160",
+      "Bn_l_lalian_001_0181",
+      "Bn_l_lalian_001_end_0368",
+      "Bn_m_cloth_001_0182",
+      "Bn_m_cloth_002_0183",
+      "Bn_m_cloth_002_end_0369",
+      "Bn_r_xiong_001_0184",
+      "Bn_r_xiong_001_end_0370",
+      "Bn_l_xiong_001_0185",
+      "Bn_l_xiong_001_end_0371",
+      "Bn_r_clothC_001_0186",
+      "Bn_r_clothC_002_0187",
+      "Bn_r_clothC_002_end_0372",
+      "Bn_l_callor_001_0188",
+      "Bn_l_callor_002_0189",
+      "Bn_l_callor_002_end_0373",
+      "Bn_m_callor_001_0190",
+      "Bn_m_callor_002_0191",
+      "Bn_m_callor_002_end_0374",
+      "Bn_r_callor_001_0192",
+      "Bn_r_callor_002_0193",
+      "Bn_r_callor_002_end_0375",
+      "Bn_r_clothE_001_0194",
+      "Bn_r_clothE_end_0195",
+      "Bn_r_clothE_end_end_0376",
+      "Bn_l_clothE_001_0196",
+      "Bn_l_clothE_end_0197",
+      "Bn_l_clothE_end_end_0377",
+      "Bip001-L-Thigh_0198",
+      "Bip001-L-Calf_0199",
+      "Bip001-L-Foot_0180",
+      "Bip001-L-Toe0_0201",
+      "Bip001-L-Toe0_end_0378",
+      "FootStep_Left_0202",
+      "FootStep_Left_end_0379",
+      "Bone-L-Calf-Twist_0203",
+      "Bone-L-Calf-Twist1_0204",
+      "Bone-L-Calf-Twist1_end_0360",
+      "Bn_l_kneePush_001_0205",
+      "Bn_l_kneePush_001_end_0381",
+      "Bn_l_kneeAvg_001_0206",
+      "Bn_l_kneeAvg_001_end_0382",
+      "Bone-L-Thigh-Twist_0207",
+      "Bone-L-Thigh-Twist1_0208",
+      "Bone-L-Thigh-Twist1_end_0383",
+      "Bip001-R-Thigh_0209",
+      "Bip001-R-Calf_0210",
+      "Bip001-R-Foot_0211",
+      "Bip001-R-Toe0_0212",
+      "Bip001-R-Toe0_end_0384",
+      "FootStep_Right_0213",
+      "FootStep_Right_end_0385",
+      "Bone-R-Calf-Twist_0214",
+      "Bone-R-Calf-Twist1_0215",
+      "Bone-R-Calf-Twist1_end_0386",
+      "Bn_r_kneePush_001_0216",
+      "Bn_r_kneePush_001_end_0387",
+      "Bn_r_kneeAvg_001_0217",
+      "Bn_r_kneeAvg_001_end_0388",
+      "Bone-R-Thigh-Twist_0218",
+      "Bone-R-Thigh-Twist1_0219",
+      "Bone-R-Thigh-Twist1_end_0389",
+      "Bn_m_tail_001_0200",
+      "Bn_m_tail_002_0221",
+      "Bn_m_tail_003_0222",
+      "Bn_m_tail_004_0223",
+      "Bn_m_tail_005_0224",
+      "Bn_m_tail_006_0225",
+      "WaterDroppingSocket1_0226",
+      "WaterDroppingSocket1_end_0390",
+      "Bn_m_tail_006������_0227",
+      "Bn_m_tail_006������_end_0391",
+      "Bn_r_qunA_001_0228",
+      "Bn_r_qunA_002_0229",
+      "Bn_r_qunA_003_0230",
+      "Bn_r_qunA_003_end_0392",
+      "Bn_r_qunB_001_0231",
+      "Bn_r_qunB_002_0232",
+      "Bn_r_qunB_003_0233",
+      "Bn_r_qunB_003_end_0393",
+      "Bn_r_qunC_001_0234",
+      "Bn_r_qunC_002_0235",
+      "Bn_r_qunC_003_0236",
+      "Bn_r_piaodai_002_0237",
+      "Bn_r_piaodai_003_0238",
+      "Bn_r_piaodai_003_end_0394",
+      "Bn_m_qunF_001_0239",
+      "Bn_m_qunF_002_0220",
+      "Bn_m_qunF_003_0241",
+      "Bn_m_qunF_003_end_0395",
+      "Bn_m_qunB_001_0242",
+      "Bn_m_qunB_002_0243",
+      "Bn_m_qunB_003_0244",
+      "Bn_m_qunB_003_end_0396",
+      "Bn_l_qunC_001_0245",
+      "Bn_l_qunC_002_0246",
+      "Bn_l_qunC_003_0247",
+      "Bn_l_piaodai_003_0248",
+      "Bn_l_piaodai_004_0249",
+      "Bn_l_piaodai_004_end_0397",
+      "Bn_l_qunB_001_0250",
+      "Bn_l_qunB_002_0251",
+      "Bn_l_qunB_003_0252",
+      "Bn_l_qunB_003_end_0398",
+      "Bn_l_qunA_001_0253",
+      "Bn_l_qunA_002_0254",
+      "Bn_l_qunA_003_0255",
+      "Bn_l_qunA_003_end_0399",
+      "Bn_m_gongpai_001_0256",
+      "Bn_m_gongpai_002_0257",
+      "Bn_m_gongpai_003_0258",
+      "Bn_m_gongpai_003_end_0380",
+      "FireSocket_0259",
+      "FireSocket_end_0400",
+      "root_foot_0240",
+      "foot_r_0261",
+      "foot_r_end_0401",
+      "foot_l_0262",
+      "foot_l_end_0402",
+      "root_hand_0263",
+      "hand_r_0264",
+      "FX_hand_rSocket_0265",
+      "FX_hand_rSocket_end_0403",
+      "Rhand_Weapon_0266",
+      "Rhand_Weapon_end_0404",
+      "hand_l_0267",
+      "FX_hand_lSocket_0268",
+      "FX_hand_lSocket_end_0405",
+      "wq_root_L_0269",
+      "P_wq_L_0270",
+      "P_wq_L_end_0406",
+      "wq_root_R_0271",
+      "P_wq_R_0272",
+      "P_wq_R_end_0407",
+      "rootSocket_0273",
+      "rootSocket_end_0408",
+      "WeaponSocket_0274",
+      "WeaponSocket_end_0409"
+    ],
+    "candidates": {
+      "head": [
+        "Bip001-Head_083",
+        "Bone_head_094"
+      ],
+      "neck": [
+        "Bip001-Neck_082"
+      ],
+      "jaw": [
+        "mouth_095"
+      ],
+      "eyes": [
+        "Bon_eyebrow02_L_0109",
+        "Bon_eyebrow02_L_end_0328",
+        "Bon_eyebrow01_L_0110",
+        "Bon_eyebrow01_L_end_0329",
+        "Bon_eyebrow03_L_0111",
+        "Bon_eyebrow03_L_end_0330",
+        "Bon_eyebrow03_R_0112",
+        "Bon_eyebrow03_R_end_0331",
+        "Bon_eyebrow02_R_0113",
+        "Bon_eyebrow02_R_end_0332",
+        "Bon_eyebrow01_R_0114",
+        "Bon_eyebrow01_R_end_0333",
+        "BON_eyelid04_up_R_0115",
+        "BON_eyelid04_up_R_end_0334",
+        "BON_eyelid05_up_R_0116",
+        "BON_eyelid05_up_R_end_0335",
+        "BON_eyelid_up_R_0117",
+        "BON_eyelid_up_R_end_0336",
+        "BON_eyelid03_up_R_0118",
+        "BON_eyelid03_up_R_end_0337",
+        "BON_eyeCo_out_R_0120",
+        "BON_eyeCo_out_R_end_0338",
+        "BON_eyelid03_lo_R_0121",
+        "BON_eyelid03_lo_R_end_0339",
+        "BON_eyelid_lo_R_0122",
+        "BON_eyelid_lo_R_end_0320",
+        "BON_eyelid02_lo_R_0123",
+        "BON_eyelid02_lo_R_end_0341",
+        "BON_eyeCo_in_R_0124",
+        "BON_eyeCo_in_R_end_0342",
+        "BON_eyelid02_up_R_0125",
+        "BON_eyelid02_up_R_end_0343",
+        "Bon_eyeball_R_0126",
+        "Bon_eyeball_R_end_0344",
+        "BON_eyelid05_up_L_0128",
+        "BON_eyelid05_up_L_end_0346",
+        "BON_eyelid04_up_L_0129",
+        "BON_eyelid04_up_L_end_0347",
+        "BON_eyelid_up_L_0130",
+        "BON_eyelid_up_L_end_0348",
+        "Bon_eyeball_L_0131",
+        "Bon_eyeball_L_end_0349",
+        "BON_eyelid02_up_L_0132",
+        "BON_eyelid02_up_L_end_0350",
+        "BON_eyeCo_in_L_0133",
+        "BON_eyeCo_in_L_end_0351",
+        "BON_eyelid02_lo_L_0134",
+        "BON_eyelid02_lo_L_end_0352",
+        "BON_eyelid_lo_L_0135",
+        "BON_eyelid_lo_L_end_0353",
+        "BON_eyelid03_lo_L_0136",
+        "BON_eyelid03_lo_L_end_0354",
+        "BON_eyeCo_out_L_0137",
+        "BON_eyeCo_out_L_end_0355",
+        "BON_eyelid03_up_L_0138",
+        "BON_eyelid03_up_L_end_0356"
+      ],
+      "hands": [
+        "Bip001-L-Hand_013",
+        "Bip001-L-Finger0_014",
+        "Bip001-L-Finger01_015",
+        "Bip001-L-Finger02_016",
+        "Bip001-L-Finger02_end_0275",
+        "Bip001-L-Finger1_017",
+        "Bip001-L-Finger11_018",
+        "Bip001-L-Finger12_019",
+        "Bip001-L-Finger12_end_0276",
+        "weapon_finger_L1_020",
+        "weapon_finger_L1_end_0277",
+        "Bip001-L-Finger2_021",
+        "Bip001-L-Finger21_022",
+        "Bip001-L-Finger22_023",
+        "Bip001-L-Finger22_end_0278",
+        "Bip001-L-Finger3_024",
+        "Bip001-L-Finger31_025",
+        "Bip001-L-Finger32_026",
+        "Bip001-L-Finger32_end_0279",
+        "Bip001-L-Finger4_027",
+        "Bip001-L-Finger41_028",
+        "Bip001-L-Finger42_029",
+        "Bip001-L-Finger42_end_0260",
+        "Lhand_Weapon2_031",
+        "Lhand_Weapon2_end_0281",
+        "Bn_l_handD_001_035",
+        "Bn_l_handD_001_end_0283",
+        "Bn_l_handU_001_036",
+        "Bn_l_handU_001_end_0284",
+        "Bip001-R-Hand_045",
+        "Bip001-R-Finger0_046",
+        "Bip001-R-Finger01_047",
+        "Bip001-R-Finger02_048",
+        "Bip001-R-Finger02_end_0289",
+        "Bip001-R-Finger1_049",
+        "Bip001-R-Finger11_050",
+        "Bip001-R-Finger12_051",
+        "Bip001-R-Finger12_end_0290",
+        "weapon_finger_R1_052",
+        "weapon_finger_R1_end_0291",
+        "Bip001-R-Finger2_054",
+        "Bip001-R-Finger21_055",
+        "Bip001-R-Finger22_056",
+        "Bip001-R-Finger22_end_0293",
+        "Bip001-R-Finger3_057",
+        "Bip001-R-Finger31_058",
+        "Bip001-R-Finger32_059",
+        "Bip001-R-Finger32_end_0294",
+        "Bip001-R-Finger4_060",
+        "Bip001-R-Finger41_061",
+        "Bip001-R-Finger42_062",
+        "Bip001-R-Finger42_end_0295",
+        "Rhand_Weapon2_065",
+        "Rhand_Weapon2_end_0297",
+        "Bn_r_handD_001_069",
+        "Bn_r_handD_001_end_0299",
+        "Bn_r_handU_001_070",
+        "Bn_r_handU_001_end_0280",
+        "root_hand_0263",
+        "hand_r_0264",
+        "FX_hand_rSocket_0265",
+        "FX_hand_rSocket_end_0403",
+        "Rhand_Weapon_0266",
+        "Rhand_Weapon_end_0404",
+        "hand_l_0267",
+        "FX_hand_lSocket_0268",
+        "FX_hand_lSocket_end_0405"
+      ]
+    }
+  },
+  "morphTargets": [
+    "morph_0",
+    "morph_1",
+    "morph_2",
+    "morph_3",
+    "morph_4",
+    "morph_5",
+    "morph_6",
+    "morph_7",
+    "morph_8",
+    "morph_9",
+    "morph_10",
+    "morph_11",
+    "morph_12",
+    "morph_13",
+    "morph_14",
+    "morph_15",
+    "morph_16",
+    "morph_17",
+    "morph_18",
+    "morph_19",
+    "morph_20",
+    "morph_21",
+    "morph_22",
+    "morph_23",
+    "morph_24",
+    "morph_25",
+    "morph_26",
+    "morph_27",
+    "morph_28",
+    "morph_29",
+    "morph_30",
+    "morph_31",
+    "morph_32",
+    "morph_33",
+    "morph_34",
+    "morph_35",
+    "morph_36",
+    "morph_37",
+    "morph_38",
+    "morph_39",
+    "morph_40",
+    "morph_41",
+    "morph_42",
+    "morph_43",
+    "morph_44",
+    "morph_45",
+    "morph_46",
+    "morph_47",
+    "morph_48",
+    "morph_49",
+    "morph_50",
+    "morph_51",
+    "morph_52",
+    "morph_53",
+    "morph_54",
+    "morph_55",
+    "morph_56",
+    "morph_57",
+    "morph_58",
+    "morph_59",
+    "morph_60",
+    "morph_61",
+    "morph_62",
+    "morph_63",
+    "morph_64",
+    "morph_65",
+    "morph_66",
+    "morph_67",
+    "morph_68",
+    "morph_69",
+    "morph_70",
+    "morph_71",
+    "morph_72",
+    "morph_73",
+    "morph_74",
+    "morph_75",
+    "morph_76",
+    "morph_77",
+    "morph_78",
+    "morph_79",
+    "morph_80",
+    "morph_81",
+    "morph_82",
+    "morph_83",
+    "morph_84",
+    "morph_85",
+    "morph_86",
+    "morph_87",
+    "morph_88",
+    "morph_89",
+    "morph_90",
+    "morph_91",
+    "morph_92",
+    "morph_93",
+    "morph_94",
+    "morph_95",
+    "morph_96",
+    "morph_97",
+    "morph_98",
+    "morph_99",
+    "morph_100",
+    "morph_101",
+    "morph_102",
+    "morph_103",
+    "morph_104",
+    "morph_105",
+    "morph_106",
+    "morph_107",
+    "morph_108",
+    "morph_109",
+    "morph_110",
+    "morph_111",
+    "morph_112",
+    "morph_113",
+    "morph_114",
+    "morph_115",
+    "morph_116",
+    "morph_117",
+    "morph_118",
+    "morph_119",
+    "morph_120",
+    "morph_121",
+    "morph_122",
+    "morph_123",
+    "morph_124",
+    "morph_125",
+    "morph_126",
+    "morph_127",
+    "morph_128",
+    "morph_129",
+    "morph_130",
+    "morph_131",
+    "morph_132",
+    "morph_133",
+    "morph_134",
+    "morph_135",
+    "morph_136",
+    "morph_137",
+    "morph_138",
+    "morph_139",
+    "morph_140",
+    "morph_141",
+    "morph_142",
+    "morph_143",
+    "morph_144",
+    "morph_145",
+    "morph_146",
+    "morph_147"
+  ],
+  "animations": [
+    {
+      "index": 0,
+      "name": "player_004_lacrimosa_skin_LOD1_Skeleton|char_lacrimosa_base_stand_show_2",
+      "durationSeconds": 13.233,
+      "samplerCount": 801,
+      "channels": [
+        {
+          "node": "Bip001-L-Finger02_016",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-L-Finger02_016",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001-L-Finger02_016",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-L-Finger01_015",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-L-Finger01_015",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001-L-Finger01_015",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-L-Finger0_014",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-L-Finger0_014",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001-L-Finger0_014",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-L-Finger12_019",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-L-Finger12_019",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001-L-Finger12_019",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-L-Finger11_018",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-L-Finger11_018",
+          "path": "rotation"
+        },
+        {
+          "node": "weapon_finger_L1_020",
+          "path": "translation"
+        },
+        {
+          "node": "weapon_finger_L1_020",
+          "path": "scale"
+        },
+        {
+          "node": "weapon_finger_L1_020",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-L-Finger1_017",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-L-Finger1_017",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001-L-Finger1_017",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-L-Finger22_023",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-L-Finger22_023",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001-L-Finger22_023",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-L-Finger21_022",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-L-Finger21_022",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001-L-Finger21_022",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-L-Finger2_021",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-L-Finger2_021",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001-L-Finger2_021",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-L-Finger32_026",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-L-Finger32_026",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001-L-Finger32_026",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-L-Finger31_025",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-L-Finger31_025",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-L-Finger3_024",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-L-Finger3_024",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001-L-Finger3_024",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-L-Finger42_029",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-L-Finger42_029",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001-L-Finger42_029",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-L-Finger41_028",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-L-Finger41_028",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001-L-Finger41_028",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-L-Finger4_027",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-L-Finger4_027",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001-L-Finger4_027",
+          "path": "rotation"
+        },
+        {
+          "node": "Lhand_Weapon2_031",
+          "path": "translation"
+        },
+        {
+          "node": "Lhand_Weapon2_031",
+          "path": "scale"
+        },
+        {
+          "node": "Lhand_Weapon2_031",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-Prop2_030",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-Prop2_030",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001-Prop2_030",
+          "path": "rotation"
+        },
+        {
+          "node": "FoliageInteractionL_032",
+          "path": "translation"
+        },
+        {
+          "node": "FoliageInteractionL_032",
+          "path": "scale"
+        },
+        {
+          "node": "FoliageInteractionL_032",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-L-Hand_013",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-L-Hand_013",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001-L-Hand_013",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_l_handD_001_035",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_l_handD_001_035",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_l_handD_001_035",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_l_handU_001_036",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_l_handU_001_036",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_l_handU_001_036",
+          "path": "rotation"
+        },
+        {
+          "node": "Bone-L-ForeArm-Twist1_034",
+          "path": "translation"
+        },
+        {
+          "node": "Bone-L-ForeArm-Twist1_034",
+          "path": "scale"
+        },
+        {
+          "node": "Bone-L-ForeArm-Twist1_034",
+          "path": "rotation"
+        },
+        {
+          "node": "Bone-L-ForeArm-Twist_033",
+          "path": "translation"
+        },
+        {
+          "node": "Bone-L-ForeArm-Twist_033",
+          "path": "scale"
+        },
+        {
+          "node": "Bone-L-ForeArm-Twist_033",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_l_elbowAvg_001_037",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_l_elbowAvg_001_037",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_l_elbowAvg_001_037",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_l_elbowPush_001_038",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_l_elbowPush_001_038",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_l_elbowPush_001_038",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-L-Forearm_012",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-L-Forearm_012",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001-L-Forearm_012",
+          "path": "rotation"
+        },
+        {
+          "node": "Bone-L-UpperArm-Twist1_040",
+          "path": "translation"
+        },
+        {
+          "node": "Bone-L-UpperArm-Twist1_040",
+          "path": "scale"
+        },
+        {
+          "node": "Bone-L-UpperArm-Twist1_040",
+          "path": "rotation"
+        },
+        {
+          "node": "Bone-L-UpperArm-Twist_039",
+          "path": "translation"
+        },
+        {
+          "node": "Bone-L-UpperArm-Twist_039",
+          "path": "scale"
+        },
+        {
+          "node": "Bone-L-UpperArm-Twist_039",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-L-UpperArm_011",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-L-UpperArm_011",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001-L-UpperArm_011",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_l_callorA_001_041",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_l_callorA_001_041",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_l_callorA_001_041",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-L-Clavicle_010",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-L-Clavicle_010",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001-L-Clavicle_010",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-R-Finger02_048",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-R-Finger02_048",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001-R-Finger02_048",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-R-Finger01_047",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-R-Finger01_047",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001-R-Finger01_047",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-R-Finger0_046",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-R-Finger0_046",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001-R-Finger0_046",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-R-Finger12_051",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-R-Finger12_051",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001-R-Finger12_051",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-R-Finger11_050",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-R-Finger11_050",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001-R-Finger11_050",
+          "path": "rotation"
+        },
+        {
+          "node": "weapon_finger_R1_052",
+          "path": "translation"
+        },
+        {
+          "node": "weapon_finger_R1_052",
+          "path": "scale"
+        },
+        {
+          "node": "weapon_finger_R1_052",
+          "path": "rotation"
+        },
+        {
+          "node": "ContaintSocket_053",
+          "path": "translation"
+        },
+        {
+          "node": "ContaintSocket_053",
+          "path": "scale"
+        },
+        {
+          "node": "ContaintSocket_053",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-R-Finger1_049",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-R-Finger1_049",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001-R-Finger1_049",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-R-Finger22_056",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-R-Finger22_056",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001-R-Finger22_056",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-R-Finger21_055",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-R-Finger21_055",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001-R-Finger21_055",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-R-Finger2_054",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-R-Finger2_054",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001-R-Finger2_054",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-R-Finger32_059",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-R-Finger32_059",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001-R-Finger32_059",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-R-Finger31_058",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-R-Finger31_058",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001-R-Finger31_058",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-R-Finger3_057",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-R-Finger3_057",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001-R-Finger3_057",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-R-Finger42_062",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-R-Finger42_062",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-R-Finger41_061",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-R-Finger41_061",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001-R-Finger41_061",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-R-Finger4_060",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-R-Finger4_060",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001-R-Finger4_060",
+          "path": "rotation"
+        },
+        {
+          "node": "GlidingSocket_064",
+          "path": "translation"
+        },
+        {
+          "node": "GlidingSocket_064",
+          "path": "scale"
+        },
+        {
+          "node": "GlidingSocket_064",
+          "path": "rotation"
+        },
+        {
+          "node": "Rhand_Weapon2_065",
+          "path": "translation"
+        },
+        {
+          "node": "Rhand_Weapon2_065",
+          "path": "scale"
+        },
+        {
+          "node": "Rhand_Weapon2_065",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-Prop1_063",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-Prop1_063",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001-Prop1_063",
+          "path": "rotation"
+        },
+        {
+          "node": "FoliageInteractionR_066",
+          "path": "translation"
+        },
+        {
+          "node": "FoliageInteractionR_066",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-R-Hand_045",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-R-Hand_045",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001-R-Hand_045",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_r_handD_001_069",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_r_handD_001_069",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_r_handD_001_069",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_r_handU_001_070",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_r_handU_001_070",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_r_handU_001_070",
+          "path": "rotation"
+        },
+        {
+          "node": "Bone-R-ForeArm-Twist1_068",
+          "path": "translation"
+        },
+        {
+          "node": "Bone-R-ForeArm-Twist1_068",
+          "path": "scale"
+        },
+        {
+          "node": "Bone-R-ForeArm-Twist1_068",
+          "path": "rotation"
+        },
+        {
+          "node": "Bone-R-ForeArm-Twist_067",
+          "path": "translation"
+        },
+        {
+          "node": "Bone-R-ForeArm-Twist_067",
+          "path": "scale"
+        },
+        {
+          "node": "Bone-R-ForeArm-Twist_067",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_r_elbowAvg_001_071",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_r_elbowAvg_001_071",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_r_elbowAvg_001_071",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_r_elbowPush_001_072",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_r_elbowPush_001_072",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-R-Forearm_044",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-R-Forearm_044",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001-R-Forearm_044",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_r_callorA_002_074",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_r_callorA_002_074",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_r_callorA_002_074",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_r_callorA_001_073",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_r_callorA_001_073",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_r_callorA_001_073",
+          "path": "rotation"
+        },
+        {
+          "node": "Bone-R-UpperArm-Twist1_076",
+          "path": "translation"
+        },
+        {
+          "node": "Bone-R-UpperArm-Twist1_076",
+          "path": "rotation"
+        },
+        {
+          "node": "Bone-R-UpperArm-Twist_075",
+          "path": "translation"
+        },
+        {
+          "node": "Bone-R-UpperArm-Twist_075",
+          "path": "scale"
+        },
+        {
+          "node": "Bone-R-UpperArm-Twist_075",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_r_clothB_002_078",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_r_clothB_002_078",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_r_clothB_002_078",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_r_clothB_001_077",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_r_clothB_001_077",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_r_clothB_001_077",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_r_clothD_003_00",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_r_clothD_003_00",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_r_clothD_003_00",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_r_clothD_002_080",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_r_clothD_002_080",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_r_clothD_002_080",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_r_clothD_001_079",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_r_clothD_001_079",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_r_clothD_001_079",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-R-UpperArm_043",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-R-UpperArm_043",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001-R-UpperArm_043",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_r_upperArmPush_0_001_081",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_r_upperArmPush_0_001_081",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-R-Clavicle_042",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-R-Clavicle_042",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001-R-Clavicle_042",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_m_hairU_003_086",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_m_hairU_003_086",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_m_hairU_003_086",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_m_hairU_002_085",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_m_hairU_002_085",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_m_hairU_002_085",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_m_hairU_001_084",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_m_hairU_001_084",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_m_hairU_001_084",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_r_hairB_002_088",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_r_hairB_002_088",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_r_hairB_002_088",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_r_hairB_001_087",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_r_hairB_001_087",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_r_hairB_001_087",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_m_hair_002_090",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_m_hair_002_090",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_m_hair_002_090",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_m_hair_001_089",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_m_hair_001_089",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_m_hair_001_089",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_r_hairD_003_093",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_r_hairD_003_093",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_r_hairD_003_093",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_r_hairD_002_092",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_r_hairD_002_092",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_r_hairD_001_091",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_r_hairD_001_091",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_r_hairD_001_091",
+          "path": "rotation"
+        },
+        {
+          "node": "Bon_zuiba_R_096",
+          "path": "translation"
+        },
+        {
+          "node": "Bon_zuiba_R_096",
+          "path": "scale"
+        },
+        {
+          "node": "Bon_zuiba_R_096",
+          "path": "rotation"
+        },
+        {
+          "node": "Bon_yachi_up_097",
+          "path": "translation"
+        },
+        {
+          "node": "Bon_yachi_up_097",
+          "path": "scale"
+        },
+        {
+          "node": "Bon_yachi_up_097",
+          "path": "rotation"
+        },
+        {
+          "node": "Bon_yachi_lo_098",
+          "path": "translation"
+        },
+        {
+          "node": "Bon_yachi_lo_098",
+          "path": "scale"
+        },
+        {
+          "node": "Bon_yachi_lo_098",
+          "path": "rotation"
+        },
+        {
+          "node": "Bon_colip_R_099",
+          "path": "translation"
+        },
+        {
+          "node": "Bon_colip_R_099",
+          "path": "scale"
+        },
+        {
+          "node": "Bon_colip_R_099",
+          "path": "rotation"
+        },
+        {
+          "node": "Bon_uplip02_R_01",
+          "path": "translation"
+        },
+        {
+          "node": "Bon_uplip02_R_01",
+          "path": "scale"
+        },
+        {
+          "node": "Bon_uplip02_R_01",
+          "path": "rotation"
+        },
+        {
+          "node": "Bon_Lolip02_R_02",
+          "path": "translation"
+        },
+        {
+          "node": "Bon_Lolip02_R_02",
+          "path": "scale"
+        },
+        {
+          "node": "Bon_Lolip02_R_02",
+          "path": "rotation"
+        },
+        {
+          "node": "Bon_uplip01_R_03",
+          "path": "translation"
+        },
+        {
+          "node": "Bon_uplip01_R_03",
+          "path": "scale"
+        },
+        {
+          "node": "Bon_uplip01_R_03",
+          "path": "rotation"
+        },
+        {
+          "node": "Bon_Lolip01_R_0100",
+          "path": "translation"
+        },
+        {
+          "node": "Bon_Lolip01_R_0100",
+          "path": "scale"
+        },
+        {
+          "node": "Bon_Lolip01_R_0100",
+          "path": "rotation"
+        },
+        {
+          "node": "Bon_uplip_M_0101",
+          "path": "translation"
+        },
+        {
+          "node": "Bon_uplip_M_0101",
+          "path": "scale"
+        },
+        {
+          "node": "Bon_uplip_M_0101",
+          "path": "rotation"
+        },
+        {
+          "node": "Bon_Lolip_M_0102",
+          "path": "translation"
+        },
+        {
+          "node": "Bon_Lolip_M_0102",
+          "path": "scale"
+        },
+        {
+          "node": "Bon_Lolip_M_0102",
+          "path": "rotation"
+        },
+        {
+          "node": "Bon_uplip01_L_0103",
+          "path": "translation"
+        },
+        {
+          "node": "Bon_uplip01_L_0103",
+          "path": "scale"
+        },
+        {
+          "node": "Bon_uplip01_L_0103",
+          "path": "rotation"
+        },
+        {
+          "node": "Bon_Lolip01_L_0104",
+          "path": "translation"
+        },
+        {
+          "node": "Bon_Lolip01_L_0104",
+          "path": "scale"
+        },
+        {
+          "node": "Bon_Lolip01_L_0104",
+          "path": "rotation"
+        },
+        {
+          "node": "Bon_uplip02_L_0105",
+          "path": "translation"
+        },
+        {
+          "node": "Bon_uplip02_L_0105",
+          "path": "scale"
+        },
+        {
+          "node": "Bon_uplip02_L_0105",
+          "path": "rotation"
+        },
+        {
+          "node": "Bon_Lolip02_L_0106",
+          "path": "translation"
+        },
+        {
+          "node": "Bon_Lolip02_L_0106",
+          "path": "scale"
+        },
+        {
+          "node": "Bon_Lolip02_L_0106",
+          "path": "rotation"
+        },
+        {
+          "node": "Bon_colip_L_0107",
+          "path": "translation"
+        },
+        {
+          "node": "Bon_colip_L_0107",
+          "path": "rotation"
+        },
+        {
+          "node": "Bon_zuiba_L_0108",
+          "path": "translation"
+        },
+        {
+          "node": "Bon_zuiba_L_0108",
+          "path": "scale"
+        },
+        {
+          "node": "Bon_zuiba_L_0108",
+          "path": "rotation"
+        },
+        {
+          "node": "mouth_095",
+          "path": "translation"
+        },
+        {
+          "node": "mouth_095",
+          "path": "scale"
+        },
+        {
+          "node": "mouth_095",
+          "path": "rotation"
+        },
+        {
+          "node": "Bon_eyebrow02_L_0109",
+          "path": "translation"
+        },
+        {
+          "node": "Bon_eyebrow02_L_0109",
+          "path": "scale"
+        },
+        {
+          "node": "Bon_eyebrow02_L_0109",
+          "path": "rotation"
+        },
+        {
+          "node": "Bon_eyebrow01_L_0110",
+          "path": "translation"
+        },
+        {
+          "node": "Bon_eyebrow01_L_0110",
+          "path": "scale"
+        },
+        {
+          "node": "Bon_eyebrow01_L_0110",
+          "path": "rotation"
+        },
+        {
+          "node": "Bon_eyebrow03_L_0111",
+          "path": "translation"
+        },
+        {
+          "node": "Bon_eyebrow03_L_0111",
+          "path": "scale"
+        },
+        {
+          "node": "Bon_eyebrow03_L_0111",
+          "path": "rotation"
+        },
+        {
+          "node": "Bon_eyebrow03_R_0112",
+          "path": "translation"
+        },
+        {
+          "node": "Bon_eyebrow03_R_0112",
+          "path": "scale"
+        },
+        {
+          "node": "Bon_eyebrow03_R_0112",
+          "path": "rotation"
+        },
+        {
+          "node": "Bon_eyebrow02_R_0113",
+          "path": "translation"
+        },
+        {
+          "node": "Bon_eyebrow02_R_0113",
+          "path": "scale"
+        },
+        {
+          "node": "Bon_eyebrow02_R_0113",
+          "path": "rotation"
+        },
+        {
+          "node": "Bon_eyebrow01_R_0114",
+          "path": "translation"
+        },
+        {
+          "node": "Bon_eyebrow01_R_0114",
+          "path": "scale"
+        },
+        {
+          "node": "Bon_eyebrow01_R_0114",
+          "path": "rotation"
+        },
+        {
+          "node": "BON_eyelid04_up_R_0115",
+          "path": "translation"
+        },
+        {
+          "node": "BON_eyelid04_up_R_0115",
+          "path": "scale"
+        },
+        {
+          "node": "BON_eyelid04_up_R_0115",
+          "path": "rotation"
+        },
+        {
+          "node": "BON_eyelid05_up_R_0116",
+          "path": "translation"
+        },
+        {
+          "node": "BON_eyelid05_up_R_0116",
+          "path": "scale"
+        },
+        {
+          "node": "BON_eyelid05_up_R_0116",
+          "path": "rotation"
+        },
+        {
+          "node": "BON_eyelid_up_R_0117",
+          "path": "translation"
+        },
+        {
+          "node": "BON_eyelid_up_R_0117",
+          "path": "scale"
+        },
+        {
+          "node": "BON_eyelid_up_R_0117",
+          "path": "rotation"
+        },
+        {
+          "node": "BON_eyelid03_up_R_0118",
+          "path": "translation"
+        },
+        {
+          "node": "BON_eyelid03_up_R_0118",
+          "path": "scale"
+        },
+        {
+          "node": "BON_eyelid03_up_R_0118",
+          "path": "rotation"
+        },
+        {
+          "node": "BON_eyeCo_out_R_0120",
+          "path": "translation"
+        },
+        {
+          "node": "BON_eyeCo_out_R_0120",
+          "path": "scale"
+        },
+        {
+          "node": "BON_eyeCo_out_R_0120",
+          "path": "rotation"
+        },
+        {
+          "node": "BON_eyelid03_lo_R_0121",
+          "path": "translation"
+        },
+        {
+          "node": "BON_eyelid03_lo_R_0121",
+          "path": "scale"
+        },
+        {
+          "node": "BON_eyelid03_lo_R_0121",
+          "path": "rotation"
+        },
+        {
+          "node": "BON_eyelid_lo_R_0122",
+          "path": "translation"
+        },
+        {
+          "node": "BON_eyelid_lo_R_0122",
+          "path": "scale"
+        },
+        {
+          "node": "BON_eyelid_lo_R_0122",
+          "path": "rotation"
+        },
+        {
+          "node": "BON_eyelid02_lo_R_0123",
+          "path": "translation"
+        },
+        {
+          "node": "BON_eyelid02_lo_R_0123",
+          "path": "scale"
+        },
+        {
+          "node": "BON_eyelid02_lo_R_0123",
+          "path": "rotation"
+        },
+        {
+          "node": "BON_eyeCo_in_R_0124",
+          "path": "translation"
+        },
+        {
+          "node": "BON_eyeCo_in_R_0124",
+          "path": "scale"
+        },
+        {
+          "node": "BON_eyeCo_in_R_0124",
+          "path": "rotation"
+        },
+        {
+          "node": "BON_eyelid02_up_R_0125",
+          "path": "translation"
+        },
+        {
+          "node": "BON_eyelid02_up_R_0125",
+          "path": "scale"
+        },
+        {
+          "node": "BON_eyelid02_up_R_0125",
+          "path": "rotation"
+        },
+        {
+          "node": "Bon_eyeball_R_0126",
+          "path": "translation"
+        },
+        {
+          "node": "Bon_eyeball_R_0126",
+          "path": "scale"
+        },
+        {
+          "node": "Bon_eyeball_R_0126",
+          "path": "rotation"
+        },
+        {
+          "node": "Bon_lianjia_R_0127",
+          "path": "translation"
+        },
+        {
+          "node": "Bon_lianjia_R_0127",
+          "path": "rotation"
+        },
+        {
+          "node": "BON_eyelid05_up_L_0128",
+          "path": "translation"
+        },
+        {
+          "node": "BON_eyelid05_up_L_0128",
+          "path": "scale"
+        },
+        {
+          "node": "BON_eyelid05_up_L_0128",
+          "path": "rotation"
+        },
+        {
+          "node": "BON_eyelid04_up_L_0129",
+          "path": "translation"
+        },
+        {
+          "node": "BON_eyelid04_up_L_0129",
+          "path": "scale"
+        },
+        {
+          "node": "BON_eyelid04_up_L_0129",
+          "path": "rotation"
+        },
+        {
+          "node": "BON_eyelid_up_L_0130",
+          "path": "translation"
+        },
+        {
+          "node": "BON_eyelid_up_L_0130",
+          "path": "scale"
+        },
+        {
+          "node": "BON_eyelid_up_L_0130",
+          "path": "rotation"
+        },
+        {
+          "node": "Bon_eyeball_L_0131",
+          "path": "translation"
+        },
+        {
+          "node": "Bon_eyeball_L_0131",
+          "path": "scale"
+        },
+        {
+          "node": "Bon_eyeball_L_0131",
+          "path": "rotation"
+        },
+        {
+          "node": "BON_eyelid02_up_L_0132",
+          "path": "translation"
+        },
+        {
+          "node": "BON_eyelid02_up_L_0132",
+          "path": "scale"
+        },
+        {
+          "node": "BON_eyelid02_up_L_0132",
+          "path": "rotation"
+        },
+        {
+          "node": "BON_eyeCo_in_L_0133",
+          "path": "translation"
+        },
+        {
+          "node": "BON_eyeCo_in_L_0133",
+          "path": "scale"
+        },
+        {
+          "node": "BON_eyeCo_in_L_0133",
+          "path": "rotation"
+        },
+        {
+          "node": "BON_eyelid02_lo_L_0134",
+          "path": "translation"
+        },
+        {
+          "node": "BON_eyelid02_lo_L_0134",
+          "path": "scale"
+        },
+        {
+          "node": "BON_eyelid02_lo_L_0134",
+          "path": "rotation"
+        },
+        {
+          "node": "BON_eyelid_lo_L_0135",
+          "path": "translation"
+        },
+        {
+          "node": "BON_eyelid_lo_L_0135",
+          "path": "scale"
+        },
+        {
+          "node": "BON_eyelid_lo_L_0135",
+          "path": "rotation"
+        },
+        {
+          "node": "BON_eyelid03_lo_L_0136",
+          "path": "translation"
+        },
+        {
+          "node": "BON_eyelid03_lo_L_0136",
+          "path": "scale"
+        },
+        {
+          "node": "BON_eyelid03_lo_L_0136",
+          "path": "rotation"
+        },
+        {
+          "node": "BON_eyeCo_out_L_0137",
+          "path": "translation"
+        },
+        {
+          "node": "BON_eyeCo_out_L_0137",
+          "path": "scale"
+        },
+        {
+          "node": "BON_eyeCo_out_L_0137",
+          "path": "rotation"
+        },
+        {
+          "node": "BON_eyelid03_up_L_0138",
+          "path": "translation"
+        },
+        {
+          "node": "BON_eyelid03_up_L_0138",
+          "path": "scale"
+        },
+        {
+          "node": "BON_eyelid03_up_L_0138",
+          "path": "rotation"
+        },
+        {
+          "node": "Bon_lianjia_L_0139",
+          "path": "translation"
+        },
+        {
+          "node": "Bon_lianjia_L_0139",
+          "path": "scale"
+        },
+        {
+          "node": "Bon_lianjia_L_0139",
+          "path": "rotation"
+        },
+        {
+          "node": "Bone_head_094",
+          "path": "translation"
+        },
+        {
+          "node": "Bone_head_094",
+          "path": "scale"
+        },
+        {
+          "node": "Bone_head_094",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_r_hairA_007_0146",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_r_hairA_007_0146",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_r_hairA_007_0146",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_r_hairA_006_0145",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_r_hairA_006_0145",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_r_hairA_006_0145",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_r_hairA_005_0144",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_r_hairA_005_0144",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_r_hairA_005_0144",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_r_hairA_004_0143",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_r_hairA_004_0143",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_r_hairA_004_0143",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_r_hairA_003_0142",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_r_hairA_003_0142",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_r_hairA_003_0142",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_r_hairA_002_0141",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_r_hairA_002_0141",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_r_hairA_002_0141",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_r_hairC_004_0150",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_r_hairC_004_0150",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_r_hairC_004_0150",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_r_hairC_003_0149",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_r_hairC_003_0149",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_r_hairC_003_0149",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_r_hairC_002_0148",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_r_hairC_002_0148",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_r_hairC_002_0148",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_r_hairC_001_0147",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_r_hairC_001_0147",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_r_hairC_001_0147",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_r_hairA_001_0119",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_r_hairA_001_0119",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_r_hairA_001_0119",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_l_hairA_007_0157",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_l_hairA_007_0157",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_l_hairA_007_0157",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_l_hairA_006_0156",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_l_hairA_006_0156",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_l_hairA_006_0156",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_l_hairA_005_0155",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_l_hairA_005_0155",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_l_hairA_005_0155",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_l_hairA_004_0154",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_l_hairA_004_0154",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_l_hairA_004_0154",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_l_hairA_003_0153",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_l_hairA_003_0153",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_l_hairA_003_0153",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_l_hairA_002_0152",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_l_hairA_002_0152",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_l_hairA_002_0152",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_l_hairC_004_0161",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_l_hairC_004_0161",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_l_hairC_003_0140",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_l_hairC_003_0140",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_l_hairC_003_0140",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_l_hairC_002_0159",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_l_hairC_002_0159",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_l_hairC_002_0159",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_l_hairC_001_0158",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_l_hairC_001_0158",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_l_hairC_001_0158",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_l_hairA_001_0151",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_l_hairA_001_0151",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_l_hairA_001_0151",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_l_hairD_003_0166",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_l_hairD_003_0166",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_l_hairD_003_0166",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_l_hairD_002_0165",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_l_hairD_002_0165",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_l_hairD_002_0165",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_l_hairD_001_0164",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_l_hairD_001_0164",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_l_hairD_001_0164",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_l_hairB_002_0163",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_l_hairB_002_0163",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_l_hairB_002_0163",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_l_hairB_001_0162",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_l_hairB_001_0162",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_l_hairB_001_0162",
+          "path": "rotation"
+        },
+        {
+          "node": "FirstPersonCameraAttachSocket_0167",
+          "path": "translation"
+        },
+        {
+          "node": "FirstPersonCameraAttachSocket_0167",
+          "path": "scale"
+        },
+        {
+          "node": "FirstPersonCameraAttachSocket_0167",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-Head_083",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-Head_083",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001-Head_083",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-Neck_082",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-Neck_082",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001-Neck_082",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_m_tieU_004_0171",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_m_tieU_004_0171",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_m_tieU_004_0171",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_m_tieU_003_0170",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_m_tieU_003_0170",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_m_tieU_003_0170",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_m_tieU_002_0169",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_m_tieU_002_0169",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_m_tieU_002_0169",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_m_tieU_008_0174",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_m_tieU_008_0174",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_m_tieU_008_0174",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_m_tieU_007_0173",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_m_tieU_007_0173",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_m_tieU_007_0173",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_m_tieU_006_0172",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_m_tieU_006_0172",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_m_tieU_006_0172",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_m_tieU_001_0168",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_m_tieU_001_0168",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_m_tieU_001_0168",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_l_clothC_002_0176",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_l_clothC_002_0176",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_l_clothC_002_0176",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_l_clothC_001_0175",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_l_clothC_001_0175",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_l_clothB_002_0178",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_l_clothB_002_0178",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_l_clothB_002_0178",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_l_clothB_001_0177",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_l_clothB_001_0177",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_l_clothB_001_0177",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_l_lalian_001_0181",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_l_lalian_001_0181",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_l_lalian_001_0181",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_l_clothA_002_0160",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_l_clothA_002_0160",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_l_clothA_002_0160",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_l_clothA_001_0179",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_l_clothA_001_0179",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_l_clothA_001_0179",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_m_cloth_002_0183",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_m_cloth_002_0183",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_m_cloth_002_0183",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_m_cloth_001_0182",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_m_cloth_001_0182",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_m_cloth_001_0182",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_r_xiong_001_0184",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_r_xiong_001_0184",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_r_xiong_001_0184",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_l_xiong_001_0185",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_l_xiong_001_0185",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_l_xiong_001_0185",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_r_clothC_002_0187",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_r_clothC_002_0187",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_r_clothC_002_0187",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_r_clothC_001_0186",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_r_clothC_001_0186",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_r_clothC_001_0186",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_l_callor_002_0189",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_l_callor_002_0189",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_l_callor_002_0189",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_l_callor_001_0188",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_l_callor_001_0188",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_l_callor_001_0188",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_m_callor_002_0191",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_m_callor_002_0191",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_m_callor_002_0191",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_m_callor_001_0190",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_m_callor_001_0190",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_m_callor_001_0190",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_r_callor_002_0193",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_r_callor_002_0193",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_r_callor_002_0193",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_r_callor_001_0192",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_r_callor_001_0192",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_r_callor_001_0192",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-Spine2_09",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-Spine2_09",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001-Spine2_09",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_r_clothE_end_0195",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_r_clothE_end_0195",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_r_clothE_end_0195",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_r_clothE_001_0194",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_r_clothE_001_0194",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_r_clothE_001_0194",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_l_clothE_end_0197",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_l_clothE_end_0197",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_l_clothE_end_0197",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_l_clothE_001_0196",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_l_clothE_001_0196",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_l_clothE_001_0196",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-Spine1_08",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-Spine1_08",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001-Spine1_08",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-Spine_07",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-Spine_07",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001-Spine_07",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-L-Toe0_0201",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-L-Toe0_0201",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001-L-Toe0_0201",
+          "path": "rotation"
+        },
+        {
+          "node": "FootStep_Left_0202",
+          "path": "translation"
+        },
+        {
+          "node": "FootStep_Left_0202",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-L-Foot_0180",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-L-Foot_0180",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001-L-Foot_0180",
+          "path": "rotation"
+        },
+        {
+          "node": "Bone-L-Calf-Twist1_0204",
+          "path": "translation"
+        },
+        {
+          "node": "Bone-L-Calf-Twist1_0204",
+          "path": "scale"
+        },
+        {
+          "node": "Bone-L-Calf-Twist1_0204",
+          "path": "rotation"
+        },
+        {
+          "node": "Bone-L-Calf-Twist_0203",
+          "path": "translation"
+        },
+        {
+          "node": "Bone-L-Calf-Twist_0203",
+          "path": "scale"
+        },
+        {
+          "node": "Bone-L-Calf-Twist_0203",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_l_kneePush_001_0205",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_l_kneePush_001_0205",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_l_kneePush_001_0205",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_l_kneeAvg_001_0206",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_l_kneeAvg_001_0206",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_l_kneeAvg_001_0206",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-L-Calf_0199",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-L-Calf_0199",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001-L-Calf_0199",
+          "path": "rotation"
+        },
+        {
+          "node": "Bone-L-Thigh-Twist1_0208",
+          "path": "translation"
+        },
+        {
+          "node": "Bone-L-Thigh-Twist1_0208",
+          "path": "scale"
+        },
+        {
+          "node": "Bone-L-Thigh-Twist1_0208",
+          "path": "rotation"
+        },
+        {
+          "node": "Bone-L-Thigh-Twist_0207",
+          "path": "translation"
+        },
+        {
+          "node": "Bone-L-Thigh-Twist_0207",
+          "path": "scale"
+        },
+        {
+          "node": "Bone-L-Thigh-Twist_0207",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-L-Thigh_0198",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-L-Thigh_0198",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001-L-Thigh_0198",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-R-Toe0_0212",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-R-Toe0_0212",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001-R-Toe0_0212",
+          "path": "rotation"
+        },
+        {
+          "node": "FootStep_Right_0213",
+          "path": "translation"
+        },
+        {
+          "node": "FootStep_Right_0213",
+          "path": "scale"
+        },
+        {
+          "node": "FootStep_Right_0213",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-R-Foot_0211",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-R-Foot_0211",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001-R-Foot_0211",
+          "path": "rotation"
+        },
+        {
+          "node": "Bone-R-Calf-Twist1_0215",
+          "path": "translation"
+        },
+        {
+          "node": "Bone-R-Calf-Twist1_0215",
+          "path": "scale"
+        },
+        {
+          "node": "Bone-R-Calf-Twist1_0215",
+          "path": "rotation"
+        },
+        {
+          "node": "Bone-R-Calf-Twist_0214",
+          "path": "translation"
+        },
+        {
+          "node": "Bone-R-Calf-Twist_0214",
+          "path": "scale"
+        },
+        {
+          "node": "Bone-R-Calf-Twist_0214",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_r_kneePush_001_0216",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_r_kneePush_001_0216",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_r_kneePush_001_0216",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_r_kneeAvg_001_0217",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_r_kneeAvg_001_0217",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_r_kneeAvg_001_0217",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-R-Calf_0210",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-R-Calf_0210",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001-R-Calf_0210",
+          "path": "rotation"
+        },
+        {
+          "node": "Bone-R-Thigh-Twist1_0219",
+          "path": "translation"
+        },
+        {
+          "node": "Bone-R-Thigh-Twist1_0219",
+          "path": "scale"
+        },
+        {
+          "node": "Bone-R-Thigh-Twist1_0219",
+          "path": "rotation"
+        },
+        {
+          "node": "Bone-R-Thigh-Twist_0218",
+          "path": "translation"
+        },
+        {
+          "node": "Bone-R-Thigh-Twist_0218",
+          "path": "scale"
+        },
+        {
+          "node": "Bone-R-Thigh-Twist_0218",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-R-Thigh_0209",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-R-Thigh_0209",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001-R-Thigh_0209",
+          "path": "rotation"
+        },
+        {
+          "node": "WaterDroppingSocket1_0226",
+          "path": "translation"
+        },
+        {
+          "node": "WaterDroppingSocket1_0226",
+          "path": "scale"
+        },
+        {
+          "node": "WaterDroppingSocket1_0226",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_m_tail_006������_0227",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_m_tail_006������_0227",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_m_tail_006������_0227",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_m_tail_006_0225",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_m_tail_006_0225",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_m_tail_005_0224",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_m_tail_005_0224",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_m_tail_005_0224",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_m_tail_004_0223",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_m_tail_004_0223",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_m_tail_004_0223",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_m_tail_003_0222",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_m_tail_003_0222",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_m_tail_003_0222",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_m_tail_002_0221",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_m_tail_002_0221",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_m_tail_002_0221",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_m_tail_001_0200",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_m_tail_001_0200",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_m_tail_001_0200",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_r_qunA_003_0230",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_r_qunA_003_0230",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_r_qunA_003_0230",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_r_qunA_002_0229",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_r_qunA_002_0229",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_r_qunA_002_0229",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_r_qunA_001_0228",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_r_qunA_001_0228",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_r_qunA_001_0228",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_r_qunB_003_0233",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_r_qunB_003_0233",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_r_qunB_003_0233",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_r_qunB_002_0232",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_r_qunB_002_0232",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_r_qunB_002_0232",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_r_qunB_001_0231",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_r_qunB_001_0231",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_r_qunB_001_0231",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_r_piaodai_003_0238",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_r_piaodai_003_0238",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_r_piaodai_003_0238",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_r_piaodai_002_0237",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_r_piaodai_002_0237",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_r_piaodai_002_0237",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_r_qunC_003_0236",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_r_qunC_003_0236",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_r_qunC_003_0236",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_r_qunC_002_0235",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_r_qunC_002_0235",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_r_qunC_002_0235",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_r_qunC_001_0234",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_r_qunC_001_0234",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_r_qunC_001_0234",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_m_qunF_003_0241",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_m_qunF_003_0241",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_m_qunF_003_0241",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_m_qunF_002_0220",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_m_qunF_002_0220",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_m_qunF_002_0220",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_m_qunF_001_0239",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_m_qunF_001_0239",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_m_qunF_001_0239",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_m_qunB_003_0244",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_m_qunB_003_0244",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_m_qunB_003_0244",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_m_qunB_002_0243",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_m_qunB_002_0243",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_m_qunB_001_0242",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_m_qunB_001_0242",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_m_qunB_001_0242",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_l_piaodai_004_0249",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_l_piaodai_004_0249",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_l_piaodai_004_0249",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_l_piaodai_003_0248",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_l_piaodai_003_0248",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_l_piaodai_003_0248",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_l_qunC_003_0247",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_l_qunC_003_0247",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_l_qunC_003_0247",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_l_qunC_002_0246",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_l_qunC_002_0246",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_l_qunC_002_0246",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_l_qunC_001_0245",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_l_qunC_001_0245",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_l_qunC_001_0245",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_l_qunB_003_0252",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_l_qunB_003_0252",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_l_qunB_003_0252",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_l_qunB_002_0251",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_l_qunB_002_0251",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_l_qunB_001_0250",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_l_qunB_001_0250",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_l_qunB_001_0250",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_l_qunA_003_0255",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_l_qunA_003_0255",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_l_qunA_003_0255",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_l_qunA_002_0254",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_l_qunA_002_0254",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_l_qunA_002_0254",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_l_qunA_001_0253",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_l_qunA_001_0253",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_l_qunA_001_0253",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_m_gongpai_003_0258",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_m_gongpai_003_0258",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_m_gongpai_003_0258",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_m_gongpai_002_0257",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_m_gongpai_002_0257",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_m_gongpai_002_0257",
+          "path": "rotation"
+        },
+        {
+          "node": "Bn_m_gongpai_001_0256",
+          "path": "translation"
+        },
+        {
+          "node": "Bn_m_gongpai_001_0256",
+          "path": "scale"
+        },
+        {
+          "node": "Bn_m_gongpai_001_0256",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001-Pelvis_06",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001-Pelvis_06",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001-Pelvis_06",
+          "path": "rotation"
+        },
+        {
+          "node": "FireSocket_0259",
+          "path": "translation"
+        },
+        {
+          "node": "FireSocket_0259",
+          "path": "scale"
+        },
+        {
+          "node": "FireSocket_0259",
+          "path": "rotation"
+        },
+        {
+          "node": "Bip001_05",
+          "path": "translation"
+        },
+        {
+          "node": "Bip001_05",
+          "path": "scale"
+        },
+        {
+          "node": "Bip001_05",
+          "path": "rotation"
+        },
+        {
+          "node": "foot_r_0261",
+          "path": "translation"
+        },
+        {
+          "node": "foot_r_0261",
+          "path": "scale"
+        },
+        {
+          "node": "foot_r_0261",
+          "path": "rotation"
+        },
+        {
+          "node": "foot_l_0262",
+          "path": "translation"
+        },
+        {
+          "node": "foot_l_0262",
+          "path": "scale"
+        },
+        {
+          "node": "foot_l_0262",
+          "path": "rotation"
+        },
+        {
+          "node": "FX_hand_rSocket_0265",
+          "path": "translation"
+        },
+        {
+          "node": "FX_hand_rSocket_0265",
+          "path": "scale"
+        },
+        {
+          "node": "FX_hand_rSocket_0265",
+          "path": "rotation"
+        },
+        {
+          "node": "Rhand_Weapon_0266",
+          "path": "translation"
+        },
+        {
+          "node": "Rhand_Weapon_0266",
+          "path": "scale"
+        },
+        {
+          "node": "Rhand_Weapon_0266",
+          "path": "rotation"
+        },
+        {
+          "node": "hand_r_0264",
+          "path": "translation"
+        },
+        {
+          "node": "hand_r_0264",
+          "path": "scale"
+        },
+        {
+          "node": "hand_r_0264",
+          "path": "rotation"
+        },
+        {
+          "node": "FX_hand_lSocket_0268",
+          "path": "translation"
+        },
+        {
+          "node": "FX_hand_lSocket_0268",
+          "path": "scale"
+        },
+        {
+          "node": "FX_hand_lSocket_0268",
+          "path": "rotation"
+        },
+        {
+          "node": "hand_l_0267",
+          "path": "translation"
+        },
+        {
+          "node": "hand_l_0267",
+          "path": "scale"
+        },
+        {
+          "node": "hand_l_0267",
+          "path": "rotation"
+        },
+        {
+          "node": "P_wq_L_0270",
+          "path": "translation"
+        },
+        {
+          "node": "P_wq_L_0270",
+          "path": "scale"
+        },
+        {
+          "node": "P_wq_L_0270",
+          "path": "rotation"
+        },
+        {
+          "node": "wq_root_L_0269",
+          "path": "translation"
+        },
+        {
+          "node": "wq_root_L_0269",
+          "path": "scale"
+        },
+        {
+          "node": "wq_root_L_0269",
+          "path": "rotation"
+        },
+        {
+          "node": "P_wq_R_0272",
+          "path": "translation"
+        },
+        {
+          "node": "P_wq_R_0272",
+          "path": "scale"
+        },
+        {
+          "node": "P_wq_R_0272",
+          "path": "rotation"
+        },
+        {
+          "node": "wq_root_R_0271",
+          "path": "translation"
+        },
+        {
+          "node": "wq_root_R_0271",
+          "path": "scale"
+        },
+        {
+          "node": "wq_root_R_0271",
+          "path": "rotation"
+        },
+        {
+          "node": "Object_9",
+          "path": "weights"
+        },
+        {
+          "node": "Object_10",
+          "path": "weights"
+        },
+        {
+          "node": "Object_11",
+          "path": "weights"
+        },
+        {
+          "node": "Object_12",
+          "path": "weights"
+        },
+        {
+          "node": "Object_13",
+          "path": "weights"
+        },
+        {
+          "node": "Object_14",
+          "path": "weights"
+        },
+        {
+          "node": "Object_15",
+          "path": "weights"
+        },
+        {
+          "node": "Object_16",
+          "path": "weights"
+        },
+        {
+          "node": "Object_17",
+          "path": "weights"
+        },
+        {
+          "node": "Object_18",
+          "path": "weights"
+        }
+      ]
+    }
+  ],
+  "extensionsUsed": [
+    "KHR_materials_unlit"
+  ],
+  "extensionsRequired": []
+}
