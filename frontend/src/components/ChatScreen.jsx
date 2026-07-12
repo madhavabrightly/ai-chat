@@ -1,11 +1,10 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { useChat } from '../context/ChatContext.jsx'
-import { sendChatMessageStream, saveMemory } from '../api/memoryApi.js'
+import { importMemoryFile, sendChatMessageStream, saveMemory } from '../api/memoryApi.js'
 import RAGTracePanel from './RAGTracePanel.jsx'
 import detectMemoryIntent from '../utils/memoryDetector.js'
 import detectAvatarMood from '../utils/avatarMood.js'
 import { guardAnswer } from '../utils/languageGuard.js'
-import { parseImportFile } from '../utils/importParser.js'
 import {
   getTempImportMeta,
   getTempImportData,
@@ -116,6 +115,7 @@ export default function ChatScreen({ onAvatarState, onAvatarMood, onLastAnswer, 
     const tempCtx = hasTempImport() ? {
       enabled: true,
       file_name: importMeta?.file_name || '',
+      session_id: importMeta?.session_id || '',
       summary: importMeta?.summary || '',
       style_profile: {
         tone: importMeta?.tone || 'warm',
@@ -266,55 +266,42 @@ export default function ChatScreen({ onAvatarState, onAvatarMood, onLastAnswer, 
   // ---------------------------------------------------------------------------
 
   async function handleImportFile(e) {
-    const MAX_FILE_SIZE = 5 * 1024 * 1024  // 5MB
-    const MAX_CHUNKS = 200
-    const MAX_CHARS = 50000
+    const MAX_FILE_SIZE = 20 * 1024 * 1024  // 20MB
 
     const file = e.target.files?.[0]
     if (!file) return
 
     if (file.size > MAX_FILE_SIZE) {
-      addMessage('system', `⚠️ File too large (${(file.size / 1024 / 1024).toFixed(1)}MB). Max 5MB.`)
+      addMessage('system', `⚠️ File too large (${(file.size / 1024 / 1024).toFixed(1)}MB). Max 20MB.`)
       e.target.value = ''
       return
     }
 
-    let raw
-    try {
-      raw = await file.text()
-    } catch {
-      addMessage('system', `⚠️ Could not read file "${file.name}".`)
+    addMessage('system', `📥 Indexing "${file.name}" for memory retrieval...`)
+    const result = await importMemoryFile(file)
+    if (!result.ok) {
+      addMessage('system', `⚠️ Could not import "${file.name}": ${result.message || 'backend import failed'}.`)
       e.target.value = ''
       return
     }
 
-    if (raw.length > MAX_CHARS) {
-      addMessage('system', `⚠️ File too long (${raw.length} chars). Max ${MAX_CHARS}.`)
-      e.target.value = ''
-      return
+    const data = result.data || {}
+    const meta = {
+      session_id: data.session_id,
+      file_name: data.file_name || file.name,
+      summary: data.summary || `${data.message_count || 0} imported messages`,
+      tone: data.tone || 'warm',
+      emotions: data.emotions || [],
+      message_count: data.message_count || 0,
     }
+    const previewChunks = (data.messages || []).slice(0, 40)
 
-    let result
-    try {
-      result = parseImportFile(raw, file.name)
-    } catch (parseErr) {
-      addMessage('system', `⚠️ Could not parse "${file.name}": ${parseErr.message || 'Invalid format'}.`)
-      e.target.value = ''
-      return
-    }
-
-    if (result.chunks.length > MAX_CHUNKS) {
-      result.chunks = result.chunks.slice(0, MAX_CHUNKS)
-    }
-
-    setTempImport(
-      { file_name: result.file_name, summary: result.summary, tone: result.tone, emotions: result.emotions },
-      result.chunks
-    )
-    setImportMeta({ file_name: result.file_name, summary: result.summary, tone: result.tone, emotions: result.emotions })
-    setImportChunks(result.chunks)
-    addMessage('system', `📥 Imported "${file.name}" — ${result.chunks.length} chunks, tone: ${result.tone}`)
+    setTempImport(meta, previewChunks)
+    setImportMeta(meta)
+    setImportChunks(previewChunks)
+    addMessage('system', `✅ Imported "${file.name}" — ${meta.message_count} messages indexed, tone: ${meta.tone}`)
     setShowImport(false)
+    e.target.value = ''
   }
 
   function handleClearImport() {

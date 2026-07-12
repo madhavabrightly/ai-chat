@@ -214,6 +214,48 @@ export async function sendChatMessage({
   }
 }
 
+export async function importMemoryFile(file, { signal = null } = {}) {
+  const requestId = generateRequestId()
+  const controller = new AbortController()
+  const timeoutId = setTimeout(() => controller.abort(), CHAT_TIMEOUT_MS)
+
+  if (signal) {
+    if (signal.aborted) {
+      controller.abort()
+    } else {
+      signal.addEventListener('abort', () => controller.abort(), { once: true })
+    }
+  }
+
+  const form = new FormData()
+  form.append('file', file)
+
+  try {
+    const r = await fetch(BASE + '/memory/import/preview', {
+      method: 'POST',
+      headers: { 'X-Request-ID': requestId },
+      body: form,
+      signal: controller.signal,
+    })
+    clearTimeout(timeoutId)
+    const data = await r.json().catch(() => null)
+    if (!r.ok || data?.error) {
+      return makeError('HTTP_ERROR', data?.error || `HTTP ${r.status}`, {
+        http_status: r.status,
+        request_id: requestId,
+      })
+    }
+    return { ok: true, data, request_id: requestId }
+  } catch (err) {
+    clearTimeout(timeoutId)
+    if (err.name === 'AbortError') {
+      if (signal && signal.aborted) return makeError('CANCELLED', 'Import was cancelled', { request_id: requestId })
+      return makeError('TIMEOUT', `Import timed out after ${CHAT_TIMEOUT_MS}ms`, { request_id: requestId })
+    }
+    return makeError('NETWORK_ERROR', err.message || 'Import failed', { request_id: requestId })
+  }
+}
+
 export async function requestAvatarAction({
   answer,
   retrievedMemories = [],
@@ -344,8 +386,8 @@ export async function sendChatMessageStream({
                 type: 'rag_trace',
                 request_id: requestId,
                 retrieved_memories: [],
-                memory_count: event.memory_count || 0,
-                retrieval_ms: event.retrieval_ms || 0,
+                memory_count: event.memory_count || event.count || 0,
+                retrieval_ms: event.retrieval_ms || event.ms || 0,
                 reranker_used: event.reranker_used || false,
                 rerank_ms: event.rerank_ms || 0,
               })

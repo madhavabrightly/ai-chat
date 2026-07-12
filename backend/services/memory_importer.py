@@ -10,6 +10,7 @@ import os
 import uuid
 import re
 import sqlite3
+from collections import defaultdict
 from datetime import datetime
 from backend.config import RUNTIME_ROOT
 
@@ -27,6 +28,11 @@ WA3 = re.compile(r'^([A-Za-z][A-Za-z\s]+?):\s*(.*)')
 
 def _get_db_path(session_id: str) -> str:
     return os.path.join(IMPORTS_DB_DIR, f"{session_id}.db")
+
+
+def _safe_import_collection_name(session_id: str) -> str:
+    safe = re.sub(r"[^A-Za-z0-9_-]", "_", session_id or "")
+    return f"import_{safe}"[:63]
 
 
 def _init_db(db_path: str):
@@ -252,7 +258,7 @@ def _index_messages_in_chroma(session_id: str, messages: list[dict]):
         from backend.config import CHROMA_DB_DIR
 
         client = chromadb.PersistentClient(path=CHROMA_DB_DIR, settings=Settings(anonymized_telemetry=False))
-        collection_name = f"import_{session_id}"
+        collection_name = _safe_import_collection_name(session_id)
         try:
             client.delete_collection(collection_name)
         except ValueError:
@@ -266,6 +272,7 @@ def _index_messages_in_chroma(session_id: str, messages: list[dict]):
         texts = [m["text"] for m in messages if m["text"].strip()]
         metadatas = [
             {
+                "id": m["id"],
                 "speaker": m["speaker"],
                 "date": m["date"],
                 "timestamp_iso": m.get("timestamp_iso", ""),
@@ -302,6 +309,123 @@ def get_session_messages(session_id: str) -> list[dict]:
     rows = conn.execute("SELECT * FROM messages ORDER BY rowid").fetchall()
     conn.close()
     return [dict(r) for r in rows]
+
+
+def search_session_messages(session_id: str, query: str, n_results: int = 8) -> list[dict]:
+    """Return the most relevant imported messages for a user query.
+
+    Uses the per-import Chroma collection when embeddings are available, then
+    falls back to a lightweight SQLite lexical match. Nearby same-group
+    messages are included so short replies still have conversational context.
+    """
+    session_id = (session_id or "").strip()
+    query = (query or "").strip()
+    if not session_id or not query:
+        return []
+
+    vector_matches = _search_session_chroma(session_id, query, n_results=n_results)
+    if vector_matches:
+        return _expand_match_context(session_id, vector_matches, limit=n_results)
+
+    return _search_session_sqlite(session_id, query, n_results=n_results)
+
+
+def _search_session_chroma(session_id: str, query: str, n_results: int = 8) -> list[dict]:
+    try:
+        import chromadb
+        from chromadb.config import Settings
+        from backend.config import CHROMA_DB_DIR
+        from backend.models.embedding_loader import embed_query
+
+        client = chromadb.PersistentClient(path=CHROMA_DB_DIR, settings=Settings(anonymized_telemetry=False))
+        collection = client.get_collection(_safe_import_collection_name(session_id))
+        result = collection.query(
+            query_embeddings=[embed_query(query)],
+            n_results=max(1, n_results),
+            include=["documents", "metadatas", "distances"],
+        )
+
+        docs = result.get("documents", [[]])[0]
+        metas = result.get("metadatas", [[]])[0]
+        distances = result.get("distances", [[]])[0]
+        matches = []
+        for doc, meta, distance in zip(docs, metas, distances):
+            matches.append({
+                "id": meta.get("id", ""),
+                "speaker": meta.get("speaker", ""),
+                "date": meta.get("date", ""),
+                "timestamp_iso": meta.get("timestamp_iso", ""),
+                "text": doc,
+                "exact_source": doc,
+                "line_number": meta.get("line_number", 0),
+                "chunk_group": meta.get("chunk_group", 0),
+                "source_file": meta.get("source_file", ""),
+                "relevance": round(max(0.0, 1.0 - float(distance or 0)), 4),
+            })
+        return matches
+    except Exception as exc:
+        print(f"[IMPORTER] Chroma search unavailable for {session_id}: {exc}")
+        return []
+
+
+def _search_session_sqlite(session_id: str, query: str, n_results: int = 8) -> list[dict]:
+    db_path = _get_db_path(session_id)
+    if not os.path.exists(db_path):
+        return []
+
+    terms = [t for t in re.findall(r"[A-Za-z0-9']+", query.lower()) if len(t) > 2]
+    conn = sqlite3.connect(db_path)
+    conn.row_factory = sqlite3.Row
+    rows = conn.execute("SELECT * FROM messages ORDER BY rowid").fetchall()
+    conn.close()
+
+    scored = []
+    for row in rows:
+        item = dict(row)
+        text = f"{item.get('speaker', '')} {item.get('text', '')}".lower()
+        score = sum(text.count(term) for term in terms)
+        if score:
+            item["relevance"] = float(score)
+            scored.append(item)
+
+    scored.sort(key=lambda item: item.get("relevance", 0), reverse=True)
+    if not scored:
+        return [dict(r) for r in rows[:n_results]]
+    return _expand_match_context(session_id, scored[:n_results], limit=n_results)
+
+
+def _expand_match_context(session_id: str, matches: list[dict], limit: int = 8) -> list[dict]:
+    all_messages = get_session_messages(session_id)
+    if not all_messages:
+        return matches[:limit]
+
+    by_group = defaultdict(list)
+    by_line = {}
+    for msg in all_messages:
+        by_group[msg.get("chunk_group", -1)].append(msg)
+        by_line[int(msg.get("line_number") or 0)] = msg
+
+    selected = []
+    seen = set()
+    for match in matches:
+        group = match.get("chunk_group")
+        group_messages = by_group.get(group, [])
+        if not group_messages and match.get("line_number"):
+            group_messages = [by_line.get(int(match["line_number"]))]
+        for msg in group_messages[:3]:
+            if not msg:
+                continue
+            key = msg.get("id") or msg.get("line_number")
+            if key in seen:
+                continue
+            seen.add(key)
+            enriched = dict(msg)
+            enriched["relevance"] = match.get("relevance", enriched.get("relevance", 0))
+            selected.append(enriched)
+            if len(selected) >= limit:
+                return selected
+
+    return selected or matches[:limit]
 
 
 def get_all_sessions() -> list[dict]:

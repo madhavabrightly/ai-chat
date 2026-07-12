@@ -202,6 +202,7 @@ export default function LiveCallScreen() {
     if (!hasTempImport()) return null
     return {
       enabled: true,
+      session_id: getTempImportMeta()?.session_id || '',
       file_name: getTempImportMeta()?.file_name || '',
       summary: getTempImportMeta()?.summary || '',
       style_profile: {

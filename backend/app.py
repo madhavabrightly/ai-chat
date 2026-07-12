@@ -390,7 +390,7 @@ async def chat(req: ChatRequest):
     try:
         # Step 0a: Auto-extract memory from user message (e.g., "remember that...")
         try:
-            from services.auto_memory_extractor import check_and_extract
+            from backend.services.auto_memory_extractor import check_and_extract
             auto_mem_id = check_and_extract(question)
             if auto_mem_id:
                 logger.info(f"[CHAT:{request_id}] auto-saved memory {auto_mem_id}")
@@ -424,7 +424,7 @@ async def chat(req: ChatRequest):
         # Step 1.5: Check for trigger rule match
         trigger_match = None
         try:
-            from rag.retriever import match_trigger_rule
+            from backend.rag.retriever import match_trigger_rule
             trigger_match = match_trigger_rule(question)
             if trigger_match:
                 logger.info(f"[CHAT:{request_id}] trigger_rule matched: {trigger_match.get('trigger')}")
@@ -444,7 +444,7 @@ async def chat(req: ChatRequest):
         if trigger_match and trigger_match.get("response"):
             rule_instruction = f"\n\nIMPORTANT RULE: When the user says \"{trigger_match['trigger']}\", you MUST respond: {trigger_match['response']}"
 
-        temp_context_section = _build_temp_context_section(req.temporary_context)
+        temp_context_section = _build_temp_context_section(req.temporary_context, question)
 
         response_style = _voice_response_style() if req.voice_mode else "Respond warmly and briefly."
         user_msg = f"Relevant memories:\n{context}\n\nUser: {question}\n\n{response_style}{rule_instruction}{temp_context_section}"
@@ -526,7 +526,7 @@ async def chat_stream(req: ChatRequest):
 
     # Auto-extract memory from user message (e.g., "remember that...")
     try:
-        from services.auto_memory_extractor import check_and_extract
+        from backend.services.auto_memory_extractor import check_and_extract
         auto_mem_id = check_and_extract(question)
         if auto_mem_id:
             logger.info(f"[STREAM:{request_id}] auto-saved memory {auto_mem_id}")
@@ -554,7 +554,7 @@ async def chat_stream(req: ChatRequest):
             # 2.5: Check for trigger rule match (e.g., "if I say 22, tell me I'm beautiful")
             trigger_match = None
             try:
-                from rag.retriever import match_trigger_rule
+                from backend.rag.retriever import match_trigger_rule
                 trigger_match = match_trigger_rule(question)
                 if trigger_match:
                     logger.info(f"[STREAM:{request_id}] trigger_rule matched: {trigger_match.get('trigger')}")
@@ -576,7 +576,7 @@ async def chat_stream(req: ChatRequest):
                 rule_instruction = f"\n\nIMPORTANT RULE: When the user says \"{trigger_match['trigger']}\", you MUST respond: {trigger_match['response']}"
 
             # Inject temporary imported context (e.g., WhatsApp chat) into the prompt
-            temp_context_section = _build_temp_context_section(req.temporary_context)
+            temp_context_section = _build_temp_context_section(req.temporary_context, question)
 
             response_style = _voice_response_style() if req.voice_mode else "Respond warmly and briefly."
             user_msg = f"Relevant memories:\n{context}\n\nUser: {question}\n\n{response_style}{rule_instruction}{temp_context_section}"
@@ -733,16 +733,28 @@ def _voice_response_style() -> str:
 
 
 # ── Helper: build temp context prompt section ──────────────────────
-def _build_temp_context_section(temp_ctx: dict) -> str:
+def _build_temp_context_section(temp_ctx: dict, query: str = "") -> str:
     """Build a prompt section from temporary_context (imported chat)."""
     if not temp_ctx:
         return ""
     file_name = temp_ctx.get("file_name", "imported chat")
+    session_id = temp_ctx.get("session_id", "")
     summary = temp_ctx.get("summary", "")
     style = temp_ctx.get("style_profile", {})
     chunks = temp_ctx.get("chunks", [])
 
+    if session_id:
+        try:
+            from backend.services.memory_importer import search_session_messages
+            retrieved_chunks = search_session_messages(session_id, query, n_results=8)
+            if retrieved_chunks:
+                chunks = retrieved_chunks
+        except Exception as exc:
+            logger.warning("[IMPORT] session retrieval failed for %s: %s", session_id, exc)
+
     parts = [f"\n\n--- TEMPORARY IMPORTED CONTEXT ({file_name}) ---"]
+    if session_id:
+        parts.append(f"Import session: {session_id}")
     if summary:
         parts.append(f"Summary: {summary}")
     if style.get("tone"):
@@ -751,16 +763,18 @@ def _build_temp_context_section(temp_ctx: dict) -> str:
         parts.append(f"Emotions: {', '.join(style['emotions'])}")
     if chunks:
         parts.append("\nRelevant messages from the imported chat:")
-        # Include up to 5 most relevant chunks (or first 5 if no scores)
+        # Include the most relevant chunks. Backend sessions use real Chroma
+        # search; browser-only imports fall back to any supplied relevance.
         sorted_chunks = sorted(chunks, key=lambda c: c.get("relevance", 0), reverse=True)
-        for i, chunk in enumerate(sorted_chunks[:5], 1):
+        for i, chunk in enumerate(sorted_chunks[:8], 1):
             speaker = chunk.get("speaker", "Unknown")
             text = chunk.get("text", "")[:300]
             date = chunk.get("date", "")
             parts.append(f"  [{i}] {speaker}" + (f" ({date})" if date else "") + f": {text}")
     parts.append("--- END TEMPORARY CONTEXT ---\n")
     parts.append("IMPORTANT: When answering, prioritize facts from the temporary imported context above. "
-                 "If the user asks about something from the imported chat, answer based on those messages.")
+                 "If the user asks about something from the imported chat, answer based on those messages. "
+                 "Mirror the imported chat's warmth and casual rhythm, but do not claim to be a real person.")
     return "\n".join(parts)
 
 # SPA fallback
