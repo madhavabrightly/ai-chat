@@ -3,6 +3,7 @@ import VirtualCompanion from '../avatar/VirtualCompanion.jsx'
 import CompanionSelector from './CompanionSelector.jsx'
 import VoiceSelector from './VoiceSelector.jsx'
 import { useChat } from '../context/ChatContext.jsx'
+import { transcribeAudio } from '../api/asrApi.js'
 import { requestAvatarAction, sendChatMessageStream } from '../api/memoryApi.js'
 import detectAvatarMood from '../utils/avatarMood.js'
 import { guardAnswer } from '../utils/languageGuard.js'
@@ -12,12 +13,15 @@ import {
   subscribeSpeaking,
 } from '../utils/voiceEngine.js'
 import {
-  startListening,
-  stopListening,
-  subscribeRecognitionState,
-  getRecognitionState,
-  isSpeechRecognitionSupported,
-} from '../utils/liveSpeechRecognition.js'
+  startVad,
+  startBrowserSR,
+  stopAll as stopTranscribing,
+  subscribeActiveState,
+  getActiveState,
+  getTranscriberMode,
+  hasBrowserSpeechRecognition,
+  TRANSCRIBER_MODE,
+} from '../utils/activeTranscriber.js'
 import {
   hasTempImport,
   getTempImportMeta,
@@ -126,7 +130,7 @@ export default function LiveCallScreen() {
   useEffect(() => subscribeSpeaking(setSpeaking), [])
 
   useEffect(() => {
-    const unsub = subscribeRecognitionState((state) => {
+    const unsub = subscribeActiveState((state) => {
       addDebug(`recognition=${state}`)
     })
     return unsub
@@ -136,7 +140,7 @@ export default function LiveCallScreen() {
     return () => {
       clearPhraseTimer()
       cancelActiveResponse('unmount')
-      stopListening()
+      stopTranscribing()
       stopSpeaking()
     }
   }, [])
@@ -490,6 +494,27 @@ export default function LiveCallScreen() {
     transitionCallState(CALL_STATE.ERROR)
   }
 
+  async function handleSpeechAudio(audioBlob, sessionToken) {
+    if (callStateRef.current === CALL_STATE.ENDED) return
+    setPartialText('Transcribing...')
+    addDebug(`asr_audio_bytes=${audioBlob?.size || 0}`)
+    const result = await transcribeAudio(audioBlob)
+    if (callSessionRef.current?.token !== sessionToken) return
+    if (result.ok && result.transcript) {
+      addDebug(`asr_model=${result.asr_model || 'backend'}`)
+      handleFinalTranscript(result.transcript)
+      return
+    }
+    setPartialText('')
+    addDebug(`asr_failed=${result.error || result.code || 'unknown'}`)
+    handleSpeechError({
+      code: result.code || 'ASR_FAILED',
+      message: result.fallback
+        ? 'Backend ASR is unavailable. Install FunASR/SenseVoice dependencies, or use browser fallback.'
+        : (result.error || 'ASR failed.'),
+    })
+  }
+
   async function startCall() {
     if (!companion) return
     setSenderror('')
@@ -503,37 +528,58 @@ export default function LiveCallScreen() {
     addDebug('start_call')
     transitionCallState(CALL_STATE.REQUESTING_MIC)
 
-    if (!isSpeechRecognitionSupported()) {
-      setSenderror('Live speech is not available in this browser. Use Chrome or Edge, or type during the call.')
-      transitionCallState(CALL_STATE.ERROR)
-      return
-    }
-
     callSessionRef.current = { token: `call_${Date.now()}`, startedAt: Date.now() }
     const sessionToken = callSessionRef.current.token
 
-    const result = startListening({
+    const vadResult = await startVad({
       onSpeechStart: () => {
         if (callSessionRef.current?.token !== sessionToken) return
         handleSpeechStart()
       },
-      onInterim: (text) => {
+      onSpeechEnd: (audioBlob) => {
         if (callSessionRef.current?.token !== sessionToken) return
-        handleInterimTranscript(text)
-      },
-      onFinal: (text) => {
-        if (callSessionRef.current?.token !== sessionToken) return
-        handleFinalTranscript(text)
+        handleSpeechAudio(audioBlob, sessionToken)
       },
       onError: (e) => {
         if (callSessionRef.current?.token !== sessionToken) return
-        handleSpeechError(e)
+        addDebug(`vad_error=${e?.message || e?.code || 'unknown'}`)
       },
     })
 
-    if (callSessionRef.current?.token !== sessionToken) return
+    let result = vadResult
+    if (!vadResult.ok) {
+      if (!hasBrowserSpeechRecognition()) {
+        setSenderror('Live speech is not available. VAD failed and browser speech fallback is unavailable.')
+        transitionCallState(CALL_STATE.ERROR)
+        return
+      }
+      addDebug(`vad_fallback_browser_sr=${vadResult.error || 'init_failed'}`)
+      result = startBrowserSR({
+        onSpeechStart: () => {
+          if (callSessionRef.current?.token !== sessionToken) return
+          handleSpeechStart()
+        },
+        onInterim: (text) => {
+          if (callSessionRef.current?.token !== sessionToken) return
+          handleInterimTranscript(text)
+        },
+        onFinal: (text) => {
+          if (callSessionRef.current?.token !== sessionToken) return
+          handleFinalTranscript(text)
+        },
+        onError: (e) => {
+          if (callSessionRef.current?.token !== sessionToken) return
+          handleSpeechError(e)
+        },
+      })
+    }
 
     if (result.ok) {
+      const mode = getTranscriberMode()
+      addDebug(`transcriber=${mode}`)
+      if (mode === TRANSCRIBER_MODE.VAD) {
+        addDebug('asr_route=backend_sensevoice')
+      }
       transitionCallState(CALL_STATE.LISTENING)
       setAvatarState('listening')
     } else {
@@ -545,7 +591,7 @@ export default function LiveCallScreen() {
   function endCall() {
     addDebug('end_call')
     cancelActiveResponse('end_call')
-    stopListening()
+    stopTranscribing()
     stopSpeaking()
     callSessionRef.current = null
     processingRef.current = false
@@ -566,7 +612,7 @@ export default function LiveCallScreen() {
   function resetCall() {
     addDebug('reset')
     cancelActiveResponse('reset')
-    stopListening()
+    stopTranscribing()
     stopSpeaking()
     callSessionRef.current = null
     processingRef.current = false
@@ -660,7 +706,7 @@ export default function LiveCallScreen() {
           {showDebug && (
             <div className="livecall-debug">
               <div>Status: {callState} | Speak: {speaking ? '✅' : '❌'} | Proc: {processingRef.current ? '✅' : '❌'}</div>
-              <div>Recognition: {getRecognitionState()}</div>
+              <div>Recognition: {getActiveState()} | Mode: {getTranscriberMode()}</div>
               <div className="debug-log">{debug.map((d, i) => <div key={i} className="debug-line"><span className="debug-t">{d.t}</span> {d.msg}</div>)}</div>
             </div>
           )}

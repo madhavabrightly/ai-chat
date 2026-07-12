@@ -32,7 +32,7 @@ from backend.config import (SYSTEM_PROMPT, TOP_K, LLM_MODEL_NAME, EMBEDDING_MODE
 from backend.models.embedding_loader import load_embedder
 from backend.models.llm_loader import load_llm, generate_answer
 from backend.models.tts_loader import load_tts
-from backend.models.asr_loader import load_asr
+from backend.models.asr_loader import load_asr, transcribe_audio
 from backend.models.model_registry import get_model_status, print_model_registry
 from backend.rag.memory_store import build_vector_store, rebuild_vector_store, get_all_memories
 from backend.rag.retriever import retrieve_memories
@@ -262,6 +262,44 @@ async def avatar_action(req: AvatarActionRequest):
         plan = {**base_plan, "director": "instant_rules", "director_error": True}
 
     return {"ok": True, "plan": plan}
+
+
+@app.post("/asr/transcribe")
+async def asr_transcribe(file: UploadFile = File(...)):
+    """Transcribe one VAD-captured audio segment with SenseVoiceSmall."""
+    import tempfile
+
+    suffix = os.path.splitext(file.filename or "recording.wav")[1] or ".wav"
+    fd, path = tempfile.mkstemp(suffix=suffix)
+    try:
+        with os.fdopen(fd, "wb") as tmp:
+            tmp.write(await file.read())
+
+        loop = asyncio.get_running_loop()
+        async with _ASR_SEMAPHORE:
+            result = await asyncio.wait_for(
+                loop.run_in_executor(None, transcribe_audio, path),
+                timeout=LLM_TIMEOUT_SECONDS,
+            )
+
+        text = (result.get("text") or "").strip()
+        if text:
+            return {"ok": True, "transcript": text, "asr_model": "SenseVoiceSmall"}
+        return {
+            "ok": False,
+            "error": result.get("reason", "ASR unavailable"),
+            "fallback": result.get("fallback", "browser_asr"),
+        }
+    except asyncio.TimeoutError:
+        return make_error(ErrorCode.ASR_TIMEOUT, "ASR request timed out")
+    except Exception as exc:
+        logger.error("[ASR] transcription failed: %s", exc)
+        return make_error(ErrorCode.ASR_UNAVAILABLE, str(exc)[:200])
+    finally:
+        try:
+            os.unlink(path)
+        except Exception:
+            pass
 
 @app.get("/memories")
 def list_memories():
